@@ -92,7 +92,31 @@ export const productData = [
         productId:"DDDDW000355",
         price:"15.763.000đ",
         quantity:1,
-    }
+    },
+    {
+        image:jewerl,
+        productName:"18K Italian White Gold Necklace",
+        productId:"0000W000583",
+        price:"15.763.000đ",
+        quantity:1,
+    },
+    {
+        image:jewerl,
+        productName:"18K Italian White Gold Necklace",
+        productId:"0000W000583",
+        price:"15.763.000đ",
+        quantity:1,
+    },
+    {
+        image:jewerl,
+        productName:"18K Italian White Gold Necklace",
+        productId:"0000W000583",
+        price:"15.763.000đ",
+        quantity:1,
+    },
+    
+    
+
 ]
 
 export const historyData = [

@@ -11,7 +11,7 @@ import ForgotPassword from "./component/forgotpassword/ForgotPassword";
 import ResetPassword from "./component/resetpassword/ResetPassword";
 import Dashboard from "./component/dashboard/dashboard";
 import Category from "./component/category";
-import "./output.css";
+//import "./output.css";
 import StaffLayout from "./layouts/StaffLayout";
 import Order from "./pages/staffs/Order";
 import Product from "./pages/staffs/Product";
