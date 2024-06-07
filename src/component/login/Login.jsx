@@ -88,7 +88,7 @@ export default function Login() {
         <form onSubmit={handleSubmit}>
           <h3>LOGIN</h3>
 
-          <div className="mb-3">
+          <div className="mb-3 form-item">
             <label className="title">Email</label>
             <input
               type="email"
