@@ -12,19 +12,34 @@
     justify-content: center;
     align-items: center;
   }
-  .logo {
-    width: 200px; 
-    height: auto;
-    margin-bottom: -50px; 
-    margin-left: 70px;
-    margin-top: -50px;
+
+  .logoRegister{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .form-control{
+    margin-top: 0px !important;
+    
+  }
+  .imgRegister {
+    width: 35%; 
+    height: auto ;
+    /* margin: 0px !important; */
+    /* height: auto; */
+    /* margin-left: 85px; */
+    /* margin-bottom: -20px;
+    margin-top: -50px; */
+    display: block;
   }
   
   .form-box {
-    width: 100%; 
-    max-width: 400px;
+    width: 200%; 
+    max-width: 900px;
+    min-width: 600px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 40px;
     border: 1px solid transparent;
     background-color: transparent;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -35,6 +50,9 @@
     margin-bottom: 20px;
     text-align: center;
     color: deepskyblue;
+  }
+  .form-box{
+margin-bottom: 0px !important;
   }
 
   .title {

@@ -1,6 +1,7 @@
 import React from "react";
-import { blankAvatar } from "../data/data";
+import { blankAvatar } from "../../data/data";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import "./Header.css"
 
 export default function Header({ page }) {
   return (

@@ -84,7 +84,9 @@ export default function Login() {
   return (
     <>
       <div className="form-box login">
-        <img src='public/assets/logo.jpg' className="logo-Login" alt="Logo" />
+        <div className="logoLogin">
+        <img src='public/assets/logo.jpg' className="imgLogo" alt="Logo" />
+        </div>
         <form onSubmit={handleSubmit}>
           <h3>LOGIN</h3>
 

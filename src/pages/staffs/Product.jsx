@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "../../components/Header";
+import Header from '../../component/header/Header'
 import Table, { ProductHeadTable } from "../../components/Table";
 import { productData } from "../../data/data";
 import { Icon } from "@iconify/react/dist/iconify.js";

@@ -26,8 +26,7 @@ const router = createBrowserRouter(
       <Route path="forgot-password" element={<ForgotPassword />} />
       <Route path="reset-password" element={<ResetPassword />} />
 
-      <Route path="dashboard">
-        <Route index element={<Dashboard />}/>
+      <Route path="dashboard" element={<Dashboard/>}>
         <Route path="category" element={<Category />}/>
       </Route>
 

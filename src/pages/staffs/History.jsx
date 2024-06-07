@@ -1,7 +1,7 @@
 import React from 'react'
 import Table, { HistoryHeadTable } from '../../components/Table'
 import { historyData } from '../../data/data'
-import Header from '../../components/Header'
+import Header from '../../component/header/Header'
 
 export default function History() {
   return (

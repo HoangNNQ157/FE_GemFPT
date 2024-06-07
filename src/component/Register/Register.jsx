@@ -87,7 +87,9 @@ export default function Register() {
   return (
     <div className="form-box register">
       <form onSubmit={handleSubmit}>
-        <img src='public/assets/logo.jpg' className="logo" alt="Logo" />
+        <div className="logoRegister">
+        <img src='public/assets/logo.jpg' className="imgRegister" alt="Logo" />
+        </div>
         <h3>SIGN UP</h3>
 
         <div className="mb-3">
