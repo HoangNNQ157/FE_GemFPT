@@ -124,7 +124,7 @@ const Dashboard = () => {
   }, [currentURI]);
 
   return (
-    <Layout style={{ minHeight: "100vh" }}>
+    <Layout style={{ minHeight: "100vh" ,width:"100vw"}}>
       <Sider
         collapsible
         collapsed={collapsed}
