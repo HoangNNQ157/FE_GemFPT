@@ -12,10 +12,13 @@ import ResetPassword from "./component/resetpassword/ResetPassword";
 import Dashboard from "./component/dashboard/dashboard";
 import Category from "./component/category";
 //import "./output.css";
+
 import StaffLayout from "./layouts/StaffLayout";
 import Order from "./pages/staffs/Order";
 import Product from "./pages/staffs/Product";
 import History from "./pages/staffs/History";
+import AdminLayout from "./layoutadmin/adminlayout";
+import Account from "./pages/admin/account";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -35,7 +38,13 @@ const router = createBrowserRouter(
         <Route path="staffProduct" element={<Product />} />
         <Route path="staffHistory" element={<History />} />
       </Route>
+
+      <Route element={<AdminLayout />}>
+      <Route path="adminAccount" element={<Account />} />
+       </Route>
     </Route>
+
+   
   )
 );
 // const router = createBrowserRouter([

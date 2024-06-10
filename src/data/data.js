@@ -31,6 +31,20 @@ export const sideBar = [
     }
 ]
 
+export const sideBarAdmin = [
+    {
+        content: "ACCOUNT",
+        link: "adminAccount",
+        icon: "mdi:account-circle" 
+    },
+    {
+        content: "STATISTICS",
+        link: "adminstatistics",
+        icon: "mdi:chart-line" 
+    },
+];
+
+
 export const expand = [
     {
         content:"MESSAGE",
@@ -100,22 +114,8 @@ export const productData = [
         price:"15.763.000đ",
         quantity:1,
     },
-    {
-        image:jewerl,
-        productName:"18K Italian White Gold Necklace",
-        productId:"0000W000583",
-        price:"15.763.000đ",
-        quantity:1,
-    },
-    {
-        image:jewerl,
-        productName:"18K Italian White Gold Necklace",
-        productId:"0000W000583",
-        price:"15.763.000đ",
-        quantity:1,
-    },
-    
-    
+   
+
 
 ]
 
@@ -143,3 +143,55 @@ export const historyData = [
     }
 ]
 
+export const accountData = [
+    {
+      email: "john.doe@example.com",
+      name: "John Doe",
+      createdDate: "2023-01-15",
+      role: "Admin",
+      status: "Active"
+    },
+    {
+      email: "jane.smith@example.com",
+      name: "Jane Smith",
+      createdDate: "2023-02-10",
+      role: "User",
+      status: "Inactive"
+    },
+    {
+      email: "alice.jones@example.com",
+      name: "Alice Jones",
+      createdDate: "2023-03-20",
+      role: "Moderator",
+      status: "Active"
+    },
+    {
+      email: "bob.brown@example.com",
+      name: "Bob Brown",
+      createdDate: "2023-04-05",
+      role: "User",
+      status: "Active"
+    },
+    {
+      email: "charlie.black@example.com",
+      name: "Charlie Black",
+      createdDate: "2023-05-15",
+      role: "Admin",
+      status: "Inactive"
+    },
+    {
+        email: "hoang@gmail.com",
+        name: "Hoang",
+        createdDate: "2023-01-15",
+        role: "managements",
+        status: "Active"
+      },
+      {
+        email: "hien@example.com",
+        name: "Hien",
+        createdDate: "2023-01-15",
+        role: "Staff",
+        status: "Active"
+      },
+  ];
+  

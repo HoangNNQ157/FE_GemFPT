@@ -1,5 +1,7 @@
 import React from "react";
 import './Table.css';
+import { FaTrashCan } from "react-icons/fa6";
+
 
 export const OrderHeadTable = [
   {
@@ -103,7 +105,45 @@ export const HistoryHeadTable = [
   },
 ]
 
-export default function Table({ headTable, data }) {
+export const AccountHeadTable = [
+  {
+    title: "EMAIL",
+    ID: "email",
+    width: "w-4/12"
+  },
+  {
+    title: "NAME",
+    ID: "name",
+    width: "w-2/12"
+  },
+  {
+    title: "CREATE DATE",
+    ID: "createdDate",
+    width: "w-2/12"
+  },
+  {
+    title: "ROLE",
+    ID: "role",
+    width: "w-2/12"
+  },
+  {
+    title: "STATUS",
+    ID: "status",
+    width: "w-2/12"
+  },
+  {
+    title: "ACTION",
+    ID: "action",
+    format: (data, onDelete) => (
+      <button onClick={() => onDelete(data.email)}><FaTrashCan /></button>
+    ),
+    width: "w-2/12"
+  },
+]
+
+
+
+/* export default function Table({ headTable, data }) {
   return (
     <table className="table-container">
       <thead className="table-header">
@@ -121,6 +161,34 @@ export default function Table({ headTable, data }) {
             {headTable.map((head) => (
               <td key={head.ID} className={`body-cell ${head.width}`}>
                 {head?.format ? head.format(d) : d[head.ID]}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
+ */
+
+export default function Table({ headTable, data, onDelete }) {
+  return (
+    <table className="table-container">
+      <thead className="table-header">
+        <tr>
+          <th className="header-cell">#</th>
+          {headTable.map((head) => (
+            <th key={head.ID} className={`header-cell ${head.width}`}>{head.title}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody className="table-body">
+        {data.map((d, index) => (
+          <tr key={index} className="body-row">
+            <th className="body-cell">{index + 1}</th>
+            {headTable.map((head) => (
+              <td key={head.ID} className={`body-cell ${head.width}`}>
+                {head?.format ? head.format(d, onDelete) : d[head.ID]}
               </td>
             ))}
           </tr>

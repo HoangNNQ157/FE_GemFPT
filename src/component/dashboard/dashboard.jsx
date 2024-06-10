@@ -168,7 +168,7 @@ const Dashboard = () => {
           style={{ margin: "0 16px", display: "flex", flexDirection: "column" }}
         >
           <Breadcrumb>
-            {location.pathname.split("/").map((path, index, array) => (
+            {location.pathname.split("/").map((path, index) => (
               <Breadcrumb.Item key={path}>
                 {index === 0 ? path : <Link to={`/${path}`}>{path}</Link>}
               </Breadcrumb.Item>
