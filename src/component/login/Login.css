@@ -13,9 +13,7 @@ body {
     align-items: center;
 }
 
-.imgLogo {
-    width: 50%; 
-    height: auto;
+
     margin-bottom: -20px;
     margin-top: -50px;
     display: block;
@@ -57,20 +55,11 @@ body {
     margin-top: 5px; /* Ensures a small space between label and input */
 }
 
-.form-item {
-    position: relative;
-    margin-top: -10px;
-    min-height: 80px; /* Adjusted to provide space for error messages */
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* Ensure space for error message */
-}
 
-.icon {
     position: absolute;
+    bottom: 20px;
     right: 10px;
-    bottom: 15px;
-}
+
 
 .password-toggle-icon {
     cursor: pointer;

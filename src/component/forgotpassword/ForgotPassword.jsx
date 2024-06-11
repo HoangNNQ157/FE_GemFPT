@@ -53,8 +53,12 @@ export default function ForgotPassword() {
 
   return (
     <div className="form-box forgot-password">
-      <img src="public/assets/logo.jpg" className="logo" alt="Logo" />
-      <form onSubmit={handleSubmit}>
+
+<div className="logoForgot"> 
+<img src="public/assets/logo.jpg" className="imgForgot" alt="Logo" />
+
+  </div>      
+<form onSubmit={handleSubmit}>
         <h3>Forgot Password</h3>
 
         <div className="mb-3">

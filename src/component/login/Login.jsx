@@ -86,12 +86,15 @@ export default function Login() {
     <>
       <div className="form-box login">
         <div className="logoLogin">
+
           <img src='public/assets/logo.jpg' className="imgLogo" alt="Logo" />
+
         </div>
         <form onSubmit={handleSubmit}>
           <h3>LOGIN</h3>
 
           <div className="mb-3 form-item">
+
             <label className="User">Email</label>
             <input
               type="email"
