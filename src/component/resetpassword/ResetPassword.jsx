@@ -29,6 +29,11 @@ export default function ResetPassword() {
       ...prevState,
       [name]: value,
     }));
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: '',
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -62,6 +67,11 @@ export default function ResetPassword() {
       <form onSubmit={handleSubmit}>
         <h3>Reset Password</h3>
 
+        {/* Invisible element to reserve space for email error message */}
+        <div className="invisible-placeholder">
+          &nbsp;
+        </div>
+
         <div className="mb-3">
           <label className="title">New Password</label>
           <input
@@ -72,9 +82,7 @@ export default function ResetPassword() {
             value={formData.password}
             onChange={handleChange}
           />
-          {errors.password && (
-            <span className="error-message">{errors.password}</span>
-          )}
+          {errors.password && <span className="error-message">{errors.password}</span>}
         </div>
 
         <div className="mb-3">
@@ -87,9 +95,7 @@ export default function ResetPassword() {
             value={formData.confirmPassword}
             onChange={handleChange}
           />
-          {errors.confirmPassword && (
-            <span className="error-message">{errors.confirmPassword}</span>
-          )}
+          {errors.confirmPassword && <span className="error-message">{errors.confirmPassword}</span>}
         </div>
 
         <div className="d-grid">

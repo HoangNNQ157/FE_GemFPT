@@ -71,7 +71,6 @@ export default function Register() {
       } else {
         console.log(error);
         toast.error(error.response?.data || 'Registration failed');
-
       }
     }
   };
@@ -85,10 +84,12 @@ export default function Register() {
   };
 
   return (
-    <div className="form-box register">
+    <div className="form register">
       <form onSubmit={handleSubmit}>
         <div className="logoRegister">
+
         <img src='public/assets/logo.jpg' className="imgRegister" alt="Logo" />
+
         </div>
         <h3>SIGN UP</h3>
 
@@ -103,7 +104,9 @@ export default function Register() {
             onChange={handleChange}
           />
           <FaUser className="icon" />
-          {errors.username && <span className="error-message">{errors.username}</span>}
+          <div className="error-message-container">
+            {errors.username && <span className="error-message">{errors.username}</span>}
+          </div>
         </div>
 
         <div className="mb-3">
@@ -117,7 +120,9 @@ export default function Register() {
             onChange={handleChange}
           />
           <FaEnvelope className="icon" />
-          {errors.email && <span className="error-message">{errors.email}</span>}
+          <div className="error-message-container">
+            {errors.email && <span className="error-message">{errors.email}</span>}
+          </div>
         </div>
 
         <div className="mb-3">
@@ -132,10 +137,12 @@ export default function Register() {
               onChange={handleChange}
             />
             <span className="password-toggle-icon" onClick={togglePasswordVisibility}>
-              {showPassword ? <FaEye /> : <FaEyeSlash  />}
+              {showPassword ? <FaEye /> : <FaEyeSlash />}
             </span>
           </div>
-          {errors.password && <span className="error-message">{errors.password}</span>}
+          <div className="error-message-container">
+            {errors.password && <span className="error-message">{errors.password}</span>}
+          </div>
         </div>
 
         <div className="mb-3">
@@ -150,10 +157,12 @@ export default function Register() {
               onChange={handleChange}
             />
             <span className="password-toggle-icon" onClick={toggleConfirmPasswordVisibility}>
-              {showConfirmPassword ? <FaEye /> : <FaEyeSlash  />}
+              {showConfirmPassword ? <FaEye /> : <FaEyeSlash />}
             </span>
           </div>
-          {errors.confirmPassword && <span className="error-message">{errors.confirmPassword}</span>}
+          <div className="error-message-container">
+            {errors.confirmPassword && <span className="error-message">{errors.confirmPassword}</span>}
+          </div>
         </div>
 
         <div className="d-grid">
@@ -169,7 +178,6 @@ export default function Register() {
     </div>
   );
 }
-
 
 
 // Đăng kí bằng email
@@ -346,3 +354,6 @@ export default function Register() {
   );
 }
  */
+
+
+

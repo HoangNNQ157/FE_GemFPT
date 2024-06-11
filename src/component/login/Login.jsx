@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import * as Yup from 'yup';
 import './Login.css';
-import { FaEnvelope, FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import api from '../../config/axios';
@@ -69,6 +69,7 @@ export default function Login() {
 
       localStorage.setItem("token", user.data.token);
       dispatch(login(user.data));
+      console.log("first",user.data.token)
 
       toast.success('Login with Google Successful');
     } catch (error) {
@@ -85,13 +86,16 @@ export default function Login() {
     <>
       <div className="form-box login">
         <div className="logoLogin">
-        <img src='public/assets/logo.jpg' className="imgLogo" alt="Logo" />
+
+          <img src='public/assets/logo.jpg' className="imgLogo" alt="Logo" />
+
         </div>
         <form onSubmit={handleSubmit}>
           <h3>LOGIN</h3>
 
           <div className="mb-3 form-item">
-            <label className="title">Email</label>
+
+            <label className="User">Email</label>
             <input
               type="email"
               className="form-control"
@@ -100,12 +104,14 @@ export default function Login() {
               value={formData.email}
               onChange={handleChange}
             />
-            <FaEnvelope className="icon" />
-            {errors.email && <span className="error-message">{errors.email}</span>}
+            
+            <span className={`error-message ${errors.email ? '' : 'hidden-error'}`}>
+              {errors.email || 'Email is required'}
+            </span>
           </div>
 
           <div className="mb-3">
-            <label className="title">Password</label>
+            <label className="User">Password</label>
             <div className="password-wrapper">
               <input
                 type={showPassword ? "text" : "password"}
@@ -120,7 +126,9 @@ export default function Login() {
                 {showPassword ? <FaEye /> : <FaEyeSlash />}
               </span>
             </div>
-            {errors.password && <span className="error-message">{errors.password}</span>}
+            <span className={`error-message ${errors.password ? '' : 'hidden-error'}`}>
+              {errors.password || 'Password is required'}
+            </span>
           </div>
           <div className="d-grid">
             <button type="submit" className="btn btn-primary">Login</button>
@@ -144,8 +152,6 @@ export default function Login() {
     </>
   );
 }
-
-
 
 
 // LOGIN BANG SDT 
@@ -296,3 +302,4 @@ export default function Login() {
     </>
   );
 } */
+
