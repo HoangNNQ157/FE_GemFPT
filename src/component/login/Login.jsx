@@ -89,7 +89,9 @@ export default function Login() {
 
   return (
     <>
+
       <div className="form login">
+
         <form onSubmit={handleSubmit}>
           <div className="logoLogin">
             <img src='public/assets/logo.jpg' className="imgLogo" alt="Logo" />
@@ -97,6 +99,7 @@ export default function Login() {
           <h3>LOGIN</h3>
 
           <div className="mb-3 form-item">
+
             <label className="User">Email</label>
             <input
               type="email"

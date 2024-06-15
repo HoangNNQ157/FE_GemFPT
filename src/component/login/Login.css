@@ -17,7 +17,7 @@ body {
   width: 50%;
   height: auto;
   display: block;
-}
+
 
 .form h3 {
   font-size: 30px;
@@ -55,6 +55,7 @@ body {
   margin-bottom: 25px;
   position: relative;
 }
+
 
 .form input[type="email"],
 .form input[type="password"] {
