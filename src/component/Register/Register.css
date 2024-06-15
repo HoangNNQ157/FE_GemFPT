@@ -44,9 +44,10 @@ body {
   border-radius: 8px;
 }
 
-.Actor {
-  font-size: 20px;
+.title {
+  display: flex;
   color: #615c5c;
+  font-weight: 600;
 }
 
 .form .mb-3 {
@@ -85,14 +86,14 @@ body {
   width: 100%;
 }
 
-.error-message {
+.error-message-rg {
   color: red;
   height: 100%;
   display: flex;
   align-items: center;
 }
 
-.btn-primary {
+.brg-primary {
   background-color: #007bff;
   color: #fff;
   margin-top: 10px;

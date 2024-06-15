@@ -53,10 +53,11 @@ export default function ForgotPassword() {
 
   return (
     <div className="form-box forgot-password">
-      <img src="public/assets/logo.jpg" className="logo" alt="Logo" />
+      <div className="logoForgot">
+        <img src="public/assets/logo.jpg" className="imgForgot" alt="Logo" />
+      </div>
       <form onSubmit={handleSubmit}>
         <h3>Forgot Password</h3>
-
         <div className="mb-3">
           <label className="title">Email</label>
           <input
@@ -67,27 +68,21 @@ export default function ForgotPassword() {
             value={formData.email}
             onChange={handleChange}
           />
-          {errors.email && (
-            <span className="error-message">{errors.email}</span>
-          )}
+          <span className={`error-message ${errors.email ? "visible" : ""}`}>
+            {errors.email || "Email is required"}
+          </span>
         </div>
-
         <div className="d-grid">
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="bfg bfg-primary">
             Reset Password
           </button>
         </div>
-        {/* <div className="Login-Link">
-          <p>
-            <Link to="/login">Login</Link>
-          </p>
-        </div> */}
-
         <ToastContainer />
       </form>
     </div>
   );
 }
+
 
 /* import { useState } from "react";
 import * as Yup from "yup";

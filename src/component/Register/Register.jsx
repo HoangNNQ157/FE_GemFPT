@@ -101,9 +101,9 @@ export default function Register() {
             value={formData.username}
             onChange={handleChange}
           />
-          <FaUser className="icon" />
+        
           <div className="error-message-container">
-            {errors.username && <span className="error-message">{errors.username}</span>}
+            {errors.username && <span className="error-message-rg">{errors.username}</span>}
           </div>
         </div>
 
@@ -117,9 +117,9 @@ export default function Register() {
             value={formData.email}
             onChange={handleChange}
           />
-          <FaEnvelope className="icon" />
+   
           <div className="error-message-container">
-            {errors.email && <span className="error-message">{errors.email}</span>}
+            {errors.email && <span className="error-message-rg">{errors.email}</span>}
           </div>
         </div>
 
@@ -139,7 +139,7 @@ export default function Register() {
             </span>
           </div>
           <div className="error-message-container">
-            {errors.password && <span className="error-message">{errors.password}</span>}
+            {errors.password && <span className="error-message-rg">{errors.password}</span>}
           </div>
         </div>
 
@@ -159,12 +159,12 @@ export default function Register() {
             </span>
           </div>
           <div className="error-message-container">
-            {errors.confirmPassword && <span className="error-message">{errors.confirmPassword}</span>}
+            {errors.confirmPassword && <span className="error-message-rg">{errors.confirmPassword}</span>}
           </div>
         </div>
 
         <div className="d-grid">
-          <button type="submit" className="btn btn-primary">Sign up</button>
+          <button type="submit" className="brg brg-primary">Sign up</button>
         </div>
 
         <div className="Login-Link">
@@ -339,7 +339,7 @@ export default function Register() {
         </div>
 
         <div className="d-grid">
-          <button type="submit" className="btn btn-primary">Sign up</button>
+          <button type="submit" className="brg brg-primary">Sign up</button>
         </div>
 
         <div className="Login-Link">
