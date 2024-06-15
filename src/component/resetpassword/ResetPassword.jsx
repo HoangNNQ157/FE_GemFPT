@@ -13,7 +13,7 @@ export default function ResetPassword() {
   });
 
   const [errors, setErrors] = useState({});
-  const { token } = useParams(); 
+  const { token } = useParams();
   const validationSchema = Yup.object({
     password: Yup.string()
       .min(6, "Password must be at least 6 characters long")
@@ -63,7 +63,7 @@ export default function ResetPassword() {
 
   return (
     <div className="form-box reset-password">
-      <img src="public/assets/logo.jpg" className="logo" alt="Logo" />
+      <img src="public/assets/logo.jpg" className="imgReset" alt="Logo" />
       <form onSubmit={handleSubmit}>
         <h3>Reset Password</h3>
 
@@ -82,7 +82,9 @@ export default function ResetPassword() {
             value={formData.password}
             onChange={handleChange}
           />
-          {errors.password && <span className="error-message">{errors.password}</span>}
+          <span className={`error-message-sp ${errors.password ? 'visible' : ''}`}>
+            {errors.password}
+          </span>
         </div>
 
         <div className="mb-3">
@@ -95,11 +97,13 @@ export default function ResetPassword() {
             value={formData.confirmPassword}
             onChange={handleChange}
           />
-          {errors.confirmPassword && <span className="error-message">{errors.confirmPassword}</span>}
+          <span className={`error-message-sp ${errors.confirmPassword ? 'visible' : ''}`}>
+            {errors.confirmPassword}
+          </span>
         </div>
 
         <div className="d-grid">
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="bsp bsp-primary">
             Reset Password
           </button>
         </div>

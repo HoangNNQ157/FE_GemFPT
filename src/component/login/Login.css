@@ -1,140 +1,163 @@
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
 }
 
 .logoLogin {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: -30px;
 }
 
+.imgLogo {
+  width: 50%;
+  height: auto;
+  display: block;
 
-    margin-bottom: -20px;
-    margin-top: -50px;
-    display: block;
+
+.form h3 {
+  font-size: 30px;
+  margin-top: -20px;
+  margin-bottom: -15px;
+  text-align: center;
+  color: deepskyblue;
 }
 
-.form-box h3 {
-    font-size: 30px;
-    margin-top: -20px;
-    margin-bottom: -15px;
-    text-align: center;
-    color: #007bff;
+.form-control {
+  margin-top: 0px !important;
+}
+
+.form {
+  margin-bottom: 0px !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  border-radius: 8px;
 }
 
 .User {
-    color: #615c5c;
-    font-size: 20px;
-    margin-bottom: 5px;
+  display: flex;
+  margin-bottom: 5px;
+  color: #615c5c ;
+  font-weight: 600;
 }
 
-.form-box .mb-3 {
-    margin-top: -20px;
+.form .mb-3 {
+  margin-bottom: 25px;
+  position: relative;
 }
 
-.form-box input[type="email"],
-.form-box input[type="password"] {
-    width: 100%;
-    padding: 8px; /* Adjusted padding for closer spacing */
-    font-size: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    margin-top: 5px; /* Ensures a small space between label and input */
+
+.form input[type="email"],
+.form input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 13px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding-right: 40px; /* Added padding-right to make space for the icon */
 }
 
 .password-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-    margin-top: 5px; /* Ensures a small space between label and input */
+  position: relative;
+  display: flex;
+  align-items: center;
 }
-
-
-    position: absolute;
-    bottom: 20px;
-    right: 10px;
-
 
 .password-toggle-icon {
-    cursor: pointer;
-    position: absolute;
-    bottom: 15px;
-    right: 10px;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
-.error-message {
-    color: red;
-    font-size: 12px;
-    margin-top: 5px; /* Added margin to separate error message from input */
-    visibility: visible; /* Ensure the message is visible when present */
+.error-message-container {
+  height: 20px;
+  position: absolute;
+  bottom: -25px;
+  width: 100%;
 }
 
-.hidden-error {
-    visibility: hidden; /* Keeps space for the error message without displaying it */
-    height: 0;
+.error-message-lg {
+  color: red;
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
 
-.form-box .d-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-}
-
-.btn-primary {
-    background-color: #007bff; 
-    color: #fff; 
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-align: center;
-}
-
-.btn-primary:hover {
-    background-color: #0056b3;
+.blg-primary {
+  background-color: #007bff;
+  color: #fff;
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  width: 100%; /* Ensure the button takes full width */
+  box-sizing: border-box; /* Ensure padding is included in the element's total width */
 }
 
 .login-gg {
-    margin-top: 10px;
+  margin-top: 10px;
+  width: 100%; /* Ensure the container takes full width */
 }
 
 .login-google {
-    background-color: #db4437;
-    color: #fff;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-align: center;
-    width: 100%;
-}
-
-.login-google:hover {
-    background-color: #c23321;
+  background-color: #c71d0d;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  width: 100%; /* Ensure the button takes full width */
+  box-sizing: border-box; /* Ensure padding is included in the element's total width */
 }
 
 .forgot-password {
-    text-align: right;
-    margin-top: 10px;
+  text-align: right;
+  margin-top: 10px;
+  width: 100%; /* Ensure it takes full width to align to the right */
 }
 
 .register-link {
-    text-align: center;
-    margin-top: 10px;
+  text-align: right;
+
+  width: 100%; /* Ensure it takes full width to align to the right */
 }
 
 .register-link a {
-    text-decoration: none;
-    color: #007bff;
+  text-decoration: none;
+  color: #007bff;
 }
 
 .register-link a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

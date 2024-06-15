@@ -30,6 +30,11 @@ export default function Login() {
       ...prevState,
       [name]: value
     }));
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: '',
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -64,7 +69,7 @@ export default function Login() {
 
   const handleLoginWithGoogle = async () => {
     try {
-      const user = await api.post('/login-google');
+      const user = await api.post('/login_google');
       console.log("Login with Google success:", user.data);
 
       localStorage.setItem("token", user.data.token);
@@ -84,13 +89,13 @@ export default function Login() {
 
   return (
     <>
-      <div className="form-box login">
-        <div className="logoLogin">
 
-          <img src='public/assets/logo.jpg' className="imgLogo" alt="Logo" />
+      <div className="form login">
 
-        </div>
         <form onSubmit={handleSubmit}>
+          <div className="logoLogin">
+            <img src='public/assets/logo.jpg' className="imgLogo" alt="Logo" />
+          </div>
           <h3>LOGIN</h3>
 
           <div className="mb-3 form-item">
@@ -104,10 +109,9 @@ export default function Login() {
               value={formData.email}
               onChange={handleChange}
             />
-            
-            <span className={`error-message ${errors.email ? '' : 'hidden-error'}`}>
-              {errors.email || 'Email is required'}
-            </span>
+            <div className="error-message-container">
+              {errors.email && <span className="error-message-lg">{errors.email}</span>}
+            </div>
           </div>
 
           <div className="mb-3">
@@ -121,22 +125,22 @@ export default function Login() {
                 value={formData.password}
                 onChange={handleChange}
               />
-
               <span className="password-toggle-icon" onClick={togglePasswordVisibility}>
                 {showPassword ? <FaEye /> : <FaEyeSlash />}
               </span>
             </div>
-            <span className={`error-message ${errors.password ? '' : 'hidden-error'}`}>
-              {errors.password || 'Password is required'}
-            </span>
+            <div className="error-message-container">
+              {errors.password && <span className="error-message-lg">{errors.password}</span>}
+            </div>
           </div>
+
           <div className="d-grid">
-            <button type="submit" className="btn btn-primary">Login</button>
+            <button type="submit" className="blg blg-primary">Login</button>
           </div>
         </form>
 
         <div className="login-gg">
-          <button type="button" className="btn login-google" onClick={handleLoginWithGoogle}>Login with Google</button>
+          <button type="button" className="login-google" onClick={handleLoginWithGoogle}>Login with Google</button>
         </div>
 
         <p className="forgot-password text-right">
@@ -152,6 +156,7 @@ export default function Login() {
     </>
   );
 }
+
 
 
 // LOGIN BANG SDT 
@@ -281,12 +286,12 @@ export default function Login() {
           {errors.password && <span className="error-message">{errors.password}</span>}
         </div>
         <div className="d-grid">
-          <button type="submit" className="btn btn-primary">Login</button>
+          <button type="submit" className="blg blg-primary">Login</button>
         </div>
       </form>
 
       <div className="login-gg">
-        <button type="button" className="btn login-google" onClick={handleLoginWithGoogle}>Login with Google</button>
+        <button type="button" className="blg login-google" onClick={handleLoginWithGoogle}>Login with Google</button>
       </div>
 
       <p className="forgot-password text-right">
