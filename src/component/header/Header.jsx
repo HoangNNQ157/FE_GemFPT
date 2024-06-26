@@ -20,11 +20,11 @@ export default function Header({ page }) {
               <div>SORT BY</div> 
               <Icon className="icon-down" icon="teenyicons:down-solid" />
             </div>
-            <div className="header-voucher">
-              <div>VOUCHER</div> 
-              <Icon className="icon-down" icon="teenyicons:down-solid" />
+              <div className="header-voucher">
+                <div>VOUCHER</div> 
+                <Icon className="icon-down" icon="teenyicons:down-solid" />
+              </div>
             </div>
-          </div>
         </div>
         <div className="header-right">
           <div className="header-profile">
@@ -32,7 +32,7 @@ export default function Header({ page }) {
               <img src={blankAvatar} className="avatar-img" alt="Avatar" />
             </div>
             <div className="profile-info">
-              <div className="profile-name">KEVIN BRUNO</div>
+              <div className="profile-name">Nguyen Minh Hieu</div>
               <div className="profile-counter">counter : 5</div>
               <div className="profile-role">
                 <span>STAFF</span> 
