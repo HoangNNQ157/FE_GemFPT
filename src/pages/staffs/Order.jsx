@@ -23,7 +23,7 @@ export default function Order() {
             DISCOUNT:
             <div className="w-full border-b"></div>
           </div>
-          <div className="font-light flex mb-3">
+          <div className="font-light flex mb-3">  
             COUPON:
             <div className="w-full border-b"></div>
           </div>
