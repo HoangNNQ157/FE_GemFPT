@@ -60,10 +60,7 @@ export default function Order() {
           <div className="w-1/5 font-light">CUSTOMER NAME:</div>
           <input className="w-4/5 rounded-xl border-2 p-1" />
         </div>
-        <div className="flex items-center">
-          <div className="w-1/5 font-light">PHONE:</div>
-          <input className="w-4/5 rounded-xl border-2 p-1" />
-        </div>
+      
         <hr className="my-3" />
         <div className="grid grid-cols-3 gap-3">
           <div className="font-light uppercase flex items-center"><Icon className="text-xl" icon="material-symbols:person" /> name: nguyễn minh hiếu</div>
