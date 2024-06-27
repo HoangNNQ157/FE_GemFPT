@@ -57,8 +57,8 @@ export default function Order() {
     <div className="flex mt-5">
       <div className="w-4/5 rounded-xl py-1 pl-20 pr-3 mr-3 bg-white">
         <div className="flex items-center mb-1">
-          <div className="w-1/5 font-light">CUSTOMER NAME:</div>
-          <input className="w-4/5 rounded-xl border-2 p-1" />
+          
+          
         </div>
       
         <hr className="my-3" />
