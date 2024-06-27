@@ -20,10 +20,7 @@ export default function Header({ page }) {
               <div>SORT BY</div> 
               <Icon className="icon-down" icon="teenyicons:down-solid" />
             </div>
-              <div className="header-voucher">
-                <div>VOUCHER</div> 
-                <Icon className="icon-down" icon="teenyicons:down-solid" />
-              </div>
+             
             </div>
         </div>
         <div className="header-right">
