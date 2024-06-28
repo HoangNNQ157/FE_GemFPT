@@ -89,3 +89,37 @@
   .w-full {
     width: 100%;
   }
+  .container {
+    background-color: white;
+    min-height: 500px;
+    padding: 20px;
+  }
+  
+  .button-group {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .cancel-button {
+    background-color: #4a5568; /* neutral-600 */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    margin-right: 10px;
+  }
+  
+  .print-button {
+    background-color: #63b3ed; /* blue-400 */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+  }
+  
+  .pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
