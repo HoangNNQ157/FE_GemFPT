@@ -7,21 +7,26 @@ import './account.css';
 const ITEMS_PER_PAGE = 5; 
 
 export default function Account() {
+  const [accounts, setAccounts] = useState(accountData);
   const [currentPage, setCurrentPage] = useState(1);
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
-  const displayedAccounts = accountData.slice(startIndex, endIndex);
+  const displayedAccounts = accounts.slice(startIndex, endIndex);
 
-  const totalPages = Math.ceil(accountData.length / ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(accounts.length / ITEMS_PER_PAGE);
 
   const nextPage = () => {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
   };
 
-
   const prevPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
+
+  const deleteAccount = (id) => {
+    setAccounts(accounts.filter(account => account.id !== id));
+    setCurrentPage(1); // Optional: Reset to first page after deletion
   };
 
   return (
@@ -29,13 +34,13 @@ export default function Account() {
       <Header page={"ACCOUNT"} />
 
       <div className="container">
-        <Table headTable={AccountHeadTable} data={displayedAccounts} />
+        <Table headTable={AccountHeadTable} data={displayedAccounts} deleteAccount={deleteAccount} />
       </div>
 
-      <div className="pagination">
-        <button onClick={prevPage} disabled={currentPage === 1}>Previous </button>
+      <div className="pagination">  
+        <button onClick={prevPage} disabled={currentPage === 1}>Previous</button>
         <span>{currentPage} / {totalPages}</span>
-        <button onClick={nextPage} disabled={currentPage === totalPages}> Next</button>
+        <button onClick={nextPage} disabled={currentPage === totalPages}>Next</button>
       </div>
     </div>
   );
