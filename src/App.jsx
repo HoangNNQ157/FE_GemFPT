@@ -11,6 +11,7 @@ import ForgotPassword from "./component/forgotpassword/ForgotPassword";
 import ResetPassword from "./component/resetpassword/ResetPassword";
 import Dashboard from "./component/dashboard/dashboard";
 import Category from "./component/category";
+
 //import "./output.css";
 
 import StaffLayout from "./layouts/StaffLayout";
@@ -19,6 +20,7 @@ import Product from "./pages/staffs/Product";
 import History from "./pages/staffs/History";
 import AdminLayout from "./layoutadmin/adminlayout";
 import Account from "./pages/admin/account";
+import Profile from "./component/profile/hoso";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,6 +33,7 @@ const router = createBrowserRouter(
 
       <Route path="dashboard" element={<Dashboard/>}>
         <Route path="category" element={<Category />}/>
+        <Route path="profile" element={<Profile />} />
       </Route>
 
       <Route element={<StaffLayout />}>
