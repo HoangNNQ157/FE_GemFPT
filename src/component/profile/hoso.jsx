@@ -72,7 +72,7 @@ const Profile = () => {
     localStorage.setItem("employees", JSON.stringify(combinedData));
   };
 
-  useEffect(() => {
+  useEffect((   ) => {
     fetchData();
   }, []);
 
