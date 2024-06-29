@@ -188,7 +188,7 @@ const Dashboard = () => {
           </div>
         </Content>
         <Footer style={{ textAlign: "center", backgroundColor: "#E3F2EE" }}>
-          DATSAN79 ©{new Date().getFullYear()} Created by DEMI
+          Bán hàng trang sức tại cửa hàng ©{new Date().getFullYear()} Created by 5 thằng ngu
         </Footer>
       </Layout>
     </Layout>
