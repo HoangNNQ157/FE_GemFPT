@@ -69,7 +69,7 @@ const Dashboard = () => {
     if (role === "staff") {
       setItems([
         getItem("Category", "category"),
-        getItem("Hồ sơ", "profile", <ProfileOutlined />),
+        getItem("Hồ sơ", "profile", <Profile/>),
         getItem("Club", "clubs", <HeartOutlined />, [
           getItem("Time Slot", "time-slot"),
           getItem("Promotion", "promotion"),
