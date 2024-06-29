@@ -317,7 +317,11 @@ function Category() {
         )}
       </Modal>
 
-      <Table dataSource={data} columns={columns} />
+      <Table 
+        dataSource={data} 
+        columns={columns} 
+        pagination={{ pageSize: 5 }} 
+      />
     </div>
   );
 }
