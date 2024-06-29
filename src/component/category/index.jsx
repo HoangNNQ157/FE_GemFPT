@@ -1,7 +1,6 @@
 import { Button, Form, Input, Modal, Table } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { CgSlack } from "react-icons/cg";
 
 function Category() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,46 +22,31 @@ function Category() {
     setData([...data, response.data]);
     console.log(response.data);
     setIsModalOpen(false);
-    //add xong render lai man hinh data moi nhat thi state phai thay doi
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
-  const dataSource = [
-    {
-      key: "1",
-      name: "Mike",
-      age: 32,
-      address: "10 Downing Street",
-    },
-    {
-      key: "2",
-      name: "John",
-      age: 42,
-      address: "10 Downing Street",
-    },
-  ];
+
   const [data, setData] = useState([]);
   const fetchData = async () => {
     const response = await axios.get(
       "https://665d6f09e88051d604068e77.mockapi.io/category"
     );
-
     console.log(response.data);
     setData(response.data);
   };
-  // chay moi khi load trong web ,chạy 1 lần duy nhất
+
   useEffect(() => {
     fetchData();
   }, []);
   
   const handleDelete = async (values) => {
     console.log(values);
-    const response = await axios.delete(
+    await axios.delete(
       `https://665d6f09e88051d604068e77.mockapi.io/category/${values.id}`
     );
-    setData(data.filter((data) => data.id != values.id));
+    setData(data.filter((data) => data.id !== values.id));
   };
 
   const columns = [
@@ -74,7 +58,42 @@ function Category() {
     {
       title: "Category Name",
       dataIndex: "categoryName",
-      key: "category name",
+      key: "categoryName",
+    },
+    {
+      title: "Image URL",
+      dataIndex: "imageURL",
+      key: "imageURL",
+    },
+    {
+      title: "Product Name",
+      dataIndex: "productName",
+      key: "productName",
+    },
+    {
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
+    },
+    {
+      title: "Pricing Ratio",
+      dataIndex: "pricingRatio",
+      key: "pricingRatio",
+    },
+    {
+      title: "Metal",
+      dataIndex: "metal",
+      key: "metal",
+    },
+    {
+      title: "Shape",
+      dataIndex: "shape",
+      key: "shape",
+    },
+    {
+      title: "Size",
+      dataIndex: "size",
+      key: "size",
     },
     {
       title: "Action",
@@ -85,14 +104,15 @@ function Category() {
       ),
     },
   ];
+
   return (
     <div>
       <Button type="primary" onClick={showModal}>
-        Add New category
+        Add New Category
       </Button>
       <Modal
         footer={false}
-        title="Basic Modal"
+        title="Add New Category"
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
@@ -116,12 +136,103 @@ function Category() {
           autoComplete="off"
         >
           <Form.Item
-            label="Category name"
+            label="Category Name"
             name="categoryName"
             rules={[
               {
                 required: true,
-                message: "Please input your category name!",
+                message: "Please input the category name!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          
+          <Form.Item
+            label="Image URL"
+            name="imageURL"
+            rules={[
+              {
+                required: true,
+                message: "Please input the image URL!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          
+          <Form.Item
+            label="Product Name"
+            name="productName"
+            rules={[
+              {
+                required: true,
+                message: "Please input the product name!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="Description"
+            name="description"
+            rules={[
+              {
+                required: true,
+                message: "Please input the description!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="Pricing Ratio"
+            name="pricingRatio"
+            rules={[
+              {
+                required: true,
+                message: "Please input the pricing ratio!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="Metal"
+            name="metal"
+            rules={[
+              {
+                required: true,
+                message: "Please input the metal type!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="Shape"
+            name="shape"
+            rules={[
+              {
+                required: true,
+                message: "Please input the shape!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="Size"
+            name="size"
+            rules={[
+              {
+                required: true,
+                message: "Please input the size!",
               },
             ]}
           >
