@@ -1,6 +1,7 @@
-import { Button, Form, Input, Modal, Table } from "antd";
+import { Button, Form, Input, Modal, Table, Space } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
 function Category() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -122,14 +123,14 @@ function Category() {
     {
       title: "Action",
       render: (record) => (
-        <>
-          <Button onClick={() => handleUpdate(record)} type="primary">
+        <Space size="middle">
+          <Button type="primary" icon={<EditOutlined />} onClick={() => handleUpdate(record)}>
             Update
           </Button>
-          <Button onClick={() => handleDelete(record)} danger type="primary" style={{ marginLeft: 8 }}>
+          <Button type="primary" danger icon={<DeleteOutlined />} onClick={() => handleDelete(record)}>
             Delete
           </Button>
-        </>
+        </Space>
       ),
     },
   ];
@@ -281,7 +282,7 @@ function Category() {
           </Form.Item>
         </Form>
       </Modal>
-      <Table dataSource={data} columns={columns} />;
+      <Table dataSource={data} columns={columns} />
     </div>
   );
 }
