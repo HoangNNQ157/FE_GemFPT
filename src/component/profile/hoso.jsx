@@ -10,7 +10,6 @@ const Profile = () => {
   const [data, setData] = useState([]);
   const [form] = Form.useForm();
 
-  
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -32,13 +31,17 @@ const Profile = () => {
         `https://665d6f09e88051d604068e77.mockapi.io/employees/${currentRecord.id}`,
         values
       );
-      setData(data.map((item) => (item.id === currentRecord.id ? response.data : item)));
+      const updatedData = data.map((item) => (item.id === currentRecord.id ? response.data : item));
+      setData(updatedData);
+      localStorage.setItem("employees", JSON.stringify(updatedData));
     } else {
       const response = await axios.post(
         "https://665d6f09e88051d604068e77.mockapi.io/employees",
         values
       );
-      setData([...data, response.data]);
+      const newData = [...data, response.data];
+      setData(newData);
+      localStorage.setItem("employees", JSON.stringify(newData));
     }
     setIsModalOpen(false);
     setIsEdit(false);
@@ -51,10 +54,14 @@ const Profile = () => {
   };
 
   const fetchData = async () => {
+    const localData = JSON.parse(localStorage.getItem("employees"));
     const response = await axios.get(
       "https://665d6f09e88051d604068e77.mockapi.io/employees"
     );
-    setData(response.data);
+    const fetchedData = response.data;
+    const combinedData = localData ? [...fetchedData, ...localData] : fetchedData;
+    setData(combinedData);
+    localStorage.setItem("employees", JSON.stringify(combinedData));
   };
 
   useEffect(() => {
@@ -65,7 +72,9 @@ const Profile = () => {
     await axios.delete(
       `https://665d6f09e88051d604068e77.mockapi.io/employees/${record.id}`
     );
-    setData(data.filter((item) => item.id !== record.id));
+    const updatedData = data.filter((item) => item.id !== record.id);
+    setData(updatedData);
+    localStorage.setItem("employees", JSON.stringify(updatedData));
   };
 
   const handleUpdate = (record) => {
@@ -114,11 +123,11 @@ const Profile = () => {
   return (
     <div>
       <Button type="primary" onClick={showModal}>
-        Add New Employee
+        Add Staff
       </Button>
       <Modal
         footer={false}
-        title={isEdit ? "Update Employee" : "Add New Employee"}
+        title={isEdit ? "Update Staff" : "Add Staff"}
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
