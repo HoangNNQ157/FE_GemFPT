@@ -1,10 +1,11 @@
-import { Button, Form, Input, Modal, Table, Space } from "antd";
+import { Button, Form, Input, Modal, Table, Space, Image } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
 
 function Category() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [currentRecord, setCurrentRecord] = useState(null);
   const [form] = Form.useForm();
@@ -13,12 +14,19 @@ function Category() {
     setIsModalOpen(true);
   };
 
+  const showViewModal = (record) => {
+    setCurrentRecord(record);
+    setIsViewModalOpen(true);
+  };
+
   const handleOk = () => {
     setIsModalOpen(false);
+    setIsViewModalOpen(false);
   };
 
   const handleCancel = () => {
     setIsModalOpen(false);
+    setIsViewModalOpen(false);
     setIsEdit(false);
     setCurrentRecord(null);
     form.resetFields();
@@ -129,6 +137,9 @@ function Category() {
           </Button>
           <Button type="primary" danger icon={<DeleteOutlined />} onClick={() => handleDelete(record)}>
             Delete
+          </Button>
+          <Button type="default" icon={<EyeOutlined />} onClick={() => showViewModal(record)}>
+            View
           </Button>
         </Space>
       ),
@@ -282,6 +293,30 @@ function Category() {
           </Form.Item>
         </Form>
       </Modal>
+
+      <Modal
+        title="View Category"
+        open={isViewModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        footer={null}
+      >
+        {currentRecord && (
+          <>
+            <p><strong>ID:</strong> {currentRecord.id}</p>
+            <p><strong>Category Name:</strong> {currentRecord.categoryName}</p>
+            <p><strong>Product Name:</strong> {currentRecord.productName}</p>
+            <p><strong>Description:</strong> {currentRecord.description}</p>
+            <p><strong>Pricing Ratio:</strong> {currentRecord.pricingRatio}</p>
+            <p><strong>Metal:</strong> {currentRecord.metal}</p>
+            <p><strong>Shape:</strong> {currentRecord.shape}</p>
+            <p><strong>Size:</strong> {currentRecord.size}</p>
+            <p><strong>Image:</strong></p>
+            <Image width={200} src={currentRecord.imageURL} />
+          </>
+        )}
+      </Modal>
+
       <Table dataSource={data} columns={columns} />
     </div>
   );
