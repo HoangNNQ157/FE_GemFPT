@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Button, Form, Input, Modal, Table, Space } from "antd";
+import { Button, Form, Input, Modal, Table, Space, Upload, Image } from "antd";
+import { UploadOutlined, EditOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import axios from "axios";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 const Profile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [currentRecord, setCurrentRecord] = useState(null);
   const [data, setData] = useState([]);
@@ -14,12 +15,19 @@ const Profile = () => {
     setIsModalOpen(true);
   };
 
+  const showViewModal = (record) => {
+    setCurrentRecord(record);
+    setIsViewModalOpen(true);
+  };
+
   const handleOk = () => {
     setIsModalOpen(false);
+    setIsViewModalOpen(false);
   };
 
   const handleCancel = () => {
     setIsModalOpen(false);
+    setIsViewModalOpen(false);
     setIsEdit(false);
     setCurrentRecord(null);
     form.resetFields();
@@ -84,6 +92,17 @@ const Profile = () => {
     showModal();
   };
 
+  const handleUpload = ({ fileList }) => {
+    if (fileList.length > 0) {
+      const file = fileList[0].originFileObj;
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        form.setFieldsValue({ image: reader.result });
+      };
+    }
+  };
+
   const columns = [
     {
       title: "ID",
@@ -106,6 +125,12 @@ const Profile = () => {
       key: "address",
     },
     {
+      title: "Image",
+      dataIndex: "image",
+      key: "image",
+      render: (text) => <Image width={50} src={text} />,
+    },
+    {
       title: "Action",
       render: (record) => (
         <Space size="middle">
@@ -114,6 +139,9 @@ const Profile = () => {
           </Button>
           <Button type="primary" danger icon={<DeleteOutlined />} onClick={() => handleDelete(record)}>
             Delete
+          </Button>
+          <Button type="default" icon={<EyeOutlined />} onClick={() => showViewModal(record)}>
+            View
           </Button>
         </Space>
       ),
@@ -191,6 +219,26 @@ const Profile = () => {
           </Form.Item>
 
           <Form.Item
+            label="Image"
+            name="image"
+            rules={[
+              {
+                required: true,
+                message: "Please upload an image!",
+              },
+            ]}
+          >
+            <Upload
+              listType="picture"
+              maxCount={1}
+              beforeUpload={() => false}
+              onChange={handleUpload}
+            >
+              <Button icon={<UploadOutlined />}>Click to upload</Button>
+            </Upload>
+          </Form.Item>
+
+          <Form.Item
             wrapperCol={{
               offset: 8,
               span: 16,
@@ -202,6 +250,26 @@ const Profile = () => {
           </Form.Item>
         </Form>
       </Modal>
+
+      <Modal
+        title="View Staff"
+        open={isViewModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        footer={null}
+      >
+        {currentRecord && (
+          <>
+            <p><strong>ID:</strong> {currentRecord.id}</p>
+            <p><strong>Email:</strong> {currentRecord.email}</p>
+            <p><strong>Password:</strong> {currentRecord.password}</p>
+            <p><strong>Address:</strong> {currentRecord.address}</p>
+            <p><strong>Image:</strong></p>
+            <Image width={200} src={currentRecord.image} />
+          </>
+        )}
+      </Modal>
+
       <Table dataSource={data} columns={columns} />
     </div>
   );
