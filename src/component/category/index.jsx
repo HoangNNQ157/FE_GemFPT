@@ -4,24 +4,43 @@ import React, { useEffect, useState } from "react";
 
 function Category() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [currentRecord, setCurrentRecord] = useState(null);
+  const [form] = Form.useForm();
+
   const showModal = () => {
     setIsModalOpen(true);
   };
+
   const handleOk = () => {
     setIsModalOpen(false);
   };
+
   const handleCancel = () => {
     setIsModalOpen(false);
+    setIsEdit(false);
+    setCurrentRecord(null);
+    form.resetFields();
   };
+
   const onFinish = async (values) => {
-    console.log("Success:", values);
-    const response = await axios.post(
-      "https://665d6f09e88051d604068e77.mockapi.io/category",
-      values
-    );
-    setData([...data, response.data]);
-    console.log(response.data);
+    if (isEdit) {
+      const response = await axios.put(
+        `https://665d6f09e88051d604068e77.mockapi.io/category/${currentRecord.id}`,
+        values
+      );
+      setData(data.map((item) => (item.id === currentRecord.id ? response.data : item)));
+    } else {
+      const response = await axios.post(
+        "https://665d6f09e88051d604068e77.mockapi.io/category",
+        values
+      );
+      setData([...data, response.data]);
+    }
     setIsModalOpen(false);
+    setIsEdit(false);
+    setCurrentRecord(null);
+    form.resetFields();
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -33,20 +52,25 @@ function Category() {
     const response = await axios.get(
       "https://665d6f09e88051d604068e77.mockapi.io/category"
     );
-    console.log(response.data);
     setData(response.data);
   };
 
   useEffect(() => {
     fetchData();
   }, []);
-  
-  const handleDelete = async (values) => {
-    console.log(values);
+
+  const handleDelete = async (record) => {
     await axios.delete(
-      `https://665d6f09e88051d604068e77.mockapi.io/category/${values.id}`
+      `https://665d6f09e88051d604068e77.mockapi.io/category/${record.id}`
     );
-    setData(data.filter((data) => data.id !== values.id));
+    setData(data.filter((item) => item.id !== record.id));
+  };
+
+  const handleUpdate = (record) => {
+    setIsEdit(true);
+    setCurrentRecord(record);
+    form.setFieldsValue(record);
+    showModal();
   };
 
   const columns = [
@@ -97,10 +121,15 @@ function Category() {
     },
     {
       title: "Action",
-      render: (values) => (
-        <Button onClick={() => handleDelete(values)} danger type="primary">
-          Delete
-        </Button>
+      render: (record) => (
+        <>
+          <Button onClick={() => handleUpdate(record)} type="primary">
+            Update
+          </Button>
+          <Button onClick={() => handleDelete(record)} danger type="primary" style={{ marginLeft: 8 }}>
+            Delete
+          </Button>
+        </>
       ),
     },
   ];
@@ -112,12 +141,13 @@ function Category() {
       </Button>
       <Modal
         footer={false}
-        title="Add New Category"
+        title={isEdit ? "Update Category" : "Add New Category"}
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
       >
         <Form
+          form={form}
           name="basic"
           labelCol={{
             span: 8,
@@ -246,7 +276,7 @@ function Category() {
             }}
           >
             <Button type="primary" htmlType="submit">
-              Submit
+              {isEdit ? "Update" : "Submit"}
             </Button>
           </Form.Item>
         </Form>
