@@ -214,7 +214,57 @@ export const historyData = [
         createdDate: "23/05/2023",
         customer: "nguyễn minh hiếu",
         total: "65.082.000Đ"
+    },
+    {
+        product: "14K Yellow White Diamond Pendant",
+        orderId: "khisao45u8",
+        createdDate: "23/05/2023",
+        customer: "nguyễn minh hiếu",
+        total: "65.082.000Đ"
+    },
+    {
+        product: "14K Yellow White Diamond Pendant",
+        orderId: "khisao45u8",
+        createdDate: "23/05/2023",
+        customer: "nguyễn minh hiếu",
+        total: "65.082.000Đ"
+    },
+    {
+        product: "14K Yellow White Diamond Pendant",
+        orderId: "khisao45u8",
+        createdDate: "23/05/2023",
+        customer: "nguyễn minh hiếu",
+        total: "65.082.000Đ"
+    },
+    {
+        product: "14K Yellow White Diamond Pendant",
+        orderId: "khisao45u8",
+        createdDate: "23/05/2023",
+        customer: "nguyễn minh hiếu",
+        total: "65.082.000Đ"
+    },
+    {
+        product: "14K Yellow White Diamond Pendant",
+        orderId: "khisao45u8",
+        createdDate: "23/05/2023",
+        customer: "nguyễn minh hiếu",
+        total: "65.082.000Đ"
+    },
+    {
+        product: "14K Yellow White Diamond Pendant",
+        orderId: "khisao45u8",
+        createdDate: "23/05/2023",
+        customer: "nguyễn minh hiếu",
+        total: "65.082.000Đ"
+    },
+    {
+        product: "14K Yellow White Diamond Pendant",
+        orderId: "khisao45u8",
+        createdDate: "23/05/2023",
+        customer: "nguyễn minh hiếu",
+        total: "65.082.000Đ"
     }
+    
 ]
 
 export const accountData = [
