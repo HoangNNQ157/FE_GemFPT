@@ -34,6 +34,14 @@ export const OrderHeadTable = [
     ID: "total",
     width: "w-2/12"
   },
+  {
+    title: "",
+    ID: "",
+    format: (data, onDelete) => (
+      <button onClick={() => onDelete(data.email)}><FaTrashCan /></button>
+    ),
+    
+  }
 ];
 
 export const ProductHeadTable = [
@@ -68,6 +76,14 @@ export const ProductHeadTable = [
     title: "PRICE",
     ID: 'price',
     width: "w-2/12"
+  },
+  {
+    title: "",
+    ID: "",
+    format: (data, onDelete) => (
+      <button onClick={() => onDelete(data.email)}><FaTrashCan /></button>
+    ),
+    
   }
 ]
 
@@ -102,7 +118,16 @@ export const HistoryHeadTable = [
     title: "",
     ID: "",
     format: (data) => <input type="checkbox" />
+    
   },
+  {
+    title: "",
+    ID: "",
+    format: (data, onDelete) => (
+      <button onClick={() => onDelete(data.email)}><FaTrashCan /></button>
+    ),
+    
+  }
 ]
 
 export const AccountHeadTable = [
