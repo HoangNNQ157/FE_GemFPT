@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal, Table, Space, Image } from "antd";
+import { Button, Form, Input, Modal, Table, Space, Image, Tooltip } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { EditOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
@@ -82,6 +82,10 @@ function Category() {
     showModal();
   };
 
+  const truncate = (str, n) => {
+    return str.length > n ? str.substr(0, n - 1) + "..." : str;
+  };
+
   const columns = [
     {
       title: "ID",
@@ -107,6 +111,11 @@ function Category() {
       title: "Description",
       dataIndex: "description",
       key: "description",
+      render: (text) => (
+        <Tooltip title={text}>
+          {truncate(text, 50)}
+        </Tooltip>
+      ),
     },
     {
       title: "Pricing Ratio",
