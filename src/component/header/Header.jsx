@@ -27,9 +27,8 @@ export default function Header({ page }) {
               <Icon className="icon-down" icon="teenyicons:down-solid" />
               {sortDropdownVisible && (
                 <div className="sort-dropdown">
-                  <div className="sort-option">Product</div>
-                  <div className="sort-option">ID</div>
-                  <div className="sort-option">Name</div>
+                  <div className="sort-option">Ascending</div>
+                  <div className="sort-option">Decrease</div>
                 </div>
               )}
             </div>
