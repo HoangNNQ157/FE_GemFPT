@@ -3,6 +3,7 @@ import './Table.css';
 import { FaTrashCan } from "react-icons/fa6";
 
 
+
 export const OrderHeadTable = [
   {
     title: "IMAGE",
