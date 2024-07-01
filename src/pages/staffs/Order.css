@@ -1,14 +1,20 @@
-.table-container {
-  width: 80%;
-  margin-right: 0.75rem;
-  background-color: white;
-  min-height: 500px;
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.table-section {
+  width: 75%;
+  margin-right: 1rem;
+}
+
+.summary-section {
+  width: 25%;
 }
 
 .summary-container {
-  width: 20%;
   border-radius: 1rem;
-  padding: 0.5rem;
+  padding: 1rem;
   background-color: white;
   display: flex;
   flex-direction: column;
