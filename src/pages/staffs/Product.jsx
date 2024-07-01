@@ -30,25 +30,17 @@ export default function Product() {
   return (
     <div>
       <Header page={"PRODUCT"} />
-
-      <div className="mr-3 bg-white min-h-[500px]">
+      <div className="product-container">
         <Table headTable={ProductHeadTable} data={currentData} />
-        <div className="flex items-center justify-center text-xl">
+        <div className="pagination">
           <Icon icon="teenyicons:left-solid" onClick={handlePrevPage} />
-          <span className="mx-5">{currentPage} OF {totalPages}</span>
+          <span>{currentPage} OF {totalPages}</span>
           <Icon icon="teenyicons:right-solid" onClick={handleNextPage} />
         </div>
       </div>
-
-      <div className="flex mt-5 justify-center">
-        <div className="flex mt-5 justify-center">
-          <button className="px-10 py-3 rounded-lg bg-neutral-600 text-white mr-3 flex items-center">
-            CANCEL
-          </button>
-          <button className="px-7 py-3 rounded-lg bg-blue-400 text-white">
-            ADD TO ORDER
-          </button>
-        </div>
+      <div className="button-container">
+        <button className="cancel-button">CANCEL</button>
+        <button className="add-button">ADD TO ORDER</button>
       </div>
     </div>
   );
