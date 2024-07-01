@@ -9,42 +9,44 @@ export default function Order() {
   return (
     <div>
       <Header page={"ORDER"} />
-      <div className="flex">
-        <div className="table-container">
+      <div className="flex-container">
+        <div className="table-section">
           <Table headTable={OrderHeadTable} data={orderData} />
         </div>
-        <div className="summary-container">
-          <div>
-            <div className="summary-text">
-              TOTAL OF ORDER: <span className="summary-amount">4</span>
+        <div className="summary-section">
+          <div className="summary-container">
+            <div>
+              <div className="summary-text">
+                TOTAL OF ORDER: <span className="summary-amount">4</span>
+              </div>
+              <div className="summary-amount">63.052.000Đ</div>
+              <div className="summary-detail">
+                DISCOUNT:
+                <div className="border-line"></div>
+              </div>
+              <div className="summary-detail">
+                COUPON:
+                <div className="border-line"></div>
+              </div>
+              <div className="summary-label">GUEST NEED TO PAY :</div>
+              <div className="summary-amount-pay">63.052.000Đ</div>
             </div>
-            <div className="summary-amount">63.052.000Đ</div>
-            <div className="summary-detail">
-              DISCOUNT:
-              <div className="border-line"></div>
-            </div>
-            <div className="summary-detail">
-              COUPON:
-              <div className="border-line"></div>
-            </div>
-            <div className="summary-label">GUEST NEED TO PAY :</div>
-            <div className="summary-amount-pay">63.052.000Đ</div>
-          </div>
-          <div>
-            <div className="summary-payment">
-              CASH:
-              <div className="border-line"></div>
-            </div>
-            <div className="summary-payment">
-              CARD:
-              <div className="border-line"></div>
-            </div>
-            <div className="payment-other">OTHER FORMS TO PAYMENT</div>
-            <div className="summary-payment-label">PAY BACK TO GUEST</div>
-            <div className="payment-amount">63.052.000Đ</div>
-            <div className="summary-payment">
-              NOTE:
-              <div className="border-line"></div>
+            <div>
+              <div className="summary-payment">
+                CASH:
+                <div className="border-line"></div>
+              </div>
+              <div className="summary-payment">
+                CARD:
+                <div className="border-line"></div>
+              </div>
+              <div className="payment-other">OTHER FORMS TO PAYMENT</div>
+              <div className="summary-payment-label">PAY BACK TO GUEST</div>
+              <div className="payment-amount">63.052.000Đ</div>
+              <div className="summary-payment">
+                NOTE:
+                <div className="border-line"></div>
+              </div>
             </div>
           </div>
         </div>
