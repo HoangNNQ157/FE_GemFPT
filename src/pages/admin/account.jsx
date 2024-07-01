@@ -4,7 +4,7 @@ import { accountData } from '../../data/data';
 import Header from '../../component/header/Header';
 import './account.css';
 
-const ITEMS_PER_PAGE = 5; 
+const ITEMS_PER_PAGE = 5;
 
 export default function Account() {
   const [accounts, setAccounts] = useState(accountData);
@@ -34,10 +34,15 @@ export default function Account() {
       <Header page={"ACCOUNT"} />
 
       <div className="container">
-        <Table headTable={AccountHeadTable} data={displayedAccounts} deleteAccount={deleteAccount} />
+        <div className="table-container">
+          <Table headTable={AccountHeadTable} data={displayedAccounts} deleteAccount={deleteAccount} />
+        </div>
+        <div className="add-account-form">
+          {/* Add account form content goes here */}
+        </div>
       </div>
 
-      <div className="pagination">  
+      <div className="pagination">
         <button onClick={prevPage} disabled={currentPage === 1}>Previous</button>
         <span>{currentPage} / {totalPages}</span>
         <button onClick={nextPage} disabled={currentPage === totalPages}>Next</button>
