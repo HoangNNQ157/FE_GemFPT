@@ -35,19 +35,15 @@ export default function History() {
         <Table headTable={HistoryHeadTable} data={currentData} />
       </div>
 
-      <div className="pagination-controls flex items-center justify-center text-xl mt-3">
+      <div className="pagination-controls">
         <Icon icon="teenyicons:left-solid" onClick={handlePrevPage} />
-        <span className="mx-5">{currentPage} OF {totalPages}</span>
+        <span className="page-indicator">{currentPage} OF {totalPages}</span>
         <Icon icon="teenyicons:right-solid" onClick={handleNextPage} />
       </div>
 
-      <div className="button-group flex justify-center mt-5">
-        <button className="cancel-button px-10 py-3 rounded-lg bg-neutral-600 text-white mr-3 flex items-center">
-          CANCEL
-        </button>
-        <button className="print-button px-7 py-3 rounded-lg bg-blue-400 text-white">
-          PRINT
-        </button>
+      <div className="button-group">
+        <button className="cancel-button">CANCEL</button>
+        <button className="print-button">PRINT</button>
       </div>
     </div>
   );
