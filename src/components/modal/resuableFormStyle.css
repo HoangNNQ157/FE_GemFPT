@@ -1,0 +1,12 @@
+.customer__info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-top: 12px;
+    border-top: 1px solid #333;
+}
+.customer__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
