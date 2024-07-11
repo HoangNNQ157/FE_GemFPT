@@ -1,0 +1,32 @@
+.revenue__container {
+    padding: 20px;
+}
+.title {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+.chart__title {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0;
+    margin-bottom: 20px;
+}
+.recenue__chart {
+    background: #f4f5f9;
+    padding: 20px;
+    border-radius: 6px;
+    border: 2px dashed #999;
+    width: 100%;
+}
+.revenua__denamic {
+    margin: 10px 0;
+}
+.revenue__btn-wrapper {
+    display: flex;
+    align-items: center;
+    margin: 10px 8px;
+    justify-content: flex-end;
+    gap: 10px;
+}
