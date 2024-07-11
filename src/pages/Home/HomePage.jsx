@@ -19,8 +19,9 @@ const HomePage = () => {
     const userData = useSelector((state) => state.user);
     const navigator = useNavigate();
     const adminLinks = [
+        { path: "/adminRevenue", label: "Admin Dasboard" },
         { path: "/adminAccount", label: "Admin Account" },
-        { path: "/adminCustomer", label: "Admin Customer" },
+        { path: "/customer", label: "Admin Customer" },
         { path: "/adminMetal", label: "Admin Metal" },
     ];
 
@@ -29,11 +30,15 @@ const HomePage = () => {
         { path: "/managerPromotion", label: "Manager Promotion" },
         { path: "/manager-stall", label: "Manager Stall" },
         { path: "/manager-discount", label: "Manager Discount" },
+        { path: "/manager-customer", label: "Manager Customer" },
     ];
 
     const staffLinks = [
         { path: "/staff-order", label: "Staff Order" },
         { path: "/staff-product", label: "Staff Product" },
+        { path: "/staff-customer", label: "Staff Customer" },
+        { path: "/staff-buy-back", label: "Staff buy back" },
+        { path: "/staff-bill", label: "Staff bill" },
     ];
 
     const getLinks = () => {

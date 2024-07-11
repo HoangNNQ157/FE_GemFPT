@@ -101,7 +101,7 @@ const TableStall = () => {
             setVisible(false);
         }
     };
-    const handleChange = async (value) => {
+    const handleChange = (value) => {
         setSearchCustomer(value);
     };
     useEffect(() => {
