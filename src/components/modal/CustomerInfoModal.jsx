@@ -8,6 +8,7 @@ import {
 import "./resuableFormStyle.css";
 import { BiCalendar, BiPhone, BiUser } from "react-icons/bi";
 import { getCustomerByPhone } from "../../service/customer";
+import { toast } from "react-toastify";
 const CustomerInfoModal = ({
     isModalVisible,
     setIsModalVisible,
@@ -24,12 +25,21 @@ const CustomerInfoModal = ({
             .then((values) => {
                 if (values.phone) {
                     getCustomerByPhone({ phone: values.phone })
-                        .then((res) => res.data)
-                        .then((data) => setCustomerData(data));
+                        .then((res) => {
+                            if (res.data) {
+                                setCustomerData(res.data);
+                                toast.success("Customer found");
+                            } else {
+                                toast.error("Customer not found");
+                            }
+                        })
+                        .catch((error) => {
+                            toast.error("Customer not found");
+                        });
                 }
             })
             .catch((info) => {
-                console.log("Validate Failed:", info);
+                toast.error("Please enter a valid phone number");
             });
     };
     return (
