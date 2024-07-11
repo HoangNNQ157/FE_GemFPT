@@ -1,0 +1,104 @@
+.login-wrapper {
+    min-width: 700px;
+}
+.logoLogin {
+    display: flex;
+    justify-content: center;
+}
+.imgLogo-login {
+    height: 150px;
+}
+
+.form-box input[type="email"],
+.form-box input[type="password"] {
+    width: 100%;
+    padding: 8px; /* Adjusted padding for closer spacing */
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 5px; /* Ensures a small space between label and input */
+}
+
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-top: 5px; /* Ensures a small space between label and input */
+}
+
+.password-toggle-icon {
+    cursor: pointer;
+    position: absolute;
+    top: 42%;
+    transform: translateY(-50%);
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px; /* Added margin to separate error message from input */
+    visibility: visible; /* Ensure the message is visible when present */
+}
+
+.hidden-error {
+    visibility: hidden; /* Keeps space for the error message without displaying it */
+    height: 0;
+}
+
+.form-box .d-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.login-gg {
+    margin-top: 10px;
+}
+
+.login-google {
+    background-color: #db4437;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    width: 100%;
+}
+
+.login-google:hover {
+    background-color: #c23321;
+}
+
+.forgot-password {
+    text-align: right;
+    margin-top: 10px;
+}
+
+.register-link {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.register-link a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
