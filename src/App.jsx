@@ -1,94 +1,125 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import {
-  createBrowserRouter,
-  RouterProvider,
-  Route,
-  createRoutesFromElements,
+    createBrowserRouter,
+    createRoutesFromElements,
+    Route,
+    RouterProvider,
 } from "react-router-dom";
-import Login from "./component/login/Login";
-import Register from "./component/Register/Register";
-import ForgotPassword from "./component/forgotpassword/ForgotPassword";
-import ResetPassword from "./component/resetpassword/ResetPassword";
-import Dashboard from "./component/dashboard/dashboard";
-import Category from "./component/category";
+import AdminLayout from "./layouts/AdminLayout/AdminLayout";
+import ManagerLayout from "./layouts/ManagerLayout/ManagerLayout";
+import StaffLayout from "./layouts/StaffLayout/StaffLayout";
+import Account from "./pages/admin/Account/Account";
+import Customer from "./pages/admin/Customer/Customer";
+import Metal from "./pages/admin/Metal/Metal";
+import ForgotPassword from "./pages/auth/ForgotPassword/ForgotPassword";
+import Login from "./pages/auth/Login/Login";
+import Register from "./pages/auth/Register/Register";
+import ResetPassword from "./pages/auth/resetpassword/ResetPassword";
+import HomePage from "./pages/Home/HomePage";
+import ManagerDiscount from "./pages/manager/Discount/ManagerDiscount";
+import ManagerDashboard from "./pages/manager/ManagerDashboard/ManagerDashboard";
+import ManagerStall from "./pages/manager/ManagerStall/ManagerStall";
+import Promotion from "./pages/manager/Promotion/Promotion";
+import PageNotFound from "./pages/NotFound/PageNotFound"; // Import PageNotFound
+import StaffOrder from "./pages/staffs/StaffOrder/StaffOrder";
+import Product from "./pages/staffs/StaffProduct/StaffProduct";
+import ManagerSidebarLayout from "./layouts/ManagerLayout/ManagerSidebarLayout";
+import AdminSiderbarLayout from "./layouts/AdminLayout/AdminSiderbarLayout";
 
-//import "./output.css";
+const App = () => {
+    const userData = useSelector((state) => state.user);
+    const router = createBrowserRouter(
+        createRoutesFromElements(
+            <Route path="/">
+                <Route index element={<Login />} />
+                <Route path="login" element={<Login />} />
+                <Route path="register" element={<Register />} />
+                <Route path="forgot-password" element={<ForgotPassword />} />
+                <Route path="reset-password" element={<ResetPassword />} />
+                <Route path="home" element={<HomePage />} />
+                {userData ? (
+                    <>
+                        {/* Staff routes */}
+                        {(userData.role === "STAFF" ||
+                            userData.role === "ADMIN" ||
+                            userData.role === "MANAGER") && (
+                            <Route element={<StaffLayout />}>
+                                <Route
+                                    path="staff-order"
+                                    element={<StaffOrder />}
+                                />
 
-import StaffLayout from "./layouts/StaffLayout";
-import Order from "./pages/staffs/Order";
-import Product from "./pages/staffs/Product";
-import History from "./pages/staffs/History";
-import AdminLayout from "./layoutadmin/adminlayout";
-import Account from "./pages/admin/account";
-import Profile from "./component/profile/hoso";
+                                <Route
+                                    path="staff-product"
+                                    element={<Product />}
+                                />
+                            </Route>
+                        )}
 
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/">
-      <Route index element={<Login />} />
-      <Route path="login" element={<Login />} />
-      <Route path="register" element={<Register />} />
-      <Route path="forgot-password" element={<ForgotPassword />} />
-      <Route path="reset-password" element={<ResetPassword />} />
+                        {/* Admin routes */}
+                        {userData.role === "ADMIN" && (
+                            <>
+                                <Route element={<AdminLayout />}>
+                                    <Route
+                                        path="adminAccount"
+                                        element={<Account />}
+                                    />
 
-      <Route path="dashboard" element={<Dashboard/>}>
-        <Route path="category" element={<Category />}/>
-        <Route path="profile" element={<Profile />} />
-      </Route>
+                                    <Route
+                                        path="adminMetal"
+                                        element={<Metal />}
+                                    />
+                                </Route>
+                                <Route element={<AdminSiderbarLayout />}>
+                                    <Route
+                                        path="adminCustomer"
+                                        element={<Customer />}
+                                    />
+                                </Route>
+                            </>
+                        )}
 
-      <Route element={<StaffLayout />}>
-        <Route path="staffOrder" element={<Order />} />
-        <Route path="staffProduct" element={<Product />} />
-        <Route path="staffHistory" element={<History />} />
-      </Route>
+                        {/* Manager routes */}
+                        {(userData.role === "MANAGER" ||
+                            userData.role === "ADMIN") && (
+                            <>
+                                <Route element={<ManagerLayout />}>
+                                    <Route
+                                        path="managerPromotion"
+                                        element={<Promotion />}
+                                    />
+                                    <Route
+                                        path="manager-stall"
+                                        element={<ManagerStall />}
+                                    />
+                                    <Route
+                                        path="manager-discount"
+                                        element={<ManagerDiscount />}
+                                    />
+                                </Route>
+                                <Route element={<ManagerSidebarLayout />}>
+                                    <Route
+                                        path="managerDashboard"
+                                        element={<ManagerDashboard />}
+                                    />
+                                </Route>
+                            </>
+                        )}
+                    </>
+                ) : null}
 
-      <Route element={<AdminLayout />}>
-      <Route path="adminAccount" element={<Account />} />
-       </Route>
-    </Route>
+                {/* Catch-all route for 404 Page Not Found */}
+                <Route path="*" element={<PageNotFound />} />
+            </Route>
+        )
+    );
 
-   
-  )
-);
-// const router = createBrowserRouter([
-//   {
-//     path: "/",
-//     element: <Login />,
-//   },
-//   {
-//     path: "/dashboard",
-//     element: <Dashboard />,
-//     children: [
-//       {
-//         path: "/dashboard/category",
-//         element: <Category />,
-//       },
-//     ],
-//   },
-//   {
-//     path: "/login",
-//     element: <Login />,
-//   },
-//   {
-//     path: "/register",
-//     element: <Register />,
-//   },
-//   {
-//     path: "/forgot-password",
-//     element: <ForgotPassword />,
-//   },
-//   {
-//     path: "/reset-password",
-//     element: <ResetPassword />,
-//   },
-// ]);
-
-function App() {
-  return (
-    <div className="App">
-      <RouterProvider router={router} />
-    </div>
-  );
-}
+    return (
+        <div className="App">
+            <RouterProvider router={router} />
+        </div>
+    );
+};
 
 export default App;
