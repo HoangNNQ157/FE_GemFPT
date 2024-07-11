@@ -83,7 +83,7 @@ const TableAccountManager = () => {
         {
             title: "ID",
             dataIndex: "id",
-            key: "id",  
+            key: "id",
         },
         {
             title: "NAME",

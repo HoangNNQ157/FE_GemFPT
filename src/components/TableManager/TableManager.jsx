@@ -9,6 +9,7 @@ import {
     deleteProduct,
     getListProducts,
     getListProductsActive,
+    getProductByCategory,
     getProductByGem,
     getProductByMetal,
     getProductByName,
@@ -20,7 +21,13 @@ import CarouselImg from "../Carousel/Carousel";
 import ModalManager from "../modal/ModalManager";
 import "./TableManager.css";
 
-const TableManager = ({ searchValue, searchPrice, searchMetal, searchGem }) => {
+const TableManager = ({
+    searchValue,
+    searchPrice,
+    searchMetal,
+    searchGem,
+    searchCategory,
+}) => {
     const [visible, setVisible] = useState(false);
     const [dataProducts, setDataProducts] = useState([]);
     const [dataUpdate, setDataUpdate] = useState(null);
@@ -30,30 +37,56 @@ const TableManager = ({ searchValue, searchPrice, searchMetal, searchGem }) => {
     console.log(searchGem);
     useEffect(() => {
         const fetchProducts = async () => {
-            // call api product
-            const response =
-                searchValue?.length > 0
-                    ? await getProductByName(searchValue)
-                    : searchPrice?.minPrice >= 0 &&
-                      searchPrice?.maxPrice > searchPrice.minPrice &&
-                      searchPrice.maxPrice > 0
-                    ? await getProductByPrice(searchPrice)
-                    : searchMetal?.length > 0
-                    ? await getProductByMetal(searchMetal)
-                    : searchGem
-                    ? await getProductByGem(searchGem)
-                    : productActice
-                    ? await getListProductsActive()
-                    : await getListProducts();
-            const products = response.data.map((product, index) => ({
-                ...product,
-                key: index + 1,
-            }));
-            setDataProducts(products);
+            try {
+                let response;
+                if (searchValue?.length > 0) {
+                    response = await getProductByName(searchValue);
+                    toast.success("Search by name");
+                } else if (
+                    searchPrice?.minPrice >= 0 &&
+                    searchPrice?.maxPrice > searchPrice.minPrice &&
+                    searchPrice.maxPrice > 0
+                ) {
+                    response = await getProductByPrice(searchPrice);
+                    toast.success("Search by price");
+                } else if (searchMetal?.length > 0) {
+                    response = await getProductByMetal(searchMetal);
+                    toast.success("Filter by metal");
+                } else if (searchGem) {
+                    response = await getProductByGem(searchGem);
+                    toast.success("Filter by gem");
+                } else if (searchCategory) {
+                    response = await getProductByCategory({
+                        category: searchCategory,
+                    });
+                    toast.success("Filter by category");
+                } else if (productActice) {
+                    response = await getListProductsActive();
+                    toast.success("Active products");
+                } else {
+                    response = await getListProducts();
+                }
+
+                const products = response.data.map((product, index) => ({
+                    ...product,
+                    key: index + 1,
+                }));
+                setDataProducts(products);
+            } catch (error) {
+                toast.error("Failed to fetch products");
+                console.error("Error fetching products:", error);
+            }
         };
 
         fetchProducts();
-    }, [productActice, searchValue, searchPrice, searchMetal, searchGem]);
+    }, [
+        productActice,
+        searchValue,
+        searchPrice,
+        searchMetal,
+        searchGem,
+        searchCategory,
+    ]);
     useEffect(() => {
         //call apu  metals
         const fetchMetals = async () => {

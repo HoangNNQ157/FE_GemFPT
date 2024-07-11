@@ -36,6 +36,6 @@ const respondtDiscount = ({ discountRequestId, approved, managerResponse }) => {
     );
 };
 const getDiscountById = ({ discountId }) => {
-    return api.get(`/discount/${discountId}`, { headers: headers });
+    return api.get(`/discount/{id}?id=${discountId}`, { headers: headers });
 };
 export { getAllDiscount, requestDiscount, respondtDiscount, getDiscountById };

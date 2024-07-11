@@ -9,6 +9,7 @@ import { TbDiscount } from "react-icons/tb";
 import { FaUsersCog } from "react-icons/fa";
 import { GrInstall } from "react-icons/gr";
 import { CiDiscount1 } from "react-icons/ci";
+import { BiUser } from "react-icons/bi";
 const sideBarManager = [
     {
         content: "PRODUCTS",
@@ -29,6 +30,11 @@ const sideBarManager = [
         content: "STALL",
         link: "manager-stall",
         icon: <GrInstall />,
+    },
+    {
+        content: "CUSTOMER",
+        link: "manager-customer",
+        icon: <BiUser />,
     },
 ];
 const ManagerSidebarLayout = () => {

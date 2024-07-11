@@ -4,11 +4,16 @@ import SidebarLayout from "../SidebarLayout/SidebarLayout";
 import "./AdminLayout.css";
 import { expand, sideBarAdmin } from "../../data/data";
 import { CiUser } from "react-icons/ci";
-import { MdAccountBalance } from "react-icons/md";
+import { MdAccountBalance, MdDashboard } from "react-icons/md";
 import { FaRegGem } from "react-icons/fa";
 import HeaderLayout from "../HeaderLayout/HeaderLayout";
 const AdminLayout = () => {
     const sideBarAdmin = [
+        {
+            content: "DASHBOARD",
+            link: "adminRevenue",
+            icon: <MdDashboard />,
+        },
         {
             content: "ACCOUNT",
             link: "adminAccount",

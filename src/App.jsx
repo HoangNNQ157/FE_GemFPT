@@ -26,6 +26,11 @@ import StaffOrder from "./pages/staffs/StaffOrder/StaffOrder";
 import Product from "./pages/staffs/StaffProduct/StaffProduct";
 import ManagerSidebarLayout from "./layouts/ManagerLayout/ManagerSidebarLayout";
 import AdminSiderbarLayout from "./layouts/AdminLayout/AdminSiderbarLayout";
+import StaffSidebarLayout from "./layouts/StaffLayout/StaffSidebarLayout";
+import Revenue from "./pages/admin/Revenue/Revenue";
+import BillPage from "./pages/BillPage/BillPage";
+import StaffBuyBack from "./pages/staffs/StaffBuyBack/StaffBuyBack";
+import StaffBill from "./pages/staffs/StaffBill/StaffBill";
 
 const App = () => {
     const userData = useSelector((state) => state.user);
@@ -38,23 +43,39 @@ const App = () => {
                 <Route path="forgot-password" element={<ForgotPassword />} />
                 <Route path="reset-password" element={<ResetPassword />} />
                 <Route path="home" element={<HomePage />} />
+                <Route path="bill/:id" element={<BillPage />} />
                 {userData ? (
                     <>
                         {/* Staff routes */}
                         {(userData.role === "STAFF" ||
                             userData.role === "ADMIN" ||
                             userData.role === "MANAGER") && (
-                            <Route element={<StaffLayout />}>
-                                <Route
-                                    path="staff-order"
-                                    element={<StaffOrder />}
-                                />
-
-                                <Route
-                                    path="staff-product"
-                                    element={<Product />}
-                                />
-                            </Route>
+                            <>
+                                <Route element={<StaffLayout />}>
+                                    <Route
+                                        path="staff-order"
+                                        element={<StaffOrder />}
+                                    />
+                                    <Route
+                                        path="staff-buy-back"
+                                        element={<StaffBuyBack />}
+                                    />
+                                </Route>
+                                <Route element={<StaffSidebarLayout />}>
+                                    <Route
+                                        path="staff-bill"
+                                        element={<StaffBill />}
+                                    />
+                                    <Route
+                                        path="staff-product"
+                                        element={<Product />}
+                                    />
+                                    <Route
+                                        path="staff-customer"
+                                        element={<Customer />}
+                                    />
+                                </Route>
+                            </>
                         )}
 
                         {/* Admin routes */}
@@ -75,6 +96,10 @@ const App = () => {
                                     <Route
                                         path="adminCustomer"
                                         element={<Customer />}
+                                    />
+                                    <Route
+                                        path="adminRevenue"
+                                        element={<Revenue />}
                                     />
                                 </Route>
                             </>
@@ -102,6 +127,10 @@ const App = () => {
                                     <Route
                                         path="managerDashboard"
                                         element={<ManagerDashboard />}
+                                    />
+                                    <Route
+                                        path="manager-customer"
+                                        element={<Customer />}
                                     />
                                 </Route>
                             </>
