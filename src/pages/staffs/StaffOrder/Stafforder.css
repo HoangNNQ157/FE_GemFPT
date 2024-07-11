@@ -1,0 +1,116 @@
+/* src/components/CustomTable/CustomTable.css */
+
+.ant-table-wrapper {
+    width: 100%;
+}
+
+.ant-table {
+    border: 1px solid #e8e8e8;
+}
+
+.ant-table-thead > tr > th {
+    background-color: #f0f0f0;
+    text-align: center !important;
+}
+
+.ant-table-tbody > tr > td {
+    text-align: center !important;
+}
+
+.ant-table-tbody > tr > td img {
+    width: 80px !important;
+    height: auto;
+}
+.btn-staff {
+    padding: 10px 12px;
+}
+.status {
+    font-weight: 700;
+    font-size: 1rem;
+}
+.order-container {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    margin-left: 8px;
+    min-height: 85vh;
+}
+.order-wrapper {
+    width: 30%;
+    display: flex;
+    background-color: white;
+    border: 1px solid #ccc;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 8px;
+    border-radius: 10px;
+}
+.order-title {
+    font-size: 22px;
+    text-align: center;
+    padding: 2px;
+    border-bottom: 1px solid #333;
+    color: black;
+}
+.order_btn-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+.order-btn {
+    width: 96%;
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px 0;
+    border: none;
+    background: #4da4ff;
+}
+.order-btn:disabled {
+    background-color: #888;
+    cursor: not-allowed;
+}
+.checkout-btn {
+    background: #4da4ff;
+    padding: 12px 0;
+    border-radius: 8px;
+    width: 96%;
+    color: white;
+    border: none;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+.checkout-btn:disabled {
+    background-color: #888;
+    cursor: not-allowed;
+}
+.order-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+.order-discount,
+.order__cash,
+.total_mount {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4px;
+}
+
+.order__lable {
+    width: 60px;
+    color: black;
+}
+.total__lable {
+    color: black;
+    font-weight: 600;
+}
+.total__price {
+    color: rgb(35, 175, 42);
+    font-weight: 400;
+    font-size: 20px;
+}
