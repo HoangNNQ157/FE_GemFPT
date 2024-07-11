@@ -1,0 +1,147 @@
+import { Button, Form, Input, Modal, DatePicker, Select } from "antd";
+import React, { useEffect } from "react";
+
+const PromotionForm = ({ visible, onCancel, onSave, dataProduct }) => {
+    const [form] = Form.useForm();
+    useEffect(() => {
+        if (visible) {
+            form.resetFields();
+        }
+    }, [visible]);
+
+    const handleOk = () => {
+        form.validateFields()
+            .then((values) => {
+                form.resetFields();
+                onSave(values);
+            })
+            .catch((info) => {
+                console.log("Validate Failed:", info);
+            });
+    };
+
+    return (
+        <Modal
+            title={"Add Promotion"}
+            visible={visible}
+            onOk={handleOk}
+            onCancel={onCancel}
+            width={800}
+        >
+            <Form form={form} layout="vertical" name="promotion_form">
+                <Form.Item
+                    name="programName"
+                    label="Program Name"
+                    rules={[
+                        {
+                            required: true,
+                            message: "Please input the program name!",
+                        },
+                    ]}
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item
+                    name="discountRate"
+                    label="Discount Rate"
+                    rules={[
+                        {
+                            required: true,
+                            type: "string",
+                            message: "Please input the discount rate!",
+                        },
+                        {
+                            validator: (_, value) =>
+                                value > 100
+                                    ? Promise.reject(
+                                          "Discount rate must not exceed 100"
+                                      )
+                                    : Promise.resolve(),
+                        },
+                    ]}
+                >
+                    <Input type="number" />
+                </Form.Item>
+                <Form.Item name="description" label="Description">
+                    <Input.TextArea />
+                </Form.Item>
+                <Form.Item
+                    name="applicableProducts"
+                    label="Applicable Products"
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item name="pointsCondition" label="Points Condition">
+                    <Input />
+                </Form.Item>
+                <Form.Item
+                    name="endTime"
+                    label="End Time"
+                    rules={[
+                        {
+                            required: true,
+                            message: "Please select the end time!",
+                        },
+                    ]}
+                >
+                    <DatePicker showTime />
+                </Form.Item>
+                <Form.List name="barcode">
+                    {(fields, { add, remove }) => (
+                        <>
+                            {fields.map((field, index) => (
+                                <div key={index}>
+                                    <Form.Item
+                                        {...field}
+                                        name={[field.name]}
+                                        fieldKey={[field.fieldKey]}
+                                        label={`ProductName - Barcode ${
+                                            index + 1
+                                        }`}
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message:
+                                                    "Please input the barcode!",
+                                            },
+                                        ]}
+                                    >
+                                        <Select>
+                                            {dataProduct.map(
+                                                (product, index) => (
+                                                    <Select.Option
+                                                        key={index}
+                                                        value={product.barcode}
+                                                    >
+                                                        {`${product.name} - ${product.barcode}`}
+                                                    </Select.Option>
+                                                )
+                                            )}
+                                        </Select>
+                                    </Form.Item>
+                                    <Button
+                                        type="dashed"
+                                        onClick={() => remove(field.name)}
+                                    >
+                                        Remove
+                                    </Button>
+                                </div>
+                            ))}
+                            <Form.Item>
+                                <Button
+                                    type="dashed"
+                                    onClick={() => add()}
+                                    block
+                                >
+                                    Add Barcode
+                                </Button>
+                            </Form.Item>
+                        </>
+                    )}
+                </Form.List>
+            </Form>
+        </Modal>
+    );
+};
+
+export default PromotionForm;
