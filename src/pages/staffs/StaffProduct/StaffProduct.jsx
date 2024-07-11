@@ -1,0 +1,356 @@
+import { Button, Form, Input, Modal, Select, Table } from "antd";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import CarouselImg from "../../../components/Carousel/Carousel";
+import HeaderProduct from "../../../components/Header/HeaderProduct/HeaderProduct";
+import SearchGemstoneForm from "../../../components/modal/SearchGemstoneForm";
+import useDebounce from "../../../hook/debound";
+import {
+    getListProductsActive,
+    getProductByCategory,
+    getProductByGem,
+    getProductByMetal,
+    getProductByName,
+    getProductByPrice,
+} from "../../../service/productService";
+import { formatVND } from "../../../utils/funUtils";
+import "./StaffProduct.css";
+import { CategoryOption } from "../../../data/data";
+
+const StaffProduct = () => {
+    const [dataProducts, setDataProducts] = useState([]);
+    const [selectedProducts, setSelectedProducts] = useState([]);
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [isModalCategory, setIsModalCategory] = useState(false);
+    const [searchProduct, setSearchProduct] = useState("");
+    const [searchProductByMetal, setSearchProductByMetal] = useState("");
+    const [searchPrice, setSearchPrice] = useState({
+        minPrice: 0,
+        maxPrice: 0,
+    });
+    const [searchGem, setSearchGem] = useState();
+    const [isModalMetal, setIsModalMetal] = useState(false);
+    const [isModalGem, setIsModalGem] = useState(false);
+    const debouncedSearchProduct = useDebounce(searchProduct, 500);
+    const debouncedSearchPrice = useDebounce(searchPrice, 500);
+    const [form] = Form.useForm();
+    const navigator = useNavigate();
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                let response;
+                if (debouncedSearchProduct) {
+                    response = await getProductByName(debouncedSearchProduct);
+                    toast.success("Search by name");
+                } else if (
+                    debouncedSearchPrice.minPrice >= 0 &&
+                    debouncedSearchPrice.maxPrice >
+                        debouncedSearchPrice.minPrice
+                ) {
+                    response = await getProductByPrice(debouncedSearchPrice);
+                    toast.success("Search by price");
+                } else if (searchProductByMetal) {
+                    response = await getProductByMetal(searchProductByMetal);
+                    toast.success("Filter by metal");
+                } else if (searchGem && searchGem.color) {
+                    response = await getProductByGem(searchGem);
+                    toast.success("Filter by gem");
+                } else {
+                    response = await getListProductsActive();
+                }
+
+                if (response?.data) {
+                    const products = response.data.map((product, index) => ({
+                        ...product,
+                        key: index + 1,
+                    }));
+                    setDataProducts(products);
+                }
+            } catch (error) {
+                toast.error("Failed to fetch products");
+                console.error("Error fetching products:", error);
+            }
+        };
+
+        fetchProducts();
+    }, [
+        debouncedSearchProduct,
+        debouncedSearchPrice,
+        searchProductByMetal,
+        searchGem,
+    ]);
+
+    const columns = [
+        {
+            title: "ID",
+            dataIndex: "productId",
+            key: "productId",
+        },
+        {
+            title: "BARCODE",
+            dataIndex: "barcode",
+            key: "barcode",
+            render: (text) => (
+                <span
+                    style={{
+                        maxWidth: "200px",
+                        display: "-webkit-box",
+                        WebkitBoxOrient: "vertical",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        WebkitLineClamp: 2,
+                        lineClamp: 2,
+                    }}
+                >
+                    {text}
+                </span>
+            ),
+        },
+        {
+            title: "STOCK",
+            dataIndex: "stock",
+            key: "stock",
+        },
+        {
+            title: "IMAGES",
+            dataIndex: "urls",
+            key: "urls",
+            render: (urls) =>
+                urls.length > 0 ? (
+                    <div
+                        style={{
+                            width: "200px",
+                            margin: "0 auto",
+                        }}
+                    >
+                        <CarouselImg listImg={urls} />
+                    </div>
+                ) : (
+                    "No Image"
+                ),
+        },
+        {
+            title: "Tên",
+            dataIndex: "name",
+            key: "name",
+            render: (text) => (
+                <span
+                    style={{
+                        display: "-webkit-box",
+                        WebkitBoxOrient: "vertical",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        WebkitLineClamp: 2,
+                        lineClamp: 2,
+                    }}
+                >
+                    {text}
+                </span>
+            ),
+        },
+        {
+            title: "Bộ sư tập",
+            dataIndex: "category",
+            key: "category",
+        },
+        {
+            title: "Số lượng",
+            dataIndex: "stock",
+            key: "stock",
+            render: (text, record) => (
+                <span> {record.stock > 0 ? record.stock : "Hết hàng"}</span>
+            ),
+        },
+        {
+            title: "Giá",
+            dataIndex: "price",
+            key: "price",
+            render: (text, record) => <span>{formatVND(record.price)}</span>,
+        },
+        {
+            title: "Giá mới",
+            dataIndex: "newPrice",
+            key: "newPrice",
+            render: (text, record) => <span>{formatVND(record.newPrice)}</span>,
+        },
+        {
+            title: "Trạng thái",
+            dataIndex: "status",
+            key: "status",
+            render: (text, record) => (
+                <span> {record.status ? "Hoạt động" : "Ngưng hoạt động"}</span>
+            ),
+        },
+    ];
+
+    const rowSelection = {
+        onChange: (selectedRowKeys, selectedRows) => {
+            setSelectedProducts(selectedRows);
+        },
+        selections: [
+            Table.SELECTION_ALL,
+            Table.SELECTION_INVERT,
+            Table.SELECTION_NONE,
+        ],
+    };
+
+    const onChange = (value) => {
+        setSearchProduct(value);
+    };
+
+    const onChangeMinMax = (values) => {
+        setSearchPrice({
+            minPrice: values[0],
+            maxPrice: values[1],
+        });
+    };
+
+    const handleContinue = () => {
+        console.log(selectedProducts);
+        if (selectedProducts.length === 0) {
+            toast.error("No products selected");
+            return;
+        }
+        localStorage.setItem("card", JSON.stringify(selectedProducts));
+        navigator(`/staff-order`);
+        toast.success("Add order card successfully");
+        setIsModalVisible(false);
+        form.resetFields();
+        setSelectedProducts([]);
+    };
+
+    const onReset = () => {
+        if (searchPrice)
+            setSearchPrice({
+                minPrice: 0,
+                maxPrice: 0,
+            });
+        if (searchProduct) setSearchProduct("");
+        if (searchProductByMetal) setSearchProductByMetal("");
+        if (searchGem) setSearchGem({});
+    };
+
+    const showModalMetal = () => {
+        setIsModalMetal(true);
+    };
+
+    const handleOkGem = (values) => {
+        const clearData = Object.fromEntries(
+            Object.entries(values).filter(([key, value]) => value !== undefined)
+        );
+        setSearchGem(clearData);
+        setIsModalGem(false);
+    };
+
+    const handleOk = () => {
+        form.validateFields().then((values) => {
+            setSearchProductByMetal(values.metal);
+            setIsModalMetal(false);
+            form.resetFields();
+        });
+    };
+    const handleOkCategory = () => {
+        form.validateFields().then((values) => {
+            getProductByCategory({ category: values.category })
+                .then((res) => res.data)
+                .then((data) => setDataProducts(data));
+            setIsModalCategory(false);
+            form.resetFields();
+        });
+    };
+    return (
+        <>
+            <HeaderProduct
+                role={"STAFF"}
+                searchValue={searchProduct}
+                onChangeMinMax={onChangeMinMax}
+                onChange={onChange}
+                searchPrice={searchPrice}
+                onReset={onReset}
+                showModalMetal={showModalMetal}
+                showModaGem={() => setIsModalGem(true)}
+                showModaCategory={() => setIsModalCategory(true)}
+            />
+            <Table
+                rowSelection={rowSelection}
+                dataSource={dataProducts}
+                columns={columns}
+                pagination={{ defaultPageSize: 4 }}
+            />
+            <div
+                style={{
+                    display: "flex",
+                    gap: "6px",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: "10px",
+                }}
+            >
+                <Button
+                    danger
+                    className="btn-staff"
+                    onClick={() => setSelectedProducts([])}
+                >
+                    Cancel
+                </Button>
+                <Button
+                    onClick={handleContinue}
+                    type="primary"
+                    className="btn-staff"
+                    disabled={selectedProducts.length === 0}
+                >
+                    Add to order
+                </Button>
+            </div>
+            <SearchGemstoneForm
+                visible={isModalGem}
+                onCancel={() => setIsModalGem(false)}
+                onSave={handleOkGem}
+            />
+            <Modal
+                title="Search by metal"
+                visible={isModalMetal}
+                onOk={handleOk}
+                onCancel={() => setIsModalMetal(false)}
+                width={600}
+            >
+                <Form form={form}>
+                    <Form.Item
+                        name="metal"
+                        rules={[
+                            {
+                                required: true,
+                                message: "Please select a metal!",
+                            },
+                        ]}
+                    >
+                        <Input placeholder="Enter your metalType" />
+                    </Form.Item>
+                </Form>
+            </Modal>{" "}
+            <Modal
+                title="Search by category"
+                visible={isModalCategory}
+                onOk={handleOkCategory}
+                onCancel={() => setIsModalCategory(false)}
+                width={600}
+            >
+                <Form form={form}>
+                    <Form.Item name="category" label="Category">
+                        <Select>
+                            {CategoryOption.map((item, index) => (
+                                <Select.Option key={index} value={item.value}>
+                                    {item.name}
+                                </Select.Option>
+                            ))}
+                        </Select>
+                    </Form.Item>
+                </Form>
+            </Modal>
+        </>
+    );
+};
+
+export default StaffProduct;
