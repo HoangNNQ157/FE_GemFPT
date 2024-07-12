@@ -11,6 +11,9 @@ import { login } from "../../../redux/features/counterSlice";
 import Cookies from "js-cookie";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { REACT_APP_GOOGLE_CLIENT_ID } from "../../../utils/serverData";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { auth, provider } from "../../../config/firebase";
+
 export default function Login() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -71,7 +74,8 @@ export default function Login() {
 
     const handleLoginWithGoogle = async () => {
         try {
-            const user = await loginWithGoogle({ token: "string" });
+            const response =await signInWithPopup(auth, provider)
+            const user = await loginWithGoogle({ token: response.user.accessToken });
             console.log("Login with Google success:", user.data);
             localStorage.setItem("token", user.data.token);
             dispatch(login(user.data));
@@ -192,6 +196,7 @@ export default function Login() {
                             onSuccess={handleGoogleLoginSuccess}
                             onError={handleGoogleLoginFailure}
                         />
+                        <button onClick={handleLoginWithGoogle}>login google</button>
                     </div>
 
                     <p className="forgot-password text-right">

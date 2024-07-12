@@ -3,8 +3,9 @@ import * as Yup from "yup";
 import "./ResetPassword.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import api from "../../../config/axios";
+import axios from "axios";
 
 export default function ResetPassword() {
     const [formData, setFormData] = useState({
@@ -13,7 +14,10 @@ export default function ResetPassword() {
     });
 
     const [errors, setErrors] = useState({});
-    const { token } = useParams();
+
+    const location = useLocation();
+    const token = new URLSearchParams(location.search).get('token');
+   
     const validationSchema = Yup.object({
         password: Yup.string()
             .min(6, "Password must be at least 6 characters long")
@@ -43,10 +47,15 @@ export default function ResetPassword() {
             await validationSchema.validate(formData, { abortEarly: false });
 
             try {
-                const response = await api.post("/reset_password", {
-                    token,
+                const response = await axios.post("http://143.198.92.27:8080/reset_password", {
                     password: formData.password,
-                });
+                },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    }
+                );
                 console.log("Reset password success:", response);
                 toast.success("Password reset successfully");
             } catch (error) {
