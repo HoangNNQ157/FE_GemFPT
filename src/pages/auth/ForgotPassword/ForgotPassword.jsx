@@ -59,7 +59,7 @@ export default function ForgotPassword() {
         <div className="form-box forgot-password">
             <div className="logoForgot">
                 <img
-                    src="public/assets/logo.jpg"
+                    src="assets/logo.jpg"
                     className="imgForgot"
                     alt="Logo"
                 />
@@ -68,7 +68,7 @@ export default function ForgotPassword() {
                 <h3>Forgot Password</h3>
 
                 <div className="mb-3">
-                    <label className="title">Email</label>
+                    <label className="title-email">Email</label>
                     <input
                         type="email"
                         className="form-control"

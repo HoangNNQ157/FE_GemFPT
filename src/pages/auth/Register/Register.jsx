@@ -98,7 +98,7 @@ export default function Register() {
                 <form onSubmit={handleSubmit}>
                     <div className="logoRegister">
                         <img
-                            src="public/assets/logo.jpg"
+                            src="assets/logo.jpg"
                             className="imgRegister"
                             alt="Logo"
                         />
@@ -106,7 +106,7 @@ export default function Register() {
                     <h3>SIGN UP</h3>
 
                     <div className="mb-3">
-                        <label className="title">Username</label>
+                        <label className="title-Regis">Username</label>
                         <input
                             type="text"
                             className="form-control"
@@ -126,7 +126,7 @@ export default function Register() {
                     </div>
 
                     <div className="mb-3">
-                        <label className="title">Email</label>
+                        <label className="title-Regis">Email</label>
                         <input
                             type="email"
                             className="form-control"
@@ -145,7 +145,7 @@ export default function Register() {
                         </div>
                     </div>
                     <div className="mb-3">
-                        <label className="title">Phone</label>
+                        <label className="title-Regis">Phone</label>
                         <input
                             type="number"
                             className="form-control"
@@ -164,7 +164,7 @@ export default function Register() {
                         </div>
                     </div>
                     <div className="mb-3">
-                        <label className="title">Password</label>
+                        <label className="title-Regis">Password</label>
                         <input
                             type={showPassword ? "text" : "password"}
                             className="form-control"
@@ -196,7 +196,7 @@ export default function Register() {
                     </div>
 
                     <div className="mb-3">
-                        <label className="title">Confirm Password</label>
+                        <label className="title-Regis">Confirm Password</label>
                         <input
                             type={showConfirmPassword ? "text" : "password"}
                             className="form-control"

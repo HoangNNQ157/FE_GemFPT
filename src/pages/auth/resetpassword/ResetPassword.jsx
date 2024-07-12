@@ -66,7 +66,7 @@ export default function ResetPassword() {
 
     return (
         <div className="form-box reset-password">
-            <img src="public/assets/logo.jpg" className="logo" alt="Logo" />
+            <img src="assets/logo.jpg" className="logo" alt="Logo" />
             <form onSubmit={handleSubmit}>
                 <h3>Reset Password</h3>
 
@@ -74,7 +74,7 @@ export default function ResetPassword() {
                 <div className="invisible-placeholder">&nbsp;</div>
 
                 <div className="mb-3">
-                    <label className="title">New Password</label>
+                    <label className="title-reset">New Password</label>
                     <input
                         type="password"
                         className="form-control"
@@ -89,7 +89,7 @@ export default function ResetPassword() {
                 </div>
 
                 <div className="mb-3">
-                    <label className="title">Confirm Password</label>
+                    <label className="title-reset">Confirm Password</label>
                     <input
                         type="password"
                         className="form-control"

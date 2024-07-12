@@ -19,26 +19,26 @@ const HomePage = () => {
     const userData = useSelector((state) => state.user);
     const navigator = useNavigate();
     const adminLinks = [
-        { path: "/adminRevenue", label: "Admin Dasboard" },
-        { path: "/adminAccount", label: "Admin Account" },
-        { path: "/customer", label: "Admin Customer" },
-        { path: "/adminMetal", label: "Admin Metal" },
+        { path: "/adminRevenue", label: "Dasboard" },
+        { path: "/adminAccount", label: "Account" },
+        { path: "/customer", label: "Customer" },
+        { path: "/adminMetal", label: "Metal" },
     ];
 
     const managerLinks = [
-        { path: "/managerDashboard", label: "Manager Dashboard" },
-        { path: "/managerPromotion", label: "Manager Promotion" },
-        { path: "/manager-stall", label: "Manager Stall" },
-        { path: "/manager-discount", label: "Manager Discount" },
-        { path: "/manager-customer", label: "Manager Customer" },
+        { path: "/managerDashboard", label: "Dashboard" },
+        { path: "/managerPromotion", label: "Promotion" },
+        { path: "/manager-stall", label: "Stall" },
+        { path: "/manager-discount", label: "Discount" },
+        { path: "/manager-customer", label: "Customer" },
     ];
 
     const staffLinks = [
-        { path: "/staff-order", label: "Staff Order" },
-        { path: "/staff-product", label: "Staff Product" },
-        { path: "/staff-customer", label: "Staff Customer" },
-        { path: "/staff-buy-back", label: "Staff buy back" },
-        { path: "/staff-bill", label: "Staff bill" },
+        { path: "/staff-order", label: "Order" },
+        { path: "/staff-product", label: "Product" },
+        { path: "/staff-customer", label: "Customer" },
+        { path: "/staff-buy-back", label: "buy back" },
+        { path: "/staff-bill", label: "Bill" },
     ];
 
     const getLinks = () => {
