@@ -125,7 +125,7 @@ export default function Login() {
                 <div className="form-box">
                     <div className="logoLogin">
                         <img
-                            src="public/assets/logo.jpg"
+                            src="assets/logo.jpg"
                             className="imgLogo-login"
                             alt="Logo"
                         />
@@ -134,7 +134,7 @@ export default function Login() {
                         <h3>LOGIN</h3>
 
                         <div className="mb-3 form-item">
-                            <label className="User">Email</label>
+                            <label className="User-mail">Email</label>
                             <input
                                 type="email"
                                 className="form-control"
