@@ -1,0 +1,57 @@
+GoldPricesTable.css body {
+    margin: 0;
+    padding: 0;
+}
+.header__price {
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    padding: 0 10px;
+}
+.img__logo {
+    width: 80px;
+    height: 50px;
+    object-fit: cover;
+}
+.gold-prices-container {
+    margin: 0 auto;
+    margin-bottom: 40px;
+}
+.table__container {
+    margin: 0 auto;
+    max-width: 800px;
+}
+.table-title {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.gold-prices-table .ant-table-content {
+    border: 1px solid #ccc;
+}
+
+.ant-table-thead > tr > th {
+    background-color: #f0f2f5;
+    color: #001529;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 2px solid #e8e8e8;
+}
+
+.ant-table-tbody > tr > td {
+    text-align: center;
+    border: 1px solid #e8e8e8;
+}
+
+.gold-type-column {
+    text-align: left;
+    padding-left: 16px;
+}
+
+.gold-price-column {
+    text-align: right;
+    padding-right: 16px;
+}

@@ -10,7 +10,10 @@ const headers = {
 const getAllMetal = () => {
     return api.get("api/metalprices", { headers: headers });
 };
+const getMetalActive = () => {
+    return api.get("/api/metalprices/active-types", { headers });
+};
 const updateMetal = ({ formData }) => {
     return api.post("api/metalprices", formData, { headers: headers });
 };
-export { getAllMetal, updateMetal };
+export { getAllMetal, updateMetal, getMetalActive };
