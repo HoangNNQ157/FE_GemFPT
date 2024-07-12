@@ -1,104 +1,158 @@
 .login-wrapper {
-    min-width: 700px;
+  min-width: 700px;
 }
 .logoLogin {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 .imgLogo-login {
-    height: 150px;
+  height: 150px;
 }
 
 .form-box input[type="email"],
 .form-box input[type="password"] {
-    width: 100%;
-    padding: 8px; /* Adjusted padding for closer spacing */
-    font-size: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    margin-top: 5px; /* Ensures a small space between label and input */
+  width: 100%;
+  padding: 8px; /* Adjusted padding for closer spacing */
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 5px; /* Ensures a small space between label and input */
 }
 
 .password-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-    margin-top: 5px; /* Ensures a small space between label and input */
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-top: 5px; /* Ensures a small space between label and input */
 }
 
 .password-toggle-icon {
-    cursor: pointer;
-    position: absolute;
-    top: 42%;
-    transform: translateY(-50%);
+  cursor: pointer;
+  position: absolute;
+  top: 42%;
+  transform: translateY(-50%);
 }
 
 .error-message {
-    color: red;
-    font-size: 12px;
-    margin-top: 5px; /* Added margin to separate error message from input */
-    visibility: visible; /* Ensure the message is visible when present */
+  color: red;
+  font-size: 12px;
+  margin-top: 5px; /* Added margin to separate error message from input */
+  visibility: visible; /* Ensure the message is visible when present */
 }
 
 .hidden-error {
-    visibility: hidden; /* Keeps space for the error message without displaying it */
-    height: 0;
+  visibility: hidden; /* Keeps space for the error message without displaying it */
+  height: 0;
 }
 
 .form-box .d-grid {
-    display: grid;
-    grid-template-columns: 1fr;
+  display: grid;
+  grid-template-columns: 1fr;
 }
 
 .btn-primary {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-align: center;
+  background-color: #007bff;
+  margin-bottom: 20px;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
 }
 
 .btn-primary:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
+/* .login-gg {
+  margin-top: 10px;
+} */
+
+/* Add this CSS to your stylesheet */
+
 .login-gg {
-    margin-top: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.3em 0.6em;
+  font-size: 1em;
+  font-weight: bold;
+  color: #fff;
+  background-color: #db4437; /* Google red */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, box-shadow 0.3s;
+  text-decoration: none;
+}
+
+.login-gg:hover {
+  background-color: #c33427; /* Darker red for hover */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.login-gg:active {
+  background-color: #a92b1b; /* Even darker red for active */
+  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2);
+}
+
+.login-gg:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(219, 68, 55, 0.5);
+}
+
+.login-gg-icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.4em;
+}
+
+.login-gg-text {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Optional: add some responsiveness */
+@media (max-width: 600px) {
+  .login-gg {
+    font-size: 0.9em;
+    padding: 0.4em 0.8em;
+  }
 }
 
 .login-google {
-    background-color: #db4437;
-    color: #fff;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-align: center;
-    width: 100%;
+  background-color: #db4437;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
 }
 
 .login-google:hover {
-    background-color: #c23321;
+  background-color: #c23321;
 }
 
 .forgot-password {
-    text-align: right;
-    margin-top: 10px;
+  text-align: right;
+  margin-top: 10px;
 }
 
 .register-link {
-    text-align: center;
-    margin-top: 10px;
+  text-align: center;
+  margin-top: 10px;
 }
 
 .register-link a {
-    text-decoration: none;
-    color: #007bff;
+  text-decoration: none;
+  color: #007bff;
 }
 
 .register-link a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
