@@ -22,6 +22,7 @@ import Login from "./pages/auth/Login/Login";
 import Register from "./pages/auth/Register/Register";
 import ResetPassword from "./pages/auth/resetpassword/ResetPassword";
 import BillPage from "./pages/BillPage/BillPage";
+import DetailProduct from "./pages/DetailProduct/DetailProduct";
 import HomePage from "./pages/Home/HomePage";
 import ManagerDiscount from "./pages/manager/Discount/ManagerDiscount";
 import ManagerDashboard from "./pages/manager/ManagerDashboard/ManagerDashboard";
@@ -84,7 +85,10 @@ const App = () => {
                                     path="profile/:id"
                                     element={<Profile />}
                                 />
-                               
+                                <Route
+                                    path="product-detail/:id"
+                                    element={<DetailProduct />}
+                                />
                             </>
                         )}
                         {/* Admin routes */}

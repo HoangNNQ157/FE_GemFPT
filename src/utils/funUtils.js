@@ -26,4 +26,13 @@ const parseParams = (params, name) => {
 
     return options ? options.slice(0, -1) : options;
 };
-export { formatVND, parseParams };
+const getInitials = (name) => {
+    if (!name) return "";
+    const initials = name
+        .split(" ")
+        .map((word) => word[0])
+        .join("")
+        .toUpperCase();
+    return initials.slice(0, 2);
+};
+export { formatVND, parseParams, getInitials };
