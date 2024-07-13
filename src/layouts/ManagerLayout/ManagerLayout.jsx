@@ -8,12 +8,18 @@ import { MdDashboard, MdOutlineProductionQuantityLimits } from "react-icons/md";
 import { TbDiscount } from "react-icons/tb";
 import { FaUsersCog } from "react-icons/fa";
 import { GrInstall } from "react-icons/gr";
-import { CiDiscount1 } from "react-icons/ci";
-import { BiUser } from "react-icons/bi";
+import { CiDiscount1, CiMoneyBill } from "react-icons/ci";
+import { BiLabel, BiLogoLess, BiUser } from "react-icons/bi";
+import BillPage from "../../pages/BillPage/BillPage";
 const sideBarManager = [
     {
+        content: "DASHBOARD",
+        link: "manager-revenue",
+        icon: <MdDashboard />,
+    },
+    {
         content: "PRODUCTS",
-        link: "managerDashboard",
+        link: "manager-product",
         icon: <MdOutlineProductionQuantityLimits />,
     },
     {
@@ -35,6 +41,11 @@ const sideBarManager = [
         content: "CUSTOMER",
         link: "manager-customer",
         icon: <BiUser />,
+    },
+    {
+        content: "BILL",
+        link: "manager-bill",
+        icon: <CiMoneyBill />,
     },
 ];
 const ManagerLayout = () => {
