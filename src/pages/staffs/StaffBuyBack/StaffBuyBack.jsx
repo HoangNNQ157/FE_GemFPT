@@ -60,7 +60,7 @@ const StaffBuyBack = () => {
             }
         } catch (err) {
             if (err.response.data) {
-                toast.error(err.response.data);
+                toast.error("Create buy back failed");
             } else toast.error("error from server");
         } finally {
             setVisible(false);
@@ -92,6 +92,9 @@ const StaffBuyBack = () => {
             title: "Total Amount",
             dataIndex: "totalAmount",
             key: "totalAmount",
+            render: (text, record) => (
+                <span>{formatVND(record.totalAmount)}</span>
+            ),
         },
         {
             title: "Create Time",
@@ -163,12 +166,12 @@ const StaffBuyBack = () => {
             key: "productId",
         },
         {
-            title: "Barcode",
+            title: "BARCODE",
             dataIndex: "barcode",
             key: "barcode",
         },
         {
-            title: "Ảnh",
+            title: "IMAGES",
             dataIndex: "urls",
             key: "urls",
             render: (urls) =>
@@ -186,7 +189,7 @@ const StaffBuyBack = () => {
                 ),
         },
         {
-            title: "Tên",
+            title: "NAME",
             dataIndex: "name",
             key: "name",
             render: (text) => (
@@ -205,12 +208,12 @@ const StaffBuyBack = () => {
             ),
         },
         {
-            title: "Bộ sư tập",
+            title: "CATEGORY",
             dataIndex: "category",
             key: "category",
         },
         {
-            title: "số lượng",
+            title: "STOCK",
             dataIndex: "stock",
             key: "stock",
             render: (text, record) => (
@@ -218,28 +221,33 @@ const StaffBuyBack = () => {
             ),
         },
         {
-            title: "Giá",
+            title: "PRICE",
             dataIndex: "price",
             key: "price",
             render: (text, record) => <span>{formatVND(record.price)}</span>,
         },
         {
-            title: "Giá mới",
+            title: "NEW PRICE",
             dataIndex: "newPrice",
             key: "newPrice",
             render: (text, record) => <span>{formatVND(record.newPrice)}</span>,
         },
         {
-            title: "Type When Buy Back",
+            title: "TYPE WHEN BUY BACK",
             dataIndex: "typeWhenBuyBack",
             key: "typeWhenBuyBack",
         },
         {
-            title: "Trang thái",
+            title: "STATUS",
             dataIndex: "status",
             key: "status",
             render: (text, record) => (
-                <span> {record.status ? "Hoạt động" : "Ngưng hoạt động"}</span>
+                <span
+                    className="status"
+                    style={{ color: record.status ? "green" : "red" }}
+                >
+                    {record.status ? "ON" : "OFF"}
+                </span>
             ),
         },
     ];

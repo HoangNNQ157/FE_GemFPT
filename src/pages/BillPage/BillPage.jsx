@@ -1,7 +1,11 @@
-import { Card, Col, Divider, Flex, Row, Table, Typography } from "antd";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { Button, Card, Row, Col, Typography, Divider, Table } from "antd";
+import { useNavigate, useParams } from "react-router-dom";
 import { getBillForId } from "../../service/bill";
+import { IoIosArrowRoundBack } from "react-icons/io";
+import { useReactToPrint } from "react-to-print";
+import PrintableBill from "../../components/PrintableBill/PrintableBill";
+import { FaPrint } from "react-icons/fa";
 import { formatVND } from "../../utils/funUtils";
 
 const BillPage = () => {
@@ -13,6 +17,12 @@ const BillPage = () => {
             .then((res) => res.data)
             .then((data) => setBillData(data));
     }, [param]);
+    const navigator = useNavigate();
+    const printRef = useRef();
+
+    const handlePrint = useReactToPrint({
+        content: () => printRef.current,
+    });
     const columns = [
         {
             title: "Product Barcode",
@@ -33,7 +43,21 @@ const BillPage = () => {
             title: "Price",
             dataIndex: "price",
             key: "price",
-            render: (text) => `${formatVND(Math.floor(text))}`,
+            render: (text) => (
+                <span
+                    style={{
+                        maxWidth: "100px",
+                        display: "-webkit-box",
+                        WebkitBoxOrient: "vertical",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        WebkitLineClamp: 2,
+                        lineClamp: 2,
+                    }}
+                >
+                    {formatVND(Math.floor(text))}
+                </span>
+            ),
         },
         {
             title: "Discount",
@@ -45,79 +69,161 @@ const BillPage = () => {
             title: "New Price",
             dataIndex: "newPrice",
             key: "newPrice",
-            render: (text) => `${formatVND(Math.floor(text))}`,
+            render: (text) => (
+                <span
+                    style={{
+                        maxWidth: "100px",
+                        display: "-webkit-box",
+                        WebkitBoxOrient: "vertical",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        WebkitLineClamp: 2,
+                        lineClamp: 2,
+                    }}
+                >
+                    {formatVND(Math.floor(text))}
+                </span>
+            ),
+        },
+    ];
+    const warrantyColumns = [
+        {
+            title: "Customer Name",
+            dataIndex: "customerName",
+            key: "customerName",
+        },
+        {
+            title: "Customer Phone",
+            dataIndex: "customerPhone",
+            key: "customerPhone",
+        },
+        {
+            title: "Product Barcode",
+            dataIndex: "productBarcode",
+            key: "productBarcode",
+        },
+        {
+            title: "Purchase Date",
+            dataIndex: "purchaseDate",
+            key: "purchaseDate",
+            render: (text) => new Date(text).toLocaleDateString(),
+        },
+        {
+            title: "Warranty Expiry Date",
+            dataIndex: "warrantyExpiryDate",
+            key: "warrantyExpiryDate",
+            render: (text) => new Date(text).toLocaleDateString(),
         },
     ];
 
     return (
-        <Card
-            bordered={false}
-            style={{
-                width: 800,
-                margin: "20px auto",
-                border: "2px dashed #ddd",
-            }}
-        >
-            <Row justify="space-between">
-                <Col>
-                    <Typography.Text strong>BILL TO</Typography.Text>
+        <>
+            <div
+                style={{
+                    height: "40px",
+                    borderBottom: "1px solid #ddd",
+                    display: "flex",
+                    alignItems: "center",
+                    padding: "0 40px",
+                }}
+            >
+                <Button
+                    style={{ border: "none" }}
+                    onClick={() => navigator(-1)}
+                >
+                    <IoIosArrowRoundBack size={30} /> PAGE BACK
+                </Button>
+                <Button style={{ marginLeft: "auto" }} onClick={handlePrint}>
+                    Print Invoice
+                    <FaPrint />
+                </Button>
+            </div>
+            <div style={{ display: "none" }}>
+                <PrintableBill
+                    ref={printRef}
+                    billData={billData}
+                    id={id}
+                    columns={columns}
+                    warrantyColumns={warrantyColumns}
+                />
+            </div>
+            <Card
+                bordered={false}
+                style={{
+                    width: 800,
+                    margin: "20px auto",
+                    border: "2px dashed #ddd",
+                }}
+            >
+                <Row justify="space-between">
+                    <Col>
+                        <Typography.Text strong>BILL TO</Typography.Text>
+                        <br />
+                        <Typography.Text>
+                            {billData?.customerName}
+                        </Typography.Text>
+                        <br />
+                        <Typography.Text>
+                            {billData?.customerPhone}
+                        </Typography.Text>
+                    </Col>
+                </Row>
+                <Divider />
+                <Row justify="space-between">
+                    <Col>
+                        <Typography.Text strong>SHIP TO</Typography.Text>
+                        <br />
+                        <Typography.Text>
+                            {billData?.customerName}
+                        </Typography.Text>
+                        <br />
+                        <Typography.Text>
+                            {billData?.customerPhone}
+                        </Typography.Text>
+                    </Col>
+                </Row>
+                <Divider />
+                <Row align="center" justify="space-between">
+                    <span style={{ fontSize: "24px", fontWeight: "700" }}>
+                        Invoice Total
+                    </span>
+                    <span style={{ fontSize: "24px", fontWeight: "700" }}>
+                        {billData?.totalAmount}₫
+                    </span>
+                </Row>
+                <Divider />
+                <Table
+                    dataSource={billData?.items}
+                    columns={columns}
+                    pagination={false}
+                    rowKey="id"
+                />
+                <Divider />
+                <Table
+                    dataSource={billData?.warrantyCards}
+                    columns={warrantyColumns}
+                    pagination={false}
+                    rowKey="id"
+                />
+                <Divider />
+                <Row justify="center">
+                    <Typography.Text strong>Terms & Conditions</Typography.Text>
                     <br />
-                    <Typography.Text>{billData?.customerName}</Typography.Text>
+                    <Typography.Text>
+                        Payment is due within 15 days
+                    </Typography.Text>
                     <br />
-                    <Typography.Text>{billData?.customerPhone}</Typography.Text>
-                </Col>
-            </Row>
-            <Divider />
-            <Row justify="space-between">
-                <Col>
-                    <Typography.Text strong>SHIP TO</Typography.Text>
+                    <Typography.Text>Name of Bank</Typography.Text>
                     <br />
-                    <Typography.Text>{billData?.customerName}</Typography.Text>
+                    <Typography.Text>
+                        Account number: 1234567890
+                    </Typography.Text>
                     <br />
-                    <Typography.Text>{billData?.customerPhone}</Typography.Text>
-                </Col>
-                <Col>
-                    <Typography.Text strong>INVOICE #</Typography.Text>
-                    <br />
-                    <Typography.Text>{id}</Typography.Text>
-                    <br />
-                    <Typography.Text strong>INVOICE DATE</Typography.Text>
-                    <br />
-                    <Typography.Text>{billData?.createTime}</Typography.Text>
-                </Col>
-            </Row>
-            <Divider />
-            <Flex align="center" justify="space-between">
-                <span style={{ fontSize: "24px", fontWeight: "700" }}>
-                    Invoice Total
-                </span>
-                <span style={{ fontSize: "24px", fontWeight: "700" }}>
-                    {billData?.totalAmount}₫
-                </span>
-            </Flex>
-
-            <Divider />
-            <Table
-                dataSource={billData?.items}
-                columns={columns}
-                pagination={false}
-                rowKey="id"
-            />
-            <Divider />
-
-            <Divider />
-            <Row justify="center">
-                <Typography.Text strong>Terms & Conditions</Typography.Text>
-                <br />
-                <Typography.Text>Payment is due within 15 days</Typography.Text>
-                <br />
-                <Typography.Text>Name of Bank</Typography.Text>
-                <br />
-                <Typography.Text>Account number: 1234567890</Typography.Text>
-                <br />
-                <Typography.Text>Routing: 098765432</Typography.Text>
-            </Row>
-        </Card>
+                    <Typography.Text>Routing: 098765432</Typography.Text>
+                </Row>
+            </Card>
+        </>
     );
 };
+
 export default BillPage;

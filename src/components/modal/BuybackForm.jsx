@@ -67,7 +67,10 @@ const BuybackForm = ({
         { name: "EARRINGS", value: "EARRINGS", id: 4 },
         { name: "ANKLETS", value: "ANKLETS", id: 5 },
     ];
-
+    const typeWhenBuyBack = [
+        { name: "PROCESSING", value: "PROCESSING", id: 1 },
+        { name: "PROCESSDONE", value: "PROCESSDONE", id: 2 },
+    ];
     return (
         <>
             <Modal
@@ -98,6 +101,21 @@ const BuybackForm = ({
                             <Form.Item name="category" label="Category">
                                 <Select>
                                     {CategoryOption.map((item, index) => (
+                                        <Select.Option
+                                            key={index}
+                                            value={item.value}
+                                        >
+                                            {item.name}
+                                        </Select.Option>
+                                    ))}
+                                </Select>
+                            </Form.Item>
+                            <Form.Item
+                                name="typeWhenBuyBack"
+                                label="typeWhenBuyBack"
+                            >
+                                <Select>
+                                    {typeWhenBuyBack.map((item, index) => (
                                         <Select.Option
                                             key={index}
                                             value={item.value}
