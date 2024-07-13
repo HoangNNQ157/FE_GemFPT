@@ -126,7 +126,7 @@ const TableStall = () => {
             <Table
                 dataSource={customerData.reverse()}
                 columns={columns}
-                pagination={{ defaultPageSize: 4 }}
+                pagination={{ defaultPageSize: 8 }}
             />
             <CreateCustomerForm
                 visible={visible}

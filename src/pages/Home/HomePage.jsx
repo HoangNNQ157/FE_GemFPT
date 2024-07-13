@@ -26,10 +26,14 @@ const HomePage = () => {
     const adminLinks = [
         { path: "/adminRevenue", label: "Admin Dasboard" },
         { path: "/adminAccount", label: "Admin Account" },
+
         { path: "/adminCustomer", label: "Admin Customer" },
+
+
         { path: "/adminMetal", label: "Admin Metal" },
     ];
     const managerLinks = [
+
         { path: "/manager-revenue", label: "Manager Dashboard" },
         { path: "/manager-product", label: "Manager Product" },
         { path: "/managerPromotion", label: "Manager Promotion" },
@@ -37,6 +41,7 @@ const HomePage = () => {
         { path: "/manager-discount", label: "Manager Discount" },
         { path: "/manager-customer", label: "Manager Customer" },
         { path: "/manager-bill", label: "Manager Bill" },
+
     ];
 
     const staffLinks = [
@@ -44,6 +49,8 @@ const HomePage = () => {
         { path: "/staff-product", label: "Staff Product" },
         { path: "/staff-customer", label: "Staff Customer" },
         { path: "/staff-buy-back", label: "Staff Buy Back" },
+
+
         { path: "/staff-bill", label: "Staff Bill" },
     ];
 
@@ -95,8 +102,8 @@ const HomePage = () => {
                             </Col>
                             <Col span={18}>
                                 <Descriptions column={1} bordered>
-                                    <Descriptions.Item label="Username">
-                                        {userData.username}
+                                    <Descriptions.Item label="Name">
+                                        {userData.name}
                                     </Descriptions.Item>
                                     <Descriptions.Item label="Email">
                                         {userData.email}

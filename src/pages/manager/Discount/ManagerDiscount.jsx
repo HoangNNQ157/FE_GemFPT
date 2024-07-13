@@ -130,7 +130,7 @@ const ManagerDiscount = () => {
             <Table
                 dataSource={stallData.reverse()}
                 columns={columns}
-                pagination={{ defaultPageSize: 4 }}
+                pagination={{ defaultPageSize: 8 }}
             />
             <RespondForm
                 visible={visible}

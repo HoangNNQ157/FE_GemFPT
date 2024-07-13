@@ -163,7 +163,7 @@ const TableAccountManager = () => {
             <Table
                 dataSource={accountData.reverse()}
                 columns={columns}
-                pagination={{ defaultPageSize: 4 }}
+                pagination={{ defaultPageSize: 8 }}
             />
             <ModalAccount
                 initialData={dataUpdate ? dataUpdate : null}
