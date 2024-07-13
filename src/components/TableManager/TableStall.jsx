@@ -27,6 +27,7 @@ const TableStall = () => {
     const [isStaffWorking, setIsStaffWorking] = useState(false);
     const [changeMoney, setChangeMoney] = useState(false);
     const [stallId, setStallId] = useState(false);
+    const [staffWorkingId, setStaffWorkingId] = useState();
     useEffect(() => {
         getAlllStalls()
             .then((data) => data.data)
@@ -94,7 +95,10 @@ const TableStall = () => {
                             ghost
                             type="primary"
                             icon={<MdModeEditOutline />}
-                            onClick={() => setIsStaffWorking(true)}
+                            onClick={() => {
+                                setIsStaffWorking(true);
+                                setStaffWorkingId(record.stallsSellId);
+                            }}
                         />
                     </Tooltip>
                     <Tooltip title="Detail stall">
@@ -145,6 +149,7 @@ const TableStall = () => {
     };
     const handleSaveStaffWorking = async (values) => {
         const formData = {
+            stallsWorkingId: staffWorkingId,
             staffWorkingStatus: values.staffWorkingStatus,
             startWorkingDateTime: values.startWorkingDateTime.toISOString(),
             endWorkingDateTime: values.endWorkingDateTime.toISOString(),
@@ -157,6 +162,7 @@ const TableStall = () => {
             });
             if (res) {
                 toast.success("Create stall working successfully");
+                setStaffWorkingId(null);
             }
         } catch (error) {
             console.log(error);
@@ -205,17 +211,11 @@ const TableStall = () => {
                 <button className="btn-add" onClick={() => showModal()}>
                     Add new stall
                 </button>
-                <button
-                    className="btn-add"
-                    onClick={() => setChangeMoney(true)}
-                >
-                    Change money
-                </button>
             </Flex>
             <Table
                 dataSource={stallData.reverse()}
                 columns={columns}
-                pagination={{ defaultPageSize: 8 }}
+                pagination={{ defaultPageSize: 4 }}
             />
             <CreateStallForm
                 visible={visible}

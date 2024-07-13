@@ -6,17 +6,21 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {
     deleteAccountAdmin,
+    getAccoutByEmail,
     getAllAccout,
     updateAccountAdmin,
 } from "../../service/account";
 import ModalAccount from "../modal/ModalAccount";
 import "./TableManager.css";
 import { registerApi } from "../../service/auth";
+import useDebounce from "../../hook/debound";
+import HeaderSearch from "../Header/HeaderSearch/HeaderSearch";
 const TableAccountManager = () => {
     const [accountData, setAccountData] = useState([]);
     const [dataUpdate, setDataUpdate] = useState();
     const [visible, setVisible] = useState(false);
-
+    const [searchEmail, setSearchEmail] = useState();
+    const debouncedSearcEmail = useDebounce(searchEmail, 500);
     const handleCancel = () => {
         if (dataUpdate) setDataUpdate(null);
         setVisible(false);
@@ -154,16 +158,49 @@ const TableAccountManager = () => {
             ),
         },
     ];
-
+    const handleChange = (value) => {
+        setSearchEmail(value);
+    };
+    useEffect(() => {
+        try {
+            if (debouncedSearcEmail) {
+                getAccoutByEmail({ email: debouncedSearcEmail })
+                    .then((res) => res.data)
+                    .then((data) => {
+                        setAccountData([data]);
+                        toast.success("search bill for Email successfully");
+                    })
+                    .catch((err) => {
+                        toast.error("search account for email failed");
+                    });
+            } else {
+                getAllAccout()
+                    .then((data) => data.data)
+                    .then((data) => {
+                        setAccountData(data);
+                    })
+                    .catch((err) => {
+                        toast.error("search account for email failed");
+                    });
+            }
+        } catch (error) {
+            toast.error("search bill for Email failed");
+        }
+    }, [debouncedSearcEmail]);
     return (
         <>
+            <HeaderSearch
+                onChange={handleChange}
+                searchValue={searchEmail}
+                placeholder="SEARCH BY EMAIL ..."
+            />
             <button className="btn-add" onClick={() => setVisible(true)}>
                 Add Account
             </button>
             <Table
                 dataSource={accountData.reverse()}
                 columns={columns}
-                pagination={{ defaultPageSize: 8 }}
+                pagination={{ defaultPageSize: 4 }}
             />
             <ModalAccount
                 initialData={dataUpdate ? dataUpdate : null}
