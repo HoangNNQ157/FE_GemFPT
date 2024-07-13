@@ -57,7 +57,7 @@ const DetailProduct = () => {
             toast.success("Added product to cart successfully");
             localStorage.setItem("card", JSON.stringify([{ ...data, key: 1 }]));
         }
-    };
+    };// form detail image
     return data ? (
         <>
             <HeaderDefault backPage />

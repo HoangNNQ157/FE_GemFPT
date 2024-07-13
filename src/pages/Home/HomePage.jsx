@@ -95,8 +95,8 @@ const HomePage = () => {
                             </Col>
                             <Col span={18}>
                                 <Descriptions column={1} bordered>
-                                    <Descriptions.Item label="Username">
-                                        {userData.username}
+                                    <Descriptions.Item label="Name">
+                                        {userData.name}
                                     </Descriptions.Item>
                                     <Descriptions.Item label="Email">
                                         {userData.email}
