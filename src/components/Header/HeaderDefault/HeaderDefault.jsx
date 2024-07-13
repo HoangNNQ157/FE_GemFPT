@@ -1,58 +1,61 @@
 import { Button, Dropdown, Menu } from "antd";
-import Cookies from "js-cookie";
 import { BiLogOut, BiUser } from "react-icons/bi";
-import { CiSearch } from "react-icons/ci";
-import { useDispatch, useSelector } from "react-redux";
-import AntdDropdown from "../../components/AntdDropdown/AntdDropdown";
-import { logout } from "../../redux/features/counterSlice";
-import "./HeaderLayout.css";
+import { MdDashboard } from "react-icons/md";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-const HeaderLayout = ({ role }) => {
+import logo from "../../../assets/trangsucdaquy.jpg";
+import Cookies from "js-cookie";
+import { getInitials } from "../../../utils/funUtils";
+import { logout } from "../../../redux/features/counterSlice";
+import { CgArrowLeft } from "react-icons/cg";
+const HeaderDefault = ({ backPage }) => {
     const userData = useSelector((state) => state.user);
-    const navigate = useNavigate();
-
-    const getInitials = (name) => {
-        if (!name) return "";
-        const initials = name
-            .split(" ")
-            .map((word) => word[0])
-            .join("")
-            .toUpperCase();
-        return initials.slice(0, 2);
-    };
-    const dispatch = useDispatch();
+    const navigator = useNavigate();
     const handleLogout = () => {
         dispatch(logout());
         Cookies.remove("token");
-        navigate("/");
+        localStorage.clear();
+        navigator("/");
     };
     const menu = (
         <Menu>
             <Menu.Item
                 key="profile"
                 icon={<BiUser />}
-                onClick={() => navigate(`profile/${userData.id}`)}
+                onClick={() => navigator(`/profile/${userData?.id}`)}
             >
-                Profile
+                PROFILE
             </Menu.Item>
+            <Menu.Item
+                key="home"
+                icon={<MdDashboard />}
+                onClick={() => navigator("/home")}
+            >
+                DASHBOARD
+            </Menu.Item>{" "}
             <Menu.Item key="logout" icon={<BiLogOut />} onClick={handleLogout}>
-                Logout
+                LOGOUT
             </Menu.Item>
         </Menu>
     );
     return (
-        <div className="headerlayout-container">
-            <div className="headerlayout-wrapper">
-                <div className="headerlayout-search-sort">
-                    <div className="headerlayout-search-input">
-                        <CiSearch className="search-icon" />
-                        <input
-                            placeholder="SEARCH"
-                            className="input-search"
-                            type="search"
-                        />
-                    </div>
-                </div>
+        <div className="header__price">
+            {!backPage ? (
+                <img
+                    src={logo}
+                    className="img__logo"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => navigator("/")}
+                />
+            ) : (
+                <Button
+                    onClick={() => navigator(-1)}
+                    style={{ border: "none", boxShadow: "none" }}
+                >
+                    BACK PAGE <CgArrowLeft />
+                </Button>
+            )}
+            {userData ? (
                 <div className="headerlayout-profile">
                     <Dropdown overlay={menu} placement="bottomRight" arrow>
                         <Button
@@ -60,8 +63,6 @@ const HeaderLayout = ({ role }) => {
                             style={{
                                 fontWeight: "700",
                                 borderColor: "#333",
-                                fontSize: "20px",
-                                padding: "22px 16px",
                             }}
                         >
                             {getInitials(userData.name)}
@@ -80,8 +81,11 @@ const HeaderLayout = ({ role }) => {
                         <span>{userData.role}</span>
                     </div>
                 </div>
-            </div>
+            ) : (
+                <Button onClick={() => navigator("/login")}>Login</Button>
+            )}
         </div>
     );
 };
-export default HeaderLayout;
+
+export default HeaderDefault;

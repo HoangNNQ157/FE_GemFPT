@@ -52,7 +52,11 @@ const HeaderProduct = ({
 
     const menu = (
         <Menu>
-            <Menu.Item key="profile" icon={<BiUser />}>
+            <Menu.Item
+                key="profile"
+                icon={<BiUser />}
+                onClick={() => navigate(`/profile/${userData?.id}`)}
+            >
                 Profile
             </Menu.Item>
             <Menu.Item key="logout" icon={<BiLogOut />} onClick={handleLogout}>

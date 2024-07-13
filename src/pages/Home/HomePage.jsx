@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
     Card,
     Col,
@@ -9,36 +9,42 @@ import {
     Descriptions,
     Avatar,
     Divider,
+    Button,
 } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import "./home.css"; // Add this for custom CSS
+import { BiLogOut } from "react-icons/bi";
+import { logout } from "../../redux/features/counterSlice";
+import Cookies from "js-cookie";
 
 const { Title, Text } = Typography;
 
 const HomePage = () => {
     const userData = useSelector((state) => state.user);
+    const dispatch = useDispatch();
     const navigator = useNavigate();
     const adminLinks = [
-        { path: "/adminRevenue", label: "Dasboard" },
-        { path: "/adminAccount", label: "Account" },
-        { path: "/customer", label: "Customer" },
-        { path: "/adminMetal", label: "Metal" },
+        { path: "/adminRevenue", label: "Admin Dasboard" },
+        { path: "/adminAccount", label: "Admin Account" },
+        { path: "/adminCustomer", label: "Admin Customer" },
+        { path: "/adminMetal", label: "Admin Metal" },
     ];
-
     const managerLinks = [
-        { path: "/managerDashboard", label: "Dashboard" },
-        { path: "/managerPromotion", label: "Promotion" },
-        { path: "/manager-stall", label: "Stall" },
-        { path: "/manager-discount", label: "Discount" },
-        { path: "/manager-customer", label: "Customer" },
+        { path: "/manager-revenue", label: "Manager Dashboard" },
+        { path: "/manager-product", label: "Manager Product" },
+        { path: "/managerPromotion", label: "Manager Promotion" },
+        { path: "/manager-stall", label: "Manager Stall" },
+        { path: "/manager-discount", label: "Manager Discount" },
+        { path: "/manager-customer", label: "Manager Customer" },
+        { path: "/manager-bill", label: "Manager Bill" },
     ];
 
     const staffLinks = [
-        { path: "/staff-order", label: "Order" },
-        { path: "/staff-product", label: "Product" },
-        { path: "/staff-customer", label: "Customer" },
-        { path: "/staff-buy-back", label: "buy back" },
-        { path: "/staff-bill", label: "Bill" },
+        { path: "/staff-order", label: "Staff Order" },
+        { path: "/staff-product", label: "Staff Product" },
+        { path: "/staff-customer", label: "Staff Customer" },
+        { path: "/staff-buy-back", label: "Staff Buy Back" },
+        { path: "/staff-bill", label: "Staff Bill" },
     ];
 
     const getLinks = () => {
@@ -53,7 +59,12 @@ const HomePage = () => {
                 return [];
         }
     };
-
+    const handleLogout = () => {
+        dispatch(logout());
+        Cookies.remove("token");
+        localStorage.clear();
+        navigator("/");
+    };
     return (
         <div className="homepage-container">
             <Title level={1}>Welcome to the Dashboard</Title>
@@ -62,11 +73,21 @@ const HomePage = () => {
                     <Card
                         className="profile-card"
                         bordered={false}
-                        style={{ marginBottom: "20px" }}
+                        style={{
+                            marginBottom: "20px",
+                            border: "1px solid #ddd",
+                            position: "relative",
+                        }}
                     >
+                        <Button className="btn__logout" onClick={handleLogout}>
+                            Logout <BiLogOut />
+                        </Button>
                         <Row align="middle">
                             <Col span={6} className="avatar-col">
                                 <Avatar
+                                    onClick={() =>
+                                        navigator(`/profile/${userData.id}`)
+                                    }
                                     size={100}
                                     icon={<UserOutlined />}
                                     className="profile-avatar"
