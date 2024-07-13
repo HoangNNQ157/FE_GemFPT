@@ -1,7 +1,7 @@
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Button, Flex, Popconfirm, Table } from "antd";
 import React, { useEffect, useState } from "react";
-import { MdOutlineEditOff } from "react-icons/md";
+import { MdOutlineEditOff, MdProductionQuantityLimits } from "react-icons/md";
 import { toast } from "react-toastify";
 import { getAllMetal } from "../../service/metalPriceService";
 import {
@@ -9,6 +9,7 @@ import {
     deleteProduct,
     getListProducts,
     getListProductsActive,
+    getProductByBarcode,
     getProductByCategory,
     getProductByGem,
     getProductByMetal,
@@ -20,6 +21,7 @@ import { formatVND } from "../../utils/funUtils";
 import CarouselImg from "../Carousel/Carousel";
 import ModalManager from "../modal/ModalManager";
 import "./TableManager.css";
+import { useNavigate } from "react-router-dom";
 
 const TableManager = ({
     searchValue,
@@ -27,6 +29,7 @@ const TableManager = ({
     searchMetal,
     searchGem,
     searchCategory,
+    searchBarcode,
 }) => {
     const [visible, setVisible] = useState(false);
     const [dataProducts, setDataProducts] = useState([]);
@@ -34,7 +37,7 @@ const TableManager = ({
     const [barcodeUpdate, setBarcodeUpdate] = useState(null);
     const [metalData, setMetalData] = useState([]);
     const [productActice, setProductActive] = useState(false);
-    console.log(searchGem);
+    const navigator = useNavigate();
     useEffect(() => {
         const fetchProducts = async () => {
             try {
@@ -60,18 +63,26 @@ const TableManager = ({
                         category: searchCategory,
                     });
                     toast.success("Filter by category");
+                } else if (searchBarcode) {
+                    response = await getProductByBarcode({
+                        barcode: searchBarcode,
+                    });
+                    toast.success("Filter by barcode");
                 } else if (productActice) {
                     response = await getListProductsActive();
                     toast.success("Active products");
                 } else {
                     response = await getListProducts();
                 }
-
-                const products = response.data.map((product, index) => ({
-                    ...product,
-                    key: index + 1,
-                }));
-                setDataProducts(products);
+                if (response?.data?.length && response?.data[0]?.productId) {
+                    const products = response.data?.map((product, index) => ({
+                        ...product,
+                        key: index + 1,
+                    }));
+                    setDataProducts(products);
+                } else {
+                    setDataProducts([response.data]);
+                }
             } catch (error) {
                 toast.error("Failed to fetch products");
                 console.error("Error fetching products:", error);
@@ -86,6 +97,7 @@ const TableManager = ({
         searchMetal,
         searchGem,
         searchCategory,
+        searchBarcode,
     ]);
     useEffect(() => {
         //call apu  metals
@@ -161,7 +173,7 @@ const TableManager = ({
             // call api delete
             const response = await deleteProduct({ barcode: record.barcode });
             if (response.data.productId) {
-                toast.success("xoa sản phẩm thành công");
+                toast.success("delete product successfully");
                 const newProducts = productActice
                     ? await getListProductsActive()
                     : await getListProducts();
@@ -172,9 +184,10 @@ const TableManager = ({
                     })
                 );
                 setDataProducts(productsWithKey);
+            } else {
+                toast.error("delete product error");
             }
         } catch (error) {
-            console.error(err.response?.data);
             toast.error("Có lỗi xảy ra. Vui lòng thử lại sau.");
         }
     };
@@ -185,11 +198,11 @@ const TableManager = ({
             key: "productId",
         },
         {
-            title: "Ảnh",
+            title: "IMAGES",
             dataIndex: "urls",
             key: "urls",
             render: (urls) =>
-                urls.length > 0 ? (
+                urls?.length > 0 ? (
                     <div
                         style={{
                             width: "200px",
@@ -203,7 +216,7 @@ const TableManager = ({
                 ),
         },
         {
-            title: "Tên",
+            title: "NAME",
             dataIndex: "name",
             key: "name",
             render: (text) => (
@@ -222,12 +235,12 @@ const TableManager = ({
             ),
         },
         {
-            title: "Bộ sư tập",
+            title: "CATEGORY",
             dataIndex: "category",
             key: "category",
         },
         {
-            title: "số lượng",
+            title: "STOCK",
             dataIndex: "stock",
             key: "stock",
             render: (text, record) => (
@@ -235,23 +248,28 @@ const TableManager = ({
             ),
         },
         {
-            title: "Giá",
+            title: "PRICE",
             dataIndex: "price",
             key: "price",
             render: (text, record) => <span>{formatVND(record.price)}</span>,
         },
         {
-            title: "Giá mới",
+            title: "NEW PRICE",
             dataIndex: "newPrice",
             key: "newPrice",
             render: (text, record) => <span>{formatVND(record.newPrice)}</span>,
         },
         {
-            title: "Trang thái",
+            title: "STATUS",
             dataIndex: "status",
             key: "status",
             render: (text, record) => (
-                <span> {record.status ? "Hoạt động" : "Ngưng hoạt động"}</span>
+                <span
+                    className="status"
+                    style={{ color: record.status ? "green" : "red" }}
+                >
+                    {record.status ? "ON" : "OFF"}
+                </span>
             ),
         },
         {
@@ -268,6 +286,14 @@ const TableManager = ({
                     ) : (
                         <Button danger icon={<MdOutlineEditOff />} />
                     )}
+                    <Button
+                        type="dashed"
+                        style={{ color: "blue" }}
+                        icon={<MdProductionQuantityLimits />}
+                        onClick={() =>
+                            navigator(`/product-detail/${record.productId}`)
+                        }
+                    />
                     <Popconfirm
                         title="Bạn muốn xóa sản phẩm ? "
                         onConfirm={() => handleDelteProduct(record)}

@@ -1,0 +1,22 @@
+.detail__wrapper {
+    width: 1200px;
+    margin: 0 auto;
+    padding: 40px;
+    display: flex;
+    align-items: start;
+    gap: 20px;
+}
+.img__wrapper {
+    display: flex;
+    height: 100%;
+    gap: 10px;
+}
+.img__child {
+    object-fit: contain;
+    background: #f7f7f7;
+    border: 1px solid #ddd;
+}
+
+.img__main {
+    border: 1px solid #ddd;
+}

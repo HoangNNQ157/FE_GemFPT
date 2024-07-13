@@ -1,13 +1,16 @@
 import { Button, Form, Input, Modal, Select, Table } from "antd";
 import React, { useEffect, useState } from "react";
+import { MdProductionQuantityLimits } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import CarouselImg from "../../../components/Carousel/Carousel";
 import HeaderProduct from "../../../components/Header/HeaderProduct/HeaderProduct";
 import SearchGemstoneForm from "../../../components/modal/SearchGemstoneForm";
+import { CategoryOption } from "../../../data/data";
 import useDebounce from "../../../hook/debound";
 import {
     getListProductsActive,
+    getProductByBarcode,
     getProductByCategory,
     getProductByGem,
     getProductByMetal,
@@ -16,12 +19,13 @@ import {
 } from "../../../service/productService";
 import { formatVND } from "../../../utils/funUtils";
 import "./StaffProduct.css";
-import { CategoryOption } from "../../../data/data";
 
 const StaffProduct = () => {
     const [dataProducts, setDataProducts] = useState([]);
     const [selectedProducts, setSelectedProducts] = useState([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const [searchBarcode, setSearchBarcode] = useState("");
     const [isModalCategory, setIsModalCategory] = useState(false);
     const [searchProduct, setSearchProduct] = useState("");
     const [searchProductByMetal, setSearchProductByMetal] = useState("");
@@ -36,7 +40,13 @@ const StaffProduct = () => {
     const debouncedSearchPrice = useDebounce(searchPrice, 500);
     const [form] = Form.useForm();
     const navigator = useNavigate();
-
+    useEffect(() => {
+        const data = JSON.parse(localStorage.getItem("card"));
+        if (data?.length) {
+            setSelectedProducts(data);
+            setSelectedRowKeys(data.map((product) => product.key));
+        }
+    }, []);
     useEffect(() => {
         const fetchProducts = async () => {
             try {
@@ -54,6 +64,11 @@ const StaffProduct = () => {
                 } else if (searchProductByMetal) {
                     response = await getProductByMetal(searchProductByMetal);
                     toast.success("Filter by metal");
+                } else if (searchBarcode) {
+                    response = await getProductByBarcode({
+                        barcode: searchBarcode,
+                    });
+                    toast.success("Filter by barcode");
                 } else if (searchGem && searchGem.color) {
                     response = await getProductByGem(searchGem);
                     toast.success("Filter by gem");
@@ -61,12 +76,14 @@ const StaffProduct = () => {
                     response = await getListProductsActive();
                 }
 
-                if (response?.data) {
-                    const products = response.data.map((product, index) => ({
+                if (response?.data?.length && response?.data[0]?.productId) {
+                    const products = response.data?.map((product, index) => ({
                         ...product,
                         key: index + 1,
                     }));
                     setDataProducts(products);
+                } else {
+                    setDataProducts([response.data]);
                 }
             } catch (error) {
                 toast.error("Failed to fetch products");
@@ -80,6 +97,7 @@ const StaffProduct = () => {
         debouncedSearchPrice,
         searchProductByMetal,
         searchGem,
+        searchBarcode,
     ]);
 
     const columns = [
@@ -132,7 +150,7 @@ const StaffProduct = () => {
                 ),
         },
         {
-            title: "Tên",
+            title: "NAME",
             dataIndex: "name",
             key: "name",
             render: (text) => (
@@ -151,12 +169,12 @@ const StaffProduct = () => {
             ),
         },
         {
-            title: "Bộ sư tập",
+            title: "CATEGORY",
             dataIndex: "category",
             key: "category",
         },
         {
-            title: "Số lượng",
+            title: "STOCK",
             dataIndex: "stock",
             key: "stock",
             render: (text, record) => (
@@ -164,30 +182,49 @@ const StaffProduct = () => {
             ),
         },
         {
-            title: "Giá",
+            title: "PRICE",
             dataIndex: "price",
             key: "price",
             render: (text, record) => <span>{formatVND(record.price)}</span>,
         },
         {
-            title: "Giá mới",
+            title: "NEW PRICE",
             dataIndex: "newPrice",
             key: "newPrice",
             render: (text, record) => <span>{formatVND(record.newPrice)}</span>,
         },
         {
-            title: "Trạng thái",
+            title: "STATUS",
             dataIndex: "status",
             key: "status",
             render: (text, record) => (
-                <span> {record.status ? "Hoạt động" : "Ngưng hoạt động"}</span>
+                <span
+                    className="status"
+                    style={{ color: record.status ? "green" : "red" }}
+                >
+                    {record.status ? "ON" : "OFF"}
+                </span>
+            ),
+        },
+        {
+            title: "ACCTIONS",
+            key: "actions",
+            render: (text, record) => (
+                <Button
+                    icon={<MdProductionQuantityLimits />}
+                    onClick={() =>
+                        navigator(`/product-detail/${record.productId}`)
+                    }
+                />
             ),
         },
     ];
 
     const rowSelection = {
+        selectedRowKeys, // Set the selected row keys
         onChange: (selectedRowKeys, selectedRows) => {
-            setSelectedProducts(selectedRows);
+            setSelectedRowKeys(selectedRowKeys); // Update selected row keys
+            setSelectedProducts(selectedRows); // Update selected products
         },
         selections: [
             Table.SELECTION_ALL,
@@ -206,9 +243,10 @@ const StaffProduct = () => {
             maxPrice: values[1],
         });
     };
-
+    const onChangeBarcode = (values) => {
+        setSearchBarcode(values.barcode);
+    };
     const handleContinue = () => {
-        console.log(selectedProducts);
         if (selectedProducts.length === 0) {
             toast.error("No products selected");
             return;
@@ -229,6 +267,7 @@ const StaffProduct = () => {
             });
         if (searchProduct) setSearchProduct("");
         if (searchProductByMetal) setSearchProductByMetal("");
+        if (searchBarcode) setSearchBarcode("");
         if (searchGem) setSearchGem({});
     };
 
@@ -271,6 +310,7 @@ const StaffProduct = () => {
                 onReset={onReset}
                 showModalMetal={showModalMetal}
                 showModaGem={() => setIsModalGem(true)}
+                onChangeBarcode={onChangeBarcode}
                 showModaCategory={() => setIsModalCategory(true)}
             />
             <Table
@@ -317,15 +357,7 @@ const StaffProduct = () => {
                 width={600}
             >
                 <Form form={form}>
-                    <Form.Item
-                        name="metal"
-                        rules={[
-                            {
-                                required: true,
-                                message: "Please select a metal!",
-                            },
-                        ]}
-                    >
+                    <Form.Item name="metal">
                         <Input placeholder="Enter your metalType" />
                     </Form.Item>
                 </Form>

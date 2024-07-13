@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import "./HeaderProduct.css";
 import { logout } from "../../../redux/features/counterSlice";
 import AntdDropdown from "../../AntdDropdown/AntdDropdown";
+import { getInitials } from "../../../utils/funUtils";
 
 const HeaderProduct = ({
     role,
@@ -19,37 +20,37 @@ const HeaderProduct = ({
     showModalMetal,
     showModaGem,
     showModaCategory,
+    onChangeBarcode,
 }) => {
     const userData = useSelector((state) => state.user);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const [isPriceModalVisible, setIsPriceModalVisible] = useState(false);
+    const [isBarocdeModalVisible, setIsBarocdeModalVisible] = useState(false);
     const [priceForm] = Form.useForm();
-
-    const getInitials = (name) => {
-        if (!name) return "";
-        const initials = name
-            .split(" ")
-            .map((word) => word[0])
-            .join("")
-            .toUpperCase();
-        return initials.slice(0, 2);
-    };
-
+    const [barcodeForm] = Form.useForm();
     const handleLogout = () => {
         dispatch(logout());
         Cookies.remove("token");
         navigate("/");
+        localStorage.clear();
     };
 
     const handlePriceFilter = () => {
         priceForm.validateFields().then((values) => {
             onChangeMinMax([values.minPrice, values.maxPrice]);
             setIsPriceModalVisible(false);
+            priceForm.resetFields();
         });
     };
-
+    const handleBarcodeFilter = () => {
+        barcodeForm.validateFields().then((values) => {
+            onChangeBarcode(values);
+            setIsBarocdeModalVisible(false);
+            barcodeForm.resetFields();
+        });
+    };
     const menu = (
         <Menu>
             <Menu.Item
@@ -78,6 +79,12 @@ const HeaderProduct = ({
             </Menu.Item>
             <Menu.Item key="category" onClick={showModaCategory}>
                 <span>Category</span>
+            </Menu.Item>
+            <Menu.Item
+                key="barcode"
+                onClick={() => setIsBarocdeModalVisible(true)}
+            >
+                <span>Barcode</span>
             </Menu.Item>
         </Menu>
     );
@@ -162,6 +169,27 @@ const HeaderProduct = ({
                             type="number"
                             placeholder="Enter maximum price"
                         />
+                    </Form.Item>
+                </Form>
+            </Modal>
+            <Modal
+                title="Barcode"
+                visible={isBarocdeModalVisible}
+                onOk={handleBarcodeFilter}
+                onCancel={() => setIsBarocdeModalVisible(false)}
+            >
+                <Form form={barcodeForm}>
+                    <Form.Item
+                        name="barcode"
+                        label="Barcode"
+                        rules={[
+                            {
+                                required: true,
+                                message: "Please enter barcode",
+                            },
+                        ]}
+                    >
+                        <Input placeholder="Enter barcode" />
                     </Form.Item>
                 </Form>
             </Modal>
