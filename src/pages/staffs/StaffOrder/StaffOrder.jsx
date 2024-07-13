@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Button, Flex, Form, Input, Table, Tooltip, Radio, Space } from "antd";
+import {
+    Button,
+    Flex,
+    Form,
+    Input,
+    Table,
+    Tooltip,
+    Radio,
+    Space,
+    Divider,
+} from "antd";
 import { CgClose } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
 import "./Stafforder.css";
@@ -10,6 +20,7 @@ import { toast } from "react-toastify";
 import { formatVND } from "../../../utils/funUtils";
 import { getDiscountById } from "../../../service/discount";
 import useDebounce from "../../../hook/debound";
+import { BiCalendar, BiPhone, BiUser } from "react-icons/bi";
 
 const StaffOrder = () => {
     const [dataProducts, setDataProducts] = useState([]);
@@ -36,10 +47,17 @@ const StaffOrder = () => {
             dataIndex: "price",
             key: "price",
             render: (text, record) => (
-                <span>{record.newPrice || record.price}</span>
+                <span>
+                    {formatVND(record.price) || formatVND(record.newPrice)}
+                </span>
             ),
         },
-        { title: "NEW PRICE", dataIndex: "newPrice", key: "newPrice" },
+        {
+            title: "NEW PRICE",
+            dataIndex: "newPrice",
+            key: "newPrice",
+            render: (text) => formatVND(text),
+        },
         { title: "CATEGORY", dataIndex: "category", key: "category" },
         {
             title: "TIME CREATED",
@@ -109,7 +127,6 @@ const StaffOrder = () => {
             }
             if (type === "billVNP") {
                 const response = await createBill(requestData);
-                console.log("response: ", response);
                 if (response.data) {
                     toast.success("Created bill successfully");
                     localStorage.removeItem("card");
@@ -188,6 +205,32 @@ const StaffOrder = () => {
                     >
                         CUSTOMER INFO
                     </button>
+                    {customerData?.id ? (
+                        <div className="customer__infoo">
+                            <Divider />
+                            <div className="customer__wrapper">
+                                <div>
+                                    <BiUser color="black" /> CUSTOMER NAME:{" "}
+                                    {customerData.name}
+                                </div>
+                                <div>
+                                    <BiPhone color="black" /> PHONE:{" "}
+                                    {customerData.phone}
+                                </div>
+                                <div>RANK: {customerData.rankCus}</div>
+                            </div>
+                            <div className="customer__wrapper">
+                                <div>
+                                    <BiCalendar color="black" /> CREATE DATE:{" "}
+                                    {new Date(
+                                        customerData.createTime
+                                    ).toLocaleString("vi-VN")}
+                                </div>
+                                <div>LOYALTY POINTS: {customerData.points}</div>
+                            </div>
+                            <Divider />
+                        </div>
+                    ) : null}
                     <button
                         className="order-btn"
                         onClick={() => setIsModalVisibleDiscount(true)}
@@ -254,20 +297,27 @@ const StaffOrder = () => {
                             </div>
                         )}
                     </div>
-                    <button
-                        className="checkout-btn"
-                        type="submit"
-                        disabled={
-                            !customerData.phone ||
-                            (paymentMethod === "cash" &&
-                                amountPaid < totalAmount) ||
-                            checkCheckoutSucces
-                        }
-                    >
-                        CHECKOUT
-                    </button>
+                    {paymentMethod === "online" ? (
+                        <button
+                            className="checkout-btn"
+                            type="submit"
+                            disabled={!customerData.phone}
+                        >
+                            CHECKOUT
+                        </button>
+                    ) : (
+                        <button
+                            className="checkout-btn"
+                            type="submit"
+                            disabled={
+                                !customerData.phone || amountPaid < totalAmount
+                            }
+                        >
+                            CHECKOUT
+                        </button>
+                    )}
                 </Form>
-                {checkCheckoutSucces ? (
+                {checkCheckoutSucces && paymentMethod === "online" ? (
                     <button
                         className="checkout-btn"
                         onClick={() => {
