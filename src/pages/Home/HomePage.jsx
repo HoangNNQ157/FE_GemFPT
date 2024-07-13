@@ -19,26 +19,26 @@ const HomePage = () => {
     const userData = useSelector((state) => state.user);
     const navigator = useNavigate();
     const adminLinks = [
-        { path: "/adminRevenue", label: "Dasboard" },
-        { path: "/adminAccount", label: "Account" },
-        { path: "/customer", label: "Customer" },
-        { path: "/adminMetal", label: "Metal" },
+        { path: "/adminRevenue", label: "Admin Dasboard" },
+        { path: "/adminAccount", label: "Admin Account" },
+        { path: "/customer", label: "Admin Customer" },
+        { path: "/adminMetal", label: "Admin Metal" },
     ];
 
     const managerLinks = [
-        { path: "/managerDashboard", label: "Dashboard" },
-        { path: "/managerPromotion", label: "Promotion" },
-        { path: "/manager-stall", label: "Stall" },
-        { path: "/manager-discount", label: "Discount" },
-        { path: "/manager-customer", label: "Customer" },
+        { path: "/managerDashboard", label: "Manager Product" },
+        { path: "/managerPromotion", label: "Manager Promotion" },
+        { path: "/manager-stall", label: "Manager Stall" },
+        { path: "/manager-discount", label: "Manager Discount" },
+        { path: "/manager-customer", label: "Manager Customer" },
     ];
 
     const staffLinks = [
-        { path: "/staff-order", label: "Order" },
-        { path: "/staff-product", label: "Product" },
-        { path: "/staff-customer", label: "Customer" },
-        { path: "/staff-buy-back", label: "buy back" },
-        { path: "/staff-bill", label: "Bill" },
+        { path: "/staff-order", label: "Staff Order" },
+        { path: "/staff-product", label: "Staff Product" },
+        { path: "/staff-customer", label: "Staff Customer" },
+        { path: "/staff-buy-back", label: "Staff Buy back" },
+        { path: "/staff-bill", label: "Staff Bill" },
     ];
 
     const getLinks = () => {
@@ -74,8 +74,8 @@ const HomePage = () => {
                             </Col>
                             <Col span={18}>
                                 <Descriptions column={1} bordered>
-                                    <Descriptions.Item label="Username">
-                                        {userData.username}
+                                    <Descriptions.Item label="Name">
+                                        {userData.name}
                                     </Descriptions.Item>
                                     <Descriptions.Item label="Email">
                                         {userData.email}

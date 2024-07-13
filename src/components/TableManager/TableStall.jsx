@@ -215,7 +215,7 @@ const TableStall = () => {
             <Table
                 dataSource={stallData.reverse()}
                 columns={columns}
-                pagination={{ defaultPageSize: 4 }}
+                pagination={{ defaultPageSize: 8 }}
             />
             <CreateStallForm
                 visible={visible}

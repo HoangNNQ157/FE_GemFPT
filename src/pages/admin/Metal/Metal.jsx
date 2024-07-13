@@ -156,7 +156,7 @@ const Metal = () => {
                 <Table
                     dataSource={dataMetal.reverse()}
                     columns={columns}
-                    pagination={{ defaultPageSize: 3 }}
+                    pagination={{ defaultPageSize: 8 }}
                 />
             )}
 
