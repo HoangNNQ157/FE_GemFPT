@@ -13,6 +13,9 @@ const getListProducts = () => {
 const getListProductsActive = () => {
     return api.get("products-true", { headers: headers });
 };
+const getProductById = ({ id }) => {
+    return api.get(`products/id/${id}`, { headers: headers });
+};
 const getProductByName = (search) => {
     return api.get(`/search/name?name=${search}`, { headers: headers });
 };
@@ -29,6 +32,11 @@ const getProductByGem = (search) => {
 };
 const getProductByCategory = ({ category }) => {
     return api.get(`category?category=${category}`, {
+        headers: headers,
+    });
+};
+const getProductByBarcode = ({ barcode }) => {
+    return api.get(`products/barcode/${barcode}`, {
         headers: headers,
     });
 };
@@ -60,4 +68,6 @@ export {
     getProductByPrice,
     getProductByGem,
     getProductByCategory,
+    getProductById,
+    getProductByBarcode,
 };

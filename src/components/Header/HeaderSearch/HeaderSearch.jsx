@@ -9,7 +9,7 @@ import { logout } from "../../../redux/features/counterSlice";
 import AntdDropdown from "../../AntdDropdown/AntdDropdown";
 import "./HeaderSearch.css";
 
-const HeaderSearch = ({ role, searchValue, onChange }) => {
+const HeaderSearch = ({ role, searchValue, onChange, placeholder }) => {
     const userData = useSelector((state) => state.user);
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -27,12 +27,17 @@ const HeaderSearch = ({ role, searchValue, onChange }) => {
     const handleLogout = () => {
         dispatch(logout());
         Cookies.remove("token");
+        localStorage.clear();
         navigate("/");
     };
 
     const menu = (
         <Menu>
-            <Menu.Item key="profile" icon={<BiUser />}>
+            <Menu.Item
+                key="profile"
+                icon={<BiUser />}
+                onClick={() => navigate(`/profile/${userData?.id}`)}
+            >
                 Profile
             </Menu.Item>
             <Menu.Item key="logout" icon={<BiLogOut />} onClick={handleLogout}>
@@ -47,7 +52,7 @@ const HeaderSearch = ({ role, searchValue, onChange }) => {
                     <div className="headerlayout-search-input">
                         <CiSearch className="search-icon" />
                         <input
-                            placeholder="SEARCH"
+                            placeholder={placeholder || "SEARCH..."}
                             className="input-search"
                             type="search"
                             value={searchValue}
