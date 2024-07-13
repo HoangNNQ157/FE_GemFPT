@@ -114,15 +114,15 @@ const StaffBill = () => {
                             onClick={() => navigator(`/bill/${record.id}`)}
                         />
                     </Tooltip>
-                    <Popconfirm
+                    {/* <Popconfirm
                         title="Bạn muốn xóa sản phẩm ? "
                         onConfirm={() => handleDelteProduct(record)}
-                        onCancel={() => {}}
+                        onCancel={() => { }}
                         okText="Yes"
                         cancelText="No"
                     >
                         <Button danger icon={<MdDeleteOutline />} />
-                    </Popconfirm>
+                    </Popconfirm> */}
                 </Flex>
             ),
         },
@@ -171,7 +171,7 @@ const StaffBill = () => {
             <Table
                 dataSource={billData.reverse()}
                 columns={columns}
-                pagination={{ defaultPageSize: 4 }}
+                pagination={{ defaultPageSize: 8 }}
             />
         </>
     );

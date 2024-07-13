@@ -93,7 +93,7 @@ const Promotion = () => {
                         <Button danger icon={<MdOutlineEditOff size={24} />} />
                     )}
                     <Popconfirm
-                        title="Bạn muốn xóa sản phẩm ? "
+                        title="Bạn muốn giảm giá sản phẩm ? "
                         onConfirm={() => handleDelteProduct(record)}
                         onCancel={() => {}}
                         okText="Yes"
@@ -234,7 +234,7 @@ const Promotion = () => {
             // call api delete
             const response = await deletePromotion({ id: record.id });
             if (response.data) {
-                toast.success("xoa giảm giá thành công");
+                toast.success("xóa giảm giá thành công");
                 getListPromotion()
                     .then((data) => data.data)
                     .then((data) => setDataPromotion(data));
@@ -267,7 +267,7 @@ const Promotion = () => {
             <Table
                 dataSource={dataPromotion.reverse()}
                 columns={columns}
-                pagination={{ defaultPageSize: 4 }}
+                pagination={{ defaultPageSize: 8 }}
             />
             <PromotionForm
                 dataProduct={dataProduct}
