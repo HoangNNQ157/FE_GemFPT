@@ -19,4 +19,13 @@ const loginWithGoogle = ({ token }) => {
 const forgotPassword = ({ email }) => {
     return api.post("forgot_password", { email });
 };
-export { registerApi, loginWithEmail, loginWithGoogle, forgotPassword };
+const getProfileById = ({ userId }) => {
+    return api.get(`${userId}`, { headers });
+};
+export {
+    registerApi,
+    loginWithEmail,
+    loginWithGoogle,
+    forgotPassword,
+    getProfileById,
+};

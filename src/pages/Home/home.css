@@ -12,7 +12,7 @@
 
 .profile-avatar {
     margin: 20px;
-    border: 2px solid #1890ff;
+    cursor: pointer;
 }
 
 .avatar-col {
@@ -33,4 +33,10 @@
 
 .link-card a {
     color: #1890ff;
+}
+.btn__logout {
+    position: absolute;
+    top: 6px;
+    right: 10px;
+    border: none;
 }

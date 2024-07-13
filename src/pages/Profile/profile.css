@@ -1,0 +1,46 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+.profile-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 50px 20px;
+    background-color: #f0f2f5;
+    min-height: 100vh;
+}
+
+.profile-card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.profile-avatar-section {
+    text-align: center;
+}
+
+.profile-avatar {
+    margin-bottom: 10px;
+}
+
+.profile-name {
+    margin: 0;
+}
+
+.profile-email {
+    color: #888;
+}
+
+.profile-title {
+    margin-bottom: 20px;
+}
+
+.profile-input {
+    width: 100%;
+}
+
+.save-profile-button {
+    text-align: right;
+}

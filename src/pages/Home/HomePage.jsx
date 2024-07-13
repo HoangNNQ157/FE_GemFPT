@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
     Card,
     Col,
@@ -9,35 +9,48 @@ import {
     Descriptions,
     Avatar,
     Divider,
+    Button,
 } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import "./home.css"; // Add this for custom CSS
+import { BiLogOut } from "react-icons/bi";
+import { logout } from "../../redux/features/counterSlice";
+import Cookies from "js-cookie";
 
 const { Title, Text } = Typography;
 
 const HomePage = () => {
     const userData = useSelector((state) => state.user);
+    const dispatch = useDispatch();
     const navigator = useNavigate();
     const adminLinks = [
         { path: "/adminRevenue", label: "Admin Dasboard" },
         { path: "/adminAccount", label: "Admin Account" },
-        { path: "/customer", label: "Admin Customer" },
+
+        { path: "/adminCustomer", label: "Admin Customer" },
+
+
         { path: "/adminMetal", label: "Admin Metal" },
     ];
-
     const managerLinks = [
-        { path: "/managerDashboard", label: "Manager Product" },
+
+        { path: "/manager-revenue", label: "Manager Dashboard" },
+        { path: "/manager-product", label: "Manager Product" },
         { path: "/managerPromotion", label: "Manager Promotion" },
         { path: "/manager-stall", label: "Manager Stall" },
         { path: "/manager-discount", label: "Manager Discount" },
         { path: "/manager-customer", label: "Manager Customer" },
+        { path: "/manager-bill", label: "Manager Bill" },
+
     ];
 
     const staffLinks = [
         { path: "/staff-order", label: "Staff Order" },
         { path: "/staff-product", label: "Staff Product" },
         { path: "/staff-customer", label: "Staff Customer" },
-        { path: "/staff-buy-back", label: "Staff Buy back" },
+        { path: "/staff-buy-back", label: "Staff Buy Back" },
+
+
         { path: "/staff-bill", label: "Staff Bill" },
     ];
 
@@ -53,7 +66,12 @@ const HomePage = () => {
                 return [];
         }
     };
-
+    const handleLogout = () => {
+        dispatch(logout());
+        Cookies.remove("token");
+        localStorage.clear();
+        navigator("/");
+    };
     return (
         <div className="homepage-container">
             <Title level={1}>Welcome to the Dashboard</Title>
@@ -62,11 +80,21 @@ const HomePage = () => {
                     <Card
                         className="profile-card"
                         bordered={false}
-                        style={{ marginBottom: "20px" }}
+                        style={{
+                            marginBottom: "20px",
+                            border: "1px solid #ddd",
+                            position: "relative",
+                        }}
                     >
+                        <Button className="btn__logout" onClick={handleLogout}>
+                            Logout <BiLogOut />
+                        </Button>
                         <Row align="middle">
                             <Col span={6} className="avatar-col">
                                 <Avatar
+                                    onClick={() =>
+                                        navigator(`/profile/${userData.id}`)
+                                    }
                                     size={100}
                                     icon={<UserOutlined />}
                                     className="profile-avatar"
