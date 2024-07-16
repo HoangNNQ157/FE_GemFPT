@@ -25,17 +25,17 @@ const Promotion = () => {
             key: "id",
         },
         {
-            title: "Tên chương trình",
+            title: "Program Name",
             dataIndex: "programName",
             key: "programName",
         },
         {
-            title: "Tỉ lệ",
+            title: "Discount Rate",
             dataIndex: "discountRate",
             key: "discountRate",
         },
         {
-            title: "Mô tả",
+            title: "Description",
             dataIndex: "description",
             key: "description",
             render: (text) => (
@@ -55,25 +55,25 @@ const Promotion = () => {
             ),
         },
         {
-            title: "Trang thái",
+            title: "Status",
             dataIndex: "status",
             key: "status",
             render: (text, record) =>
                 record.status ? "Đang kích hoạt" : "Đã ngừng",
         },
         {
-            title: "Sản phẩm giảm giá",
+            title: "Applicable Products",
             dataIndex: "applicableProducts",
             key: "applicableProducts",
         },
         {
-            title: "Ngày bắt đầu",
+            title: "Start Time",
             dataIndex: "startTime",
             key: "startTime",
             render: (text) => new Date(text).toLocaleString("vi-VN"), // Format date to Vietnamese locale
         },
         {
-            title: "Ngày kết thúc",
+            title: "End Time",
             dataIndex: "endTime",
             key: "endTime",
             render: (text) => new Date(text).toLocaleString("vi-VN"), // Format date to Vietnamese locale
@@ -93,7 +93,7 @@ const Promotion = () => {
                         <Button danger icon={<MdOutlineEditOff size={24} />} />
                     )}
                     <Popconfirm
-                        title="Bạn muốn giảm giá sản phẩm ? "
+                        title="Do you want to reduce product prices ? "
                         onConfirm={() => handleDelteProduct(record)}
                         onCancel={() => {}}
                         okText="Yes"
@@ -157,14 +157,14 @@ const Promotion = () => {
         try {
             const response = await createPromotion({ formData: values });
             if (response.data) {
-                toast.success("Tạo giảm giá thành công");
+                toast.success("Successfully created a discount");
                 getListPromotion()
                     .then((data) => data.data)
                     .then((data) => setDataPromotion(data));
             }
         } catch (err) {
             console.error(err.response?.data);
-            toast.error("Có lỗi xảy ra. Vui lòng thử lại sau.");
+            toast.error("An error occurred. Please try again later.");
         } finally {
             setVisible(false);
         }
@@ -175,7 +175,7 @@ const Promotion = () => {
                 formData: { ...values, disID: dataUpdate.id },
             });
             if (response.data) {
-                toast.success("Cập nhật giảm giá thành công");
+                toast.success("Discount updated successfully");
                 getListPromotion()
                     .then((data) => data.data)
                     .then((data) => setDataPromotion(data));
@@ -183,7 +183,7 @@ const Promotion = () => {
             setDataUpdate(null);
         } catch (err) {
             console.error(err.response?.data);
-            toast.error("Có lỗi xảy ra. Vui lòng thử lại sau.");
+            toast.error("An error occurred. Please try again later.");
         } finally {
             setShowModalUpdate(false);
         }
@@ -194,14 +194,14 @@ const Promotion = () => {
                 formData: values,
             });
             if (response.data) {
-                toast.success("create discount for all product successfully");
+                toast.success("Create discount for all product successfully");
                 getListPromotion()
                     .then((data) => data.data)
                     .then((data) => setDataPromotion(data));
             }
         } catch (err) {
             console.error(err.response?.data);
-            toast.error("Có lỗi xảy ra. Vui lòng thử lại sau.");
+            toast.error("An error occurred. Please try again later.");
         } finally {
             setShowAllPromotion(false);
         }
@@ -218,7 +218,7 @@ const Promotion = () => {
                 category: values.category,
             });
             if (response.data) {
-                toast.success("create discount for all product successfully");
+                toast.success("Create discount for all product successfully");
                 getListPromotion()
                     .then((data) => data.data)
                     .then((data) => setDataPromotion(data));
@@ -234,14 +234,14 @@ const Promotion = () => {
             // call api delete
             const response = await deletePromotion({ id: record.id });
             if (response.data) {
-                toast.success("xóa giảm giá thành công");
+                toast.success("Discount removed successfully");
                 getListPromotion()
                     .then((data) => data.data)
                     .then((data) => setDataPromotion(data));
             }
         } catch (error) {
             console.error(err.response?.data);
-            toast.error("Có lỗi xảy ra. Vui lòng thử lại sau.");
+            toast.error("An error occurred. Please try again later.");
         }
     };
     return (

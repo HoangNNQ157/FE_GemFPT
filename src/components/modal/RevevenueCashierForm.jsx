@@ -113,8 +113,8 @@ const RevevenueCashierForm = ({
                     >
                         <Select placeholder="Select cashier">
                             {allAcount?.map((account) => (
-                                <Option key={account.id} value={account.id}>
-                                    {account.email}
+                                <Option key={account.name} value={account.name}>
+                                    {account.name}
                                 </Option>
                             ))}
                         </Select>

@@ -129,7 +129,7 @@ const TableManager = ({
                     barcode: barcodeUpdate,
                 });
                 if (response.data.productId) {
-                    toast.success("Cập nhật sản phẩm thành công");
+                    toast.success("Successfully updated product");
                     //update xong -> call  lại ai product
                     const updatedProducts = productActice
                         ? await getListProductsActive()
@@ -147,7 +147,7 @@ const TableManager = ({
                 // call api tạo product
                 const response = await createProduct(values);
                 if (response.data.productId) {
-                    toast.success("Tạo mới sản phẩm thành công");
+                    toast.success("Create new products successfully");
                     // tạo oke-> call api getProduct
                     const newProducts = productActice
                         ? await getListProductsActive()
@@ -163,7 +163,7 @@ const TableManager = ({
             }
         } catch (err) {
             console.error(err.response?.data);
-            toast.error("Có lỗi xảy ra. Vui lòng thử lại sau.");
+            toast.error("An error occurred. Please try again later.");
         } finally {
             setVisible(false);
         }
@@ -188,7 +188,7 @@ const TableManager = ({
                 toast.error("delete product error");
             }
         } catch (error) {
-            toast.error("Có lỗi xảy ra. Vui lòng thử lại sau.");
+            toast.error("An error occurred. Please try again later.");
         }
     };
     const columns = [
@@ -295,7 +295,7 @@ const TableManager = ({
                         }
                     />
                     <Popconfirm
-                        title="Bạn muốn xóa sản phẩm ? "
+                        title="Do you want to delete the product ? "
                         onConfirm={() => handleDelteProduct(record)}
                         onCancel={() => {}}
                         okText="Yes"
