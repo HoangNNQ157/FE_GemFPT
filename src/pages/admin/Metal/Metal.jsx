@@ -33,12 +33,12 @@ const Metal = () => {
         try {
             const response = await updateMetal({ formData: values });
             if (response.data) {
-                toast.success("Cập nhật thành công");
+                toast.success("Update successful");
                 const newMetal = await getAllMetal();
                 setDataMetal(newMetal.data);
             }
         } catch (err) {
-            toast.error("Có lỗi xảy ra. Vui lòng thử lại sau.");
+            toast.error("An error occurred. Please try again later.");
         } finally {
             setVisible(false);
         }
@@ -50,13 +50,13 @@ const Metal = () => {
             key: "metalPriceId",
         },
         {
-            title: "Ngày cập nhật",
+            title: "Update Date",
             dataIndex: "updateDate",
             key: "updateDate",
             render: (text) => new Date(text).toLocaleString(),
         },
         {
-            title: "Trạng thái",
+            title: "Status",
             dataIndex: "status",
             key: "status",
             render: (text) => (
@@ -64,7 +64,7 @@ const Metal = () => {
             ),
         },
         {
-            title: "Danh sách metals",
+            title: "Type Of Metals",
             dataIndex: "typeOfMetals",
             key: "typeOfMetals",
             render: (text) => <span> {text.length} metal</span>,
@@ -88,7 +88,7 @@ const Metal = () => {
                         type="link"
                         onClick={() => {
                             setIndexView(record);
-                            toast.info("bạn vừa chuyển sang chi tiết metal");
+                            toast.info("You have just moved on to metal details");
                         }}
                     >
                         Chi tiết
@@ -104,13 +104,13 @@ const Metal = () => {
             key: "metalPriceId",
         },
         {
-            title: "Ngày cập nhật",
+            title: "Update Date",
             dataIndex: "updateDate",
             key: "updateDate",
             render: (text) => new Date(text).toLocaleString(),
         },
         {
-            title: "Trạng thái",
+            title: "Status",
             dataIndex: "status",
             key: "status",
             render: (text) => (
@@ -141,13 +141,13 @@ const Metal = () => {
                         className="btn-add"
                         onClick={() => {
                             setIndexView([]);
-                            toast.info("bạn vừa trở về xem danh sách");
+                            toast.info("You just returned to see the list");
                         }}
                     >
                         trở lại
                     </button>
                     <Table
-                        Headers={"Chi tiết"}
+                        Headers={"Detail"}
                         dataSource={indexView.typeOfMetals}
                         columns={columnsTypeOfMetals}
                     />

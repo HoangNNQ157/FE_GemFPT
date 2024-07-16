@@ -34,14 +34,14 @@ const TableAccountManager = () => {
                     email: dataUpdate.email,
                 });
                 if (response.data) {
-                    toast.success("Cập nhật tài khoản thành công");
+                    toast.success("Account updated successfully");
                     getAllAccout()
                         .then((data) => data.data)
                         .then((data) => setAccountData(data));
                     setDataUpdate(null);
                 }
             } catch (error) {
-                toast.error("Có lỗi xảy ra. Vui lòng thử lại sau.");
+                toast.error("An error occurred. Please try again later.");
             }
         } else {
             try {
@@ -49,14 +49,14 @@ const TableAccountManager = () => {
                     formData: values,
                 });
                 if (response.data) {
-                    toast.success("Tạo tài khoản thành công");
+                    toast.success("Account successfully created");
                     getAllAccout()
                         .then((data) => data.data)
                         .then((data) => setAccountData(data));
                     setDataUpdate(null);
                 }
             } catch (error) {
-                toast.error("Có lỗi xảy ra. Vui lòng thử lại sau.");
+                toast.error("An error occurred. Please try again later.");
             }
         }
         setVisible(false);
@@ -68,14 +68,14 @@ const TableAccountManager = () => {
                 email: record.email,
             });
             if (response.data) {
-                toast.success("xóa tài khoản thành công");
+                toast.success("Account deleted successfully");
                 getAllAccout()
                     .then((data) => data.data)
                     .then((data) => setAccountData(data));
             }
         } catch (error) {
             console.error(err.response?.data);
-            toast.error("Có lỗi xảy ra. Vui lòng thử lại sau.");
+            toast.error("An error occurred. Please try again later.");
         }
     };
     useEffect(() => {
@@ -142,7 +142,7 @@ const TableAccountManager = () => {
                         icon={<EditOutlined />}
                     />
                     <Popconfirm
-                        title={`Bạn muốn xóa tài khoản ${record.email} không ?`}
+                        title={`Do you want to delete your ${record.email} account?`}
                         onConfirm={() => handleDelteProduct(record)}
                         onCancel={() => {}}
                         okText="Yes"
