@@ -55,7 +55,7 @@ export default function Login() {
         Cookies.set("token", user.data.token);
         toast.success("Login successful");
         dispatch(login(user.data));
-        navigate("/home");
+        navigate("/staff-product");
       } catch (error) {
         console.log(error);
         toast.error(error.response?.data || "Login failed");
