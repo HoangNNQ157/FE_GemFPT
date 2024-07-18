@@ -261,7 +261,7 @@ const Promotion = () => {
                     className="btn-add"
                     onClick={() => showModalAllPromotion("create")}
                 >
-                    ADD ALL PRODUCTS
+                    ADD ALL PRODUCT
                 </button>
             </Flex>
             <Table
