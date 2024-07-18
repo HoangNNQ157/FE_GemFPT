@@ -23,19 +23,18 @@ import Register from "./pages/auth/Register/Register";
 import ResetPassword from "./pages/auth/resetpassword/ResetPassword";
 import BillPage from "./pages/BillPage/BillPage";
 import DetailProduct from "./pages/DetailProduct/DetailProduct";
-import HomePage from "./pages/Home/HomePage";
 import ManagerDiscount from "./pages/manager/Discount/ManagerDiscount";
 import ManagerDashboard from "./pages/manager/ManagerDashboard/ManagerDashboard";
 import ManagerStall from "./pages/manager/ManagerStall/ManagerStall";
 import Promotion from "./pages/manager/Promotion/Promotion";
 import PageNotFound from "./pages/NotFound/PageNotFound";
+
 import PriceTable from "./pages/PriceTable/PriceTable";
 import Profile from "./pages/Profile/Profile";
 import StaffBill from "./pages/staffs/StaffBill/StaffBill";
 import StaffBuyBack from "./pages/staffs/StaffBuyBack/StaffBuyBack";
 import StaffOrder from "./pages/staffs/StaffOrder/StaffOrder";
 import Product from "./pages/staffs/StaffProduct/StaffProduct";
-
 
 const App = () => {
     const userData = useSelector((state) => state.user);
@@ -48,7 +47,7 @@ const App = () => {
                 <Route path="register" element={<Register />} />
                 <Route path="forgot-password" element={<ForgotPassword />} />
                 <Route path="reset-password" element={<ResetPassword />} />
-                <Route path="home" element={<HomePage />} />
+                
                 <Route path="bill/:id" element={<BillPage />} />
                 {userData ? (
                     <>

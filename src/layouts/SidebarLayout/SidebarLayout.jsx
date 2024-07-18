@@ -1,52 +1,133 @@
-import React from "react";
-import { FaRocketchat } from "react-icons/fa";
-import { Link, NavLink } from "react-router-dom";
-import icon from "../../assets/trangsucdaquy.jpg";
-import "./SidebarLayout.css";
-import { TbPageBreak, TbTruckReturn } from "react-icons/tb";
+import {
+    AppstoreOutlined,
+    SettingOutlined,
+    UserOutlined,
+} from "@ant-design/icons";
+import { Layout, Menu, Typography } from "antd";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+// import "./SidebarLayout.css";
 
-const SidebarLayout = ({ data, bottonData }) => {
+const { Sider } = Layout;
+const { SubMenu } = Menu;
+
+const SidebarLayout = () => {
+    const [collapsed, setCollapsed] = useState(false);
+    const userData = useSelector((state) => state.user);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const adminLinks = [
+        { path: "/adminRevenue", label: "Admin Dashboard" },
+        { path: "/adminAccount", label: "Admin Account" },
+        { path: "/adminCustomer", label: "Admin Customer" },
+        { path: "/adminMetal", label: "Admin Metal" },
+    ];
+
+    const managerLinks = [
+        { path: "/manager-revenue", label: "Manager Dashboard" },
+        { path: "/manager-product", label: "Manager Product" },
+        { path: "/managerPromotion", label: "Manager Promotion" },
+        { path: "/manager-stall", label: "Manager Stall" },
+        { path: "/manager-discount", label: "Manager Discount" },
+        { path: "/manager-customer", label: "Manager Customer" },
+        { path: "/manager-bill", label: "Manager Bill" },
+    ];
+
+    const staffLinks = [
+        { path: "/staff-order", label: "Staff Order" },
+        { path: "/staff-product", label: "Staff Product" },
+        { path: "/staff-customer", label: "Staff Customer" },
+        { path: "/staff-buy-back", label: "Staff Buy Back" },
+        { path: "/staff-bill", label: "Staff Bill" },
+    ];
+
+    const getLinks = (role) => {
+        switch (role) {
+            case "ADMIN":
+                return [...adminLinks, ...managerLinks, ...staffLinks];
+            case "MANAGER":
+                return [...managerLinks, ...staffLinks];
+            case "STAFF":
+                return staffLinks;
+            default:
+                return [];
+        }
+    };
     return (
-        <div className="sidebar-wrapper">
-            <div className="slidebar-content">
-                <div>
-                    <Link to="/home">
-                        <img className="sidebar-icon" src={icon} alt="Icon" />
-                    </Link>
-                    <div className="sidebar-nav">
-                        {data?.length
-                            ? data.map((item, index) => (
-                                  <NavLink
-                                      key={index}
-                                      to={`/${item.link}`} // Use the correct path here
-                                      className={({ isActive }) =>
-                                          isActive
-                                              ? "nav-link active"
-                                              : "nav-link"
-                                      }
-                                  >
-                                      {item.icon}
-                                      <span style={{ marginLeft: "8px" }}>
-                                          {item.content}
-                                      </span>
-                                  </NavLink>
-                              ))
-                            : null}
-                    </div>
-                </div>
-                <div className="sidebar-footer">
-                    <NavLink
-                        to="/home"
-                        className={({ isActive }) =>
-                            isActive ? "nav-link active" : "nav-link"
-                        }
+        <Layout
+            style={{
+                flex: "none",
+                paddingTop: "10px",
+                borderRight: "1px solid #000",
+                marginRight: "10px",
+            }}
+        >
+            <Sider
+                collapsible
+                collapsed={collapsed}
+                onCollapse={setCollapsed}
+                theme="light"
+            >
+                <div className="logo" />
+                <Menu theme="light" defaultSelectedKeys={["1"]} mode="inline">
+                    <Menu.Item
+                        key="1"
+                        icon={<UserOutlined />}
+                        onClick={() => navigate(`/profile/${userData.id}`)}
                     >
-                        <TbTruckReturn className="nav-icon" />
-                        <span>PAGE BACK</span>
-                    </NavLink>
-                </div>
-            </div>
-        </div>
+                        Profile
+                    </Menu.Item>
+
+                    {userData.role === "ADMIN" && (
+                        <SubMenu
+                            key="sub1"
+                            icon={<AppstoreOutlined />}
+                            title="Admin"
+                        >
+                            {adminLinks.map((link, index) => (
+                                <Menu.Item
+                                    key={`admin-${index}`}
+                                    onClick={() => navigate(link.path)}
+                                >
+                                    {link.label}
+                                </Menu.Item>
+                            ))}
+                        </SubMenu>
+                    )}
+
+                    {(userData.role === "ADMIN" ||
+                        userData.role === "MANAGER") && (
+                        <SubMenu
+                            key="sub2"
+                            icon={<SettingOutlined />}
+                            title="Manager"
+                        >
+                            {managerLinks.map((link, index) => (
+                                <Menu.Item
+                                    key={`manager-${index}`}
+                                    onClick={() => navigate(link.path)}
+                                >
+                                    {link.label}
+                                </Menu.Item>
+                            ))}
+                        </SubMenu>
+                    )}
+
+                    <SubMenu key="sub3" icon={<UserOutlined />} title="Staff">
+                        {staffLinks.map((link, index) => (
+                            <Menu.Item
+                                key={`staff-${index}`}
+                                onClick={() => navigate(link.path)}
+                            >
+                                {link.label}
+                            </Menu.Item>
+                        ))}
+                    </SubMenu>
+                </Menu>
+            </Sider>
+        </Layout>
     );
 };
 
