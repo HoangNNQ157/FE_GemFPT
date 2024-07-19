@@ -29,7 +29,7 @@ const HeaderDefault = ({ backPage }) => {
             <Menu.Item
                 key="home"
                 icon={<MdDashboard />}
-                onClick={() => navigator("/home")}
+                onClick={() => navigator("/staff-product")}
             >
                 DASHBOARD
             </Menu.Item>{" "}

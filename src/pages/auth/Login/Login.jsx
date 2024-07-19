@@ -76,6 +76,7 @@ export default function Login() {
       console.log("Login with Google success:", user.data);
       localStorage.setItem("token", user.data.token);
       dispatch(login(user.data));
+      navigate("/staff-product");
       toast.success("Login with Google Successful");
     } catch (error) {
       console.log(error);

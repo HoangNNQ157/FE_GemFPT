@@ -198,7 +198,12 @@ const TableManager = ({
             key: "productId",
         },
         {
-            title: "IMAGES",
+            title: "Barcode",
+            dataIndex: "barcode",
+            key: "barcode",
+        },
+        {
+            title: "Images",
             dataIndex: "urls",
             key: "urls",
             render: (urls) =>
@@ -216,7 +221,7 @@ const TableManager = ({
                 ),
         },
         {
-            title: "NAME",
+            title: "Name",
             dataIndex: "name",
             key: "name",
             render: (text) => (
@@ -235,12 +240,12 @@ const TableManager = ({
             ),
         },
         {
-            title: "CATEGORY",
+            title: "Catergory",
             dataIndex: "category",
             key: "category",
         },
         {
-            title: "STOCK",
+            title:"Quantity",
             dataIndex: "stock",
             key: "stock",
             render: (text, record) => (
@@ -248,19 +253,19 @@ const TableManager = ({
             ),
         },
         {
-            title: "PRICE",
+            title: "Price",
             dataIndex: "price",
             key: "price",
             render: (text, record) => <span>{formatVND(record.price)}</span>,
         },
         {
-            title: "NEW PRICE",
+            title: "New Price",
             dataIndex: "newPrice",
             key: "newPrice",
             render: (text, record) => <span>{formatVND(record.newPrice)}</span>,
         },
         {
-            title: "STATUS",
+            title: "Status",
             dataIndex: "status",
             key: "status",
             render: (text, record) => (
@@ -311,21 +316,21 @@ const TableManager = ({
     return (
         <>
             <button className="btn-add" onClick={() => showModal("create")}>
-                Thêm sản phẩm
+                Add New Product
             </button>
             {productActice ? (
                 <button
                     className="btn-add"
                     onClick={() => setProductActive(false)}
                 >
-                    Tất cả sản phẩm
+                    All Products
                 </button>
             ) : (
                 <button
                     className="btn-add"
                     onClick={() => setProductActive(true)}
                 >
-                    Sản phẩm đang hoạt động
+                    Product Is Active
                 </button>
             )}
             <Table

@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import MetalForm from "../../../components/modal/MetalForm";
 import { getAllMetal, updateMetal } from "../../../service/metalPriceService";
 import "./metal.css";
+import { formatVND } from "../../../utils/funUtils";
 
 const Metal = () => {
     const [visible, setVisible] = useState(false);
@@ -33,12 +34,12 @@ const Metal = () => {
         try {
             const response = await updateMetal({ formData: values });
             if (response.data) {
-                toast.success("Update successful");
+                toast.success("Cập nhật thành công");
                 const newMetal = await getAllMetal();
                 setDataMetal(newMetal.data);
             }
         } catch (err) {
-            toast.error("An error occurred. Please try again later.");
+            toast.error("Có lỗi xảy ra. Vui lòng thử lại sau.");
         } finally {
             setVisible(false);
         }
@@ -50,7 +51,7 @@ const Metal = () => {
             key: "metalPriceId",
         },
         {
-            title: "Update Date",
+            title: "TIME UPDATED",
             dataIndex: "updateDate",
             key: "updateDate",
             render: (text) => new Date(text).toLocaleString(),
@@ -59,12 +60,17 @@ const Metal = () => {
             title: "Status",
             dataIndex: "status",
             key: "status",
-            render: (text) => (
-                <span> {text ? "Hoạt động" : "Ngưng hoạt động"}</span>
+            render: (text, record) => (
+                <span
+                    className="status"
+                    style={{ color: record.status ? "green" : "red" }}
+                >
+                    {record.status ? "ON" : "OFF"}
+                </span>
             ),
         },
         {
-            title: "Type Of Metals",
+            title: "List metals",
             dataIndex: "typeOfMetals",
             key: "typeOfMetals",
             render: (text) => <span> {text.length} metal</span>,
@@ -88,7 +94,7 @@ const Metal = () => {
                         type="link"
                         onClick={() => {
                             setIndexView(record);
-                            toast.info("You have just moved on to metal details");
+                            toast.info("bạn vừa chuyển sang chi tiết metal");
                         }}
                     >
                         Chi tiết
@@ -99,18 +105,13 @@ const Metal = () => {
     ];
     const columnsTypeOfMetals = [
         {
-            title: "ID",
-            dataIndex: "metalPriceId",
-            key: "metalPriceId",
-        },
-        {
-            title: "Update Date",
+            title: "Ngày cập nhật",
             dataIndex: "updateDate",
             key: "updateDate",
             render: (text) => new Date(text).toLocaleString(),
         },
         {
-            title: "Status",
+            title: "Trạng thái",
             dataIndex: "status",
             key: "status",
             render: (text) => (
@@ -126,11 +127,13 @@ const Metal = () => {
             title: "sellPrice",
             dataIndex: "sellPrice",
             key: "sellPrice",
+            render: (text) => formatVND(text),
         },
         {
             title: "buyPrice",
             dataIndex: "buyPrice",
             key: "buyPrice",
+            render: (text) => formatVND(text),
         },
     ];
     return (
@@ -141,13 +144,13 @@ const Metal = () => {
                         className="btn-add"
                         onClick={() => {
                             setIndexView([]);
-                            toast.info("You just returned to see the list");
+                            toast.info("bạn vừa trở về xem danh sách");
                         }}
                     >
                         trở lại
                     </button>
                     <Table
-                        Headers={"Detail"}
+                        Headers={"Chi tiết"}
                         dataSource={indexView.typeOfMetals}
                         columns={columnsTypeOfMetals}
                     />
@@ -156,7 +159,7 @@ const Metal = () => {
                 <Table
                     dataSource={dataMetal.reverse()}
                     columns={columns}
-                    pagination={{ defaultPageSize: 8 }}
+                    pagination={{ defaultPageSize: 3 }}
                 />
             )}
 

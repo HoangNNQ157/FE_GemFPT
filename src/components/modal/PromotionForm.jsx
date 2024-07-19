@@ -31,11 +31,11 @@ const PromotionForm = ({ visible, onCancel, onSave, dataProduct }) => {
             <Form form={form} layout="vertical" name="promotion_form">
                 <Form.Item
                     name="programName"
-                    label="Program Name"
+                    label="Discount Program"
                     rules={[
                         {
                             required: true,
-                            message: "Please input the program name!",
+                            message: "Please input the Discount Program!",
                         },
                     ]}
                 >
@@ -43,7 +43,7 @@ const PromotionForm = ({ visible, onCancel, onSave, dataProduct }) => {
                 </Form.Item>
                 <Form.Item
                     name="discountRate"
-                    label="Discount Rate"
+                    label="Discount"
                     rules={[
                         {
                             required: true,
@@ -71,9 +71,7 @@ const PromotionForm = ({ visible, onCancel, onSave, dataProduct }) => {
                 >
                     <Input />
                 </Form.Item>
-                <Form.Item name="pointsCondition" label="Points Condition">
-                    <Input />
-                </Form.Item>
+                
                 <Form.Item
                     name="endTime"
                     label="End Time"

@@ -54,25 +54,25 @@ const StaffBill = () => {
             title: "TOTAL AMOUNT",
             dataIndex: "totalAmount",
             key: "totalAmount",
-            render: (text) => formatVND(text), // Assuming you have a function to format VND
+            render: (text) => formatVND(text),
         },
         {
             title: "DISCOUNT",
             dataIndex: "discount",
             key: "discount",
-            render: (text) => formatVND(text), // Format if needed
+            render: (text) => <span>{text}%</span>,
         },
         {
             title: "VOUCHER",
             dataIndex: "voucher",
             key: "voucher",
-            render: (text) => formatVND(text), // Format if needed
+            render: (text) => <span>{text}</span>,
         },
         {
             title: "TIME CREATE",
             dataIndex: "createTime",
             key: "createTime",
-            render: (text) => moment(text).format("YYYY-MM-DD HH:mm:ss"), // Format date if needed
+            render: (text) => moment(text).format("YYYY-MM-DD HH:mm:ss"),
         },
         {
             title: "STATUS",
