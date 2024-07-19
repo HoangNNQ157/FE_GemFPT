@@ -1,4 +1,4 @@
-import { Button, Flex, Select, Table, Tooltip } from "antd";
+import { Button, Flex, Select, Table, Tooltip, Image } from "antd";
 import React, { useEffect, useState } from "react";
 import { MdModeEditOutline } from "react-icons/md";
 import { toast } from "react-toastify";
@@ -113,19 +113,26 @@ const ManagerGem = () => {
   };
 
   const columns = [
-    { title: "BARCODE", dataIndex: "gemBarcode", key: "gemBarcode" },
-    { title: "USERSTATUS", dataIndex: "userStatus", key: "userStatus" },
-    { title: "DESCRIPTION", dataIndex: "description", key: "description" },
+    { title: "ID", dataIndex: "gemId", key: "gemId" },
+    { title: "Barcode", dataIndex: "gemBarcode", key: "gemBarcode" },
     {
-      title: "CERTIFICATE CODE",
+      title: "Images",
+      dataIndex: "url",
+      key: "url",
+      render: (text) => <Image src={text} alt="gem" width={70} />,
+    },
+    { title: "Status", dataIndex: "userStatus", key: "userStatus" },
+    { title: "Description", dataIndex: "description", key: "description" },
+    {
+      title: "Certificate ",
       dataIndex: "certificateCode",
       key: "certificateCode",
       render: (text) => <span>{text ? text : "0"}</span>,
     },
-    { title: "CUT", dataIndex: "cut", key: "cut" },
-    { title: "CARAT", dataIndex: "carat", key: "carat" },
-    { title: "COLOR", dataIndex: "color", key: "color" },
-    { title: "PRICE", dataIndex: "price", key: "price" },
+    { title: "Cut", dataIndex: "cut", key: "cut" },
+    { title: "Carat", dataIndex: "carat", key: "carat" },
+    { title: "Color", dataIndex: "color", key: "color" },
+    { title: "Price", dataIndex: "price", key: "price" },
     {
       title: "Action",
       key: "actions",
