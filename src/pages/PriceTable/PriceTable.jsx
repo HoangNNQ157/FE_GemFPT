@@ -1,32 +1,34 @@
+import { Table } from "antd";
 import React, { useEffect, useState } from "react";
-import { Button, Table } from "antd";
-import "./PriceTable.css"; // Import custom CSS
-import { getAllMetal, getMetalActive } from "../../service/metalPriceService";
-import logo from "../../assets/trangsucdaquy.jpg";
-import { useNavigate } from "react-router-dom";
+import { getMetalActive } from "../../service/metalPriceService";
+
+import "./PriceTable.css";
+import HeaderDefault from "../../components/Header/HeaderDefault/HeaderDefault";
+import { formatVND } from "../../utils/funUtils";
 const columns = [
     {
         title: "Loại vàng | ĐVT: 1.000đ/Chỉ",
         dataIndex: "metalType",
         key: "metalType",
-        className: "gold-type-column", // Custom class
+        className: "gold-type-column",
     },
     {
         title: "Giá mua",
         dataIndex: "buyPrice",
         key: "buyPrice",
-        className: "gold-price-column", // Custom class
+        className: "gold-price-column",
+        render: (text) => formatVND(text),
     },
     {
         title: "Giá bán",
         dataIndex: "sellPrice",
         key: "sellPrice",
-        className: "gold-price-column", // Custom class
+        className: "gold-price-column",
+        render: (text) => formatVND(text),
     },
 ];
 
 const PriceTable = () => {
-    const navigator = useNavigate();
     const [data, setData] = useState();
     useEffect(() => {
         getMetalActive()
@@ -35,10 +37,7 @@ const PriceTable = () => {
     }, []);
     return (
         <div className="gold-prices-container">
-            <div className="header__price">
-                <img src={logo} className="img__logo" />
-                <Button onClick={() => navigator("/login")}>Login</Button>
-            </div>
+            <HeaderDefault />
             {data?.length ? (
                 <h2 className="table-title">
                     CẬP NHẬT NGÀY:{" "}

@@ -188,7 +188,9 @@ const BillPage = () => {
                         Invoice Total
                     </span>
                     <span style={{ fontSize: "24px", fontWeight: "700" }}>
-                        {billData?.totalAmount}₫
+                        {billData?.totalAmount
+                            ? formatVND(billData.totalAmount)
+                            : 0}
                     </span>
                 </Row>
                 <Divider />

@@ -25,15 +25,17 @@ const Promotion = () => {
             key: "id",
         },
         {
-            title: "Program Name",
+            title: "Discount Program",
             dataIndex: "programName",
             key: "programName",
         },
         {
-            title: "Discount Rate",
+            title: "Discount",
             dataIndex: "discountRate",
             key: "discountRate",
+            render: (text) => `${text}%`,
         },
+        
         {
             title: "Description",
             dataIndex: "description",
@@ -61,11 +63,7 @@ const Promotion = () => {
             render: (text, record) =>
                 record.status ? "Đang kích hoạt" : "Đã ngừng",
         },
-        {
-            title: "Applicable Products",
-            dataIndex: "applicableProducts",
-            key: "applicableProducts",
-        },
+        
         {
             title: "Start Time",
             dataIndex: "startTime",
@@ -261,7 +259,7 @@ const Promotion = () => {
                     className="btn-add"
                     onClick={() => showModalAllPromotion("create")}
                 >
-                    Add ALL PRODUCTS
+                    ADD ALL PRODUCTS
                 </button>
             </Flex>
             <Table

@@ -32,7 +32,7 @@ const PromotionCreateCategoryForm = ({ visible, onCancel, onSave }) => {
             <Form form={form} layout="vertical" name="promotion_form">
                 <Form.Item
                     name="category"
-                    label="category"
+                    label="Category"
                     rules={[
                         {
                             required: true,
@@ -50,11 +50,11 @@ const PromotionCreateCategoryForm = ({ visible, onCancel, onSave }) => {
                 </Form.Item>
                 <Form.Item
                     name="programName"
-                    label="Program Name"
+                    label="Discount Program"
                     rules={[
                         {
                             required: true,
-                            message: "Please input the program name!",
+                            message: "Please input the Discount Program!",
                         },
                     ]}
                 >
@@ -62,18 +62,18 @@ const PromotionCreateCategoryForm = ({ visible, onCancel, onSave }) => {
                 </Form.Item>
                 <Form.Item
                     name="discountRate"
-                    label="Discount Rate"
+                    label="Discount"
                     rules={[
                         {
                             required: true,
                             type: "string",
-                            message: "Please input the discount rate!",
+                            message: "Please input the discount!",
                         },
                         {
                             validator: (_, value) =>
                                 value > 100
                                     ? Promise.reject(
-                                          "Discount rate must not exceed 100"
+                                          "Discount must not exceed 100"
                                       )
                                     : Promise.resolve(),
                         },

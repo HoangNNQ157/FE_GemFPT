@@ -80,7 +80,7 @@ const ModalManager = ({
         >
             <Form form={form} layout="vertical" name="edit_form">
                 <Tabs defaultActiveKey="1">
-                    <TabPane tab="Main Info" key="1">
+                    <TabPane tab="Product Info" key="1">
                         <Form.Item
                             name="name"
                             label="Name"
@@ -112,11 +112,14 @@ const ModalManager = ({
                         <Form.Item name="priceRate" label="Price Rate">
                             <Input type="number" />
                         </Form.Item>
+                        <Form.Item name="wage" label="Wage">
+                            <Input type="number" />
+                        </Form.Item>
                         <Form.Item name="barcode" label="Bar code">
                             <Input type="text" />
                         </Form.Item>
                     </TabPane>
-                    <TabPane tab="URLs" key="2">
+                    <TabPane tab="Images" key="2">
                         <Form.List name="urls">
                             {(fields, { add, remove }) => (
                                 <>
@@ -219,7 +222,7 @@ const ModalManager = ({
                                                     field.fieldKey,
                                                     "weight",
                                                 ]}
-                                                label="Weight"
+                                                label="Weight/Gram"
                                             >
                                                 <Input type="number" />
                                             </Form.Item>
@@ -245,7 +248,7 @@ const ModalManager = ({
                             )}
                         </Form.List>
                     </TabPane>
-                    <TabPane tab="Gemstones" key="4">
+                    <TabPane tab="Gems" key="4">
                         <Form.List name="gemstones">
                             {(fields, { add, remove }) => (
                                 <>
@@ -262,13 +265,13 @@ const ModalManager = ({
                                                     "description",
                                                 ]}
                                                 label="Description"
-                                                rules={[
+                                                /* rules={[
                                                     {
                                                         required: true,
                                                         message:
                                                             "Please input the description!",
                                                     },
-                                                ]}
+                                                ]} */
                                             >
                                                 <Input />
                                             </Form.Item>
@@ -305,6 +308,20 @@ const ModalManager = ({
                                                     "certificateCode",
                                                 ]}
                                                 label="Certificate Code"
+                                            >
+                                                <Input />
+                                            </Form.Item>
+                                            <Form.Item
+                                                {...field}
+                                                name={[
+                                                    field.name,
+                                                    "gemBarcode",
+                                                ]}
+                                                fieldKey={[
+                                                    field.fieldKey,
+                                                    "gemBarcode",
+                                                ]}
+                                                label="Barcode"
                                             >
                                                 <Input />
                                             </Form.Item>
