@@ -7,7 +7,7 @@ import { Layout, Menu, Typography } from "antd";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-// import "./SidebarLayout.css";
+import logo from "../../assets/trangsucdaquy.jpg";
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
@@ -33,6 +33,7 @@ const SidebarLayout = () => {
         { path: "/manager-discount", label: "Manager Discount" },
         { path: "/manager-customer", label: "Manager Customer" },
         { path: "/manager-bill", label: "Manager Bill" },
+        { path: "/manager-gem", label: "Manager Gem" },
     ];
 
     const staffLinks = [
@@ -74,10 +75,16 @@ const SidebarLayout = () => {
                 <Menu theme="light" defaultSelectedKeys={["1"]} mode="inline">
                     <Menu.Item
                         key="1"
-                        icon={<UserOutlined />}
-                        onClick={() => navigate(`/profile/${userData.id}`)}
+                        style={{
+                            height: "200px",
+                            background: "white",
+                        }}
                     >
-                        Profile
+                        <img
+                            src={logo}
+                            alt="logo"
+                            style={{ width: "100%", objectFit: "contain" }}
+                        />
                     </Menu.Item>
 
                     {userData.role === "ADMIN" && (
