@@ -89,33 +89,37 @@ const DetailProduct = () => {
                             />
                             <Card style={{ marginTop: "10px" }}>
                                 <Tabs defaultActiveKey="1">
-                                    <TabPane tab="Gemstones" key="1">
+                                    <TabPane tab="Gems" key="1">
                                         {data.gemstones.map((gem) => (
                                             <div key={gem.gemId}>
                                                 <Title level={5}>
-                                                    Kim cương
+                                                    Diamond
                                                 </Title>
                                                 <Text>
-                                                    Mô tả: {gem.description}
+                                                    ID: {gem.gemId}
                                                 </Text>
                                                 <br />
                                                 <Text>
-                                                    Màu sắc: {gem.color}
+                                                    Description: {gem.description}
                                                 </Text>
                                                 <br />
                                                 <Text>
-                                                    Độ sạch: {gem.clarity}
+                                                    Color: {gem.color}
                                                 </Text>
                                                 <br />
-                                                <Text>Kiểu cắt: {gem.cut}</Text>
+                                                <Text>
+                                                    Clarity: {gem.clarity}
+                                                </Text>
+                                                <br />
+                                                <Text>Cut: {gem.cut}</Text>
                                                 <br />
                                                 <Text>
-                                                    Trọng lượng: {gem.carat}{" "}
+                                                    Carat: {gem.carat}{" "}
                                                     carat
                                                 </Text>
                                                 <br />
                                                 <Text>
-                                                    Giá:{" "}
+                                                    Price:{" "}
                                                     {gem.price.toLocaleString(
                                                         "vi-VN",
                                                         {
@@ -135,15 +139,15 @@ const DetailProduct = () => {
                                                     {metal.name}
                                                 </Title>
                                                 <Text>
-                                                    Mô tả: {metal.description}
+                                                    Description: {metal.description}
                                                 </Text>
                                                 <br />
                                                 <Text>
-                                                    Trọng lượng: {metal.weight}
+                                                    Weight: {metal.weight}
                                                 </Text>
                                                 <br />
                                                 <Text>
-                                                    Đơn vị: {metal.unit}
+                                                    Weight: {metal.unit}
                                                 </Text>
                                                 <br />
                                             </div>

@@ -35,7 +35,12 @@ const Promotion = () => {
             key: "discountRate",
             render: (text) => `${text}%`,
         },
-        
+        {
+            title: "Applicable Products",
+            dataIndex: "applicableProducts",
+            key: "applicableProducts",
+            
+        },
         {
             title: "Description",
             dataIndex: "description",
