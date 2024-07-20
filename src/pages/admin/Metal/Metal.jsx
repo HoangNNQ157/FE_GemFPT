@@ -119,18 +119,18 @@ const Metal = () => {
             ),
         },
         {
-            title: "metalType",
+            title: "MetalType",
             dataIndex: "metalType",
             key: "metalType",
         },
         {
-            title: "sellPrice",
+            title: "SellPrice",
             dataIndex: "sellPrice",
             key: "sellPrice",
             render: (text) => formatVND(text),
         },
         {
-            title: "buyPrice",
+            title: "BuyPrice",
             dataIndex: "buyPrice",
             key: "buyPrice",
             render: (text) => formatVND(text),
