@@ -111,7 +111,7 @@ const Metal = () => {
             render: (text) => new Date(text).toLocaleString(),
         },
         {
-            title: "Trạng thái",
+            title: "Status",
             dataIndex: "status",
             key: "status",
             render: (text) => (
