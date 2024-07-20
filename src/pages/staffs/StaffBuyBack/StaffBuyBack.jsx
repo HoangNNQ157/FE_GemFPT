@@ -279,7 +279,7 @@ const StaffBuyBack = () => {
                             setVisible(true);
                         }}
                     >
-                        Buy back
+                        Buy Back
                     </button>
                     <Table
                         dataSource={dataBuyback.reverse()}
