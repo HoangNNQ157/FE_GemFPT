@@ -147,7 +147,7 @@ const Metal = () => {
                             toast.info("bạn vừa trở về xem danh sách");
                         }}
                     >
-                        trở lại
+                        Back
                     </button>
                     <Table
                         Headers={"Chi tiết"}
