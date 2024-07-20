@@ -260,7 +260,7 @@ const Promotion = () => {
                     onClick={() => showModalAllPromotion("create")}
                 >
 
-                    ADD ALL PRODUCTS
+                    ADD ALL PRODUCT
 
                 </button>
             </Flex>

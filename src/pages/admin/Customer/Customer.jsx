@@ -121,7 +121,7 @@ const TableStall = () => {
                 searchValue={searchCustomer}
             />
             <button className="btn-add" onClick={showModal}>
-                Add new customer
+                Add New Customer
             </button>
             <Table
                 dataSource={customerData.reverse()}
