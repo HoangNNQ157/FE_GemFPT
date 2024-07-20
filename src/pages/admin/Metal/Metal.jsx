@@ -105,7 +105,7 @@ const Metal = () => {
     ];
     const columnsTypeOfMetals = [
         {
-            title: "Ngày cập nhật",
+            title: "Update Date",
             dataIndex: "updateDate",
             key: "updateDate",
             render: (text) => new Date(text).toLocaleString(),
