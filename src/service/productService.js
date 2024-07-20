@@ -57,6 +57,13 @@ const updateProduct = ({ formData, barcode }) => {
 const deleteProduct = ({ barcode }) => {
     return api.delete(`${barcode}`, { headers: headers });
 };
+const unLinkGems = (barcode) => {
+    return api.post(
+        `${barcode}/unlink-gems-promotion`,
+        {},
+        { headers: headers }
+    );
+};
 export {
     createProduct,
     deleteProduct,
@@ -70,4 +77,5 @@ export {
     getProductByCategory,
     getProductById,
     getProductByBarcode,
+    unLinkGems,
 };
