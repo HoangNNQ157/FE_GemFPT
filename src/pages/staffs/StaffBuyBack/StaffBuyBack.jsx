@@ -260,10 +260,10 @@ const StaffBuyBack = () => {
                         className="btn-add"
                         onClick={() => {
                             setIndexView([]);
-                            toast.info("bạn vừa trở về xem danh sách");
+                            toast.info("You just returned to see the list");
                         }}
                     >
-                        trở lại
+                        Back
                     </button>
                     <Table
                         Headers={"Chi tiết"}
