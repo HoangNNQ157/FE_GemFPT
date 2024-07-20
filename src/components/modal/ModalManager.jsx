@@ -254,7 +254,7 @@ const ModalManager = ({
                                 <>
                                     {fields.map((field, index) => (
                                         <div key={index}>
-                                            <Form.Item
+                                            {/* <Form.Item
                                                 {...field}
                                                 name={[
                                                     field.name,
@@ -265,13 +265,13 @@ const ModalManager = ({
                                                     "description",
                                                 ]}
                                                 label="Description"
-                                                /* rules={[
+                                                rules={[
                                                     {
                                                         required: true,
                                                         message:
                                                             "Please input the description!",
                                                     },
-                                                ]} */
+                                                ]}
                                             >
                                                 <Input />
                                             </Form.Item>
@@ -310,7 +310,7 @@ const ModalManager = ({
                                                 label="Certificate Code"
                                             >
                                                 <Input />
-                                            </Form.Item>
+                                            </Form.Item> */}
                                             <Form.Item
                                                 {...field}
                                                 name={[
@@ -325,7 +325,7 @@ const ModalManager = ({
                                             >
                                                 <Input />
                                             </Form.Item>
-                                            <Form.Item
+                                            {/* <Form.Item
                                                 {...field}
                                                 name={[field.name, "carat"]}
                                                 fieldKey={[
@@ -368,7 +368,7 @@ const ModalManager = ({
                                                 label="Cut"
                                             >
                                                 <Input />
-                                            </Form.Item>
+                                            </Form.Item> */}
                                             <Button
                                                 onClick={() =>
                                                     remove(field.name)
