@@ -209,7 +209,7 @@ const TableStall = () => {
         <>
             <Flex align="center" gap={10}>
                 <button className="btn-add" onClick={() => showModal()}>
-                    Add new stall
+                    Add New Stall
                 </button>
             </Flex>
             <Table
