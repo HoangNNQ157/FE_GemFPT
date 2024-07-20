@@ -97,7 +97,7 @@ const Metal = () => {
                             toast.info("bạn vừa chuyển sang chi tiết metal");
                         }}
                     >
-                        Chi tiết
+                        Detail 
                     </Button>
                 </>
             ),
