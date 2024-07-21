@@ -9,10 +9,15 @@ import {
     Legend,
     ResponsiveContainer,
 } from "recharts";
+import { formatVND } from "../../utils/funUtils";
 
 const CashChart = ({ data }) => {
     return (
-        <ResponsiveContainer width="100%" height={400}>
+        <ResponsiveContainer
+            width="100%"
+            height={400}
+            style={{ fontSize: "10px" }}
+        >
             <BarChart
                 width={500}
                 height={300}
@@ -26,8 +31,8 @@ const CashChart = ({ data }) => {
             >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="employeeName" />
-                <YAxis />
-                <Tooltip />
+                <YAxis tickFormatter={formatVND} />
+                <Tooltip formatter={(value) => formatVND(value)} />
                 <Legend />
                 <Bar
                     dataKey="totalRevenue"
