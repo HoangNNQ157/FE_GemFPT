@@ -1,7 +1,11 @@
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Button, Flex, Popconfirm, Table } from "antd";
 import React, { useEffect, useState } from "react";
-import { MdOutlineEditOff, MdProductionQuantityLimits } from "react-icons/md";
+import {
+    MdOutlineChangeCircle,
+    MdOutlineEditOff,
+    MdProductionQuantityLimits,
+} from "react-icons/md";
 import { toast } from "react-toastify";
 import { getAllMetal } from "../../service/metalPriceService";
 import {
@@ -15,6 +19,7 @@ import {
     getProductByMetal,
     getProductByName,
     getProductByPrice,
+    unLinkGems,
     updateProduct,
 } from "../../service/productService";
 import { formatVND } from "../../utils/funUtils";
@@ -22,6 +27,7 @@ import CarouselImg from "../Carousel/Carousel";
 import ModalManager from "../modal/ModalManager";
 import "./TableManager.css";
 import { useNavigate } from "react-router-dom";
+import { LiaGemSolid } from "react-icons/lia";
 
 const TableManager = ({
     searchValue,
@@ -74,12 +80,17 @@ const TableManager = ({
                 } else {
                     response = await getListProducts();
                 }
-                if (response?.data?.length && response?.data[0]?.productId) {
+                if (
+                    response?.data?.length > 0 &&
+                    response?.data[0]?.productId
+                ) {
                     const products = response.data?.map((product, index) => ({
                         ...product,
                         key: index + 1,
                     }));
                     setDataProducts(products);
+                } else if (!response?.data[0]?.productId) {
+                    toast.error("product not found");
                 } else {
                     setDataProducts([response.data]);
                 }
@@ -129,7 +140,7 @@ const TableManager = ({
                     barcode: barcodeUpdate,
                 });
                 if (response.data.productId) {
-                    toast.success("Successfully updated product");
+                    toast.success("Cập nhật sản phẩm thành công");
                     //update xong -> call  lại ai product
                     const updatedProducts = productActice
                         ? await getListProductsActive()
@@ -147,7 +158,7 @@ const TableManager = ({
                 // call api tạo product
                 const response = await createProduct(values);
                 if (response.data.productId) {
-                    toast.success("Create new products successfully");
+                    toast.success("Tạo mới sản phẩm thành công");
                     // tạo oke-> call api getProduct
                     const newProducts = productActice
                         ? await getListProductsActive()
@@ -163,7 +174,7 @@ const TableManager = ({
             }
         } catch (err) {
             console.error(err.response?.data);
-            toast.error("An error occurred. Please try again later.");
+            toast.error("Có lỗi xảy ra. Vui lòng thử lại sau.");
         } finally {
             setVisible(false);
         }
@@ -173,7 +184,7 @@ const TableManager = ({
             // call api delete
             const response = await deleteProduct({ barcode: record.barcode });
             if (response.data.productId) {
-                toast.success("delete product successfully");
+                toast.success("change status product successfully");
                 const newProducts = productActice
                     ? await getListProductsActive()
                     : await getListProducts();
@@ -185,10 +196,32 @@ const TableManager = ({
                 );
                 setDataProducts(productsWithKey);
             } else {
-                toast.error("delete product error");
+                toast.error("change status product error");
             }
         } catch (error) {
-            toast.error("An error occurred. Please try again later.");
+            toast.error("Có lỗi xảy ra. Vui lòng thử lại sau.");
+        }
+    };
+    const handleUnLinkGem = async (record) => {
+        try {
+            const response = await unLinkGems(record.barcode);
+            if (response.data) {
+                toast.success("Unlink gem successfully");
+                const newProducts = productActice
+                    ? await getListProductsActive()
+                    : await getListProducts();
+                const productsWithKey = newProducts.data.map(
+                    (product, index) => ({
+                        ...product,
+                        key: index + 1,
+                    })
+                );
+                setDataProducts(productsWithKey);
+            } else {
+                toast.error("Unlink gem error");
+            }
+        } catch (error) {
+            toast.error("Có lỗi xảy ra. Vui lòng thử lại sau.");
         }
     };
     const columns = [
@@ -240,12 +273,12 @@ const TableManager = ({
             ),
         },
         {
-            title: "Catergory",
+            title: "Category",
             dataIndex: "category",
             key: "category",
         },
         {
-            title:"Quantity",
+            title: "Quantity",
             dataIndex: "stock",
             key: "stock",
             render: (text, record) => (
@@ -300,13 +333,25 @@ const TableManager = ({
                         }
                     />
                     <Popconfirm
-                        title="Do you want to delete the product ? "
+                        title="You want to remove the gem from the product ? "
+                        onConfirm={() => handleUnLinkGem(record)}
+                        onCancel={() => {}}
+                        okText="Yes"
+                        cancelText="No"
+                    >
+                        <Button type="link" icon={<LiaGemSolid size={24} />} />
+                    </Popconfirm>
+                    <Popconfirm
+                        title="Do you want to change the product's status ?"
                         onConfirm={() => handleDelteProduct(record)}
                         onCancel={() => {}}
                         okText="Yes"
                         cancelText="No"
                     >
-                        <Button danger icon={<DeleteOutlined />} />
+                        <Button
+                            type="link"
+                            icon={<MdOutlineChangeCircle size={24} />}
+                        />
                     </Popconfirm>
                 </Flex>
             ),
@@ -330,7 +375,7 @@ const TableManager = ({
                     className="btn-add"
                     onClick={() => setProductActive(true)}
                 >
-                    Product Is Active
+                    Active Product
                 </button>
             )}
             <Table
