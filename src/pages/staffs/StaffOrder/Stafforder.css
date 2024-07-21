@@ -28,13 +28,25 @@
     font-weight: 700;
     font-size: 1rem;
 }
-.customer__infoo {
+.customer__info {
+    padding-top: 12px;
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    padding-top: 12px;
-    /* border-top: 1px solid #333; */
 }
+
+.customer__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start; /* Align items to the start (left) */
+}
+
+.customer__item {
+    margin-bottom: 1rem;
+}
+
+
 .order-container {
     display: flex;
     gap: 8px;

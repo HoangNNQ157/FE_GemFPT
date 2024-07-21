@@ -1,22 +1,26 @@
 import { Button, Dropdown, Menu } from "antd";
 import { BiLogOut, BiUser } from "react-icons/bi";
 import { MdDashboard } from "react-icons/md";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import logo from "../../../assets/trangsucdaquy.jpg";
 import Cookies from "js-cookie";
 import { getInitials } from "../../../utils/funUtils";
 import { logout } from "../../../redux/features/counterSlice";
 import { CgArrowLeft } from "react-icons/cg";
+
 const HeaderDefault = ({ backPage }) => {
     const userData = useSelector((state) => state.user);
+    const dispatch = useDispatch();
     const navigator = useNavigate();
+    
     const handleLogout = () => {
         dispatch(logout());
         Cookies.remove("token");
         localStorage.clear();
         navigator("/");
     };
+
     const menu = (
         <Menu>
             <Menu.Item
@@ -32,7 +36,7 @@ const HeaderDefault = ({ backPage }) => {
                 onClick={() => navigator("/staff-product")}
             >
                 DASHBOARD
-            </Menu.Item>{" "}
+            </Menu.Item>
             <Menu.Item key="logout" icon={<BiLogOut />} onClick={handleLogout}>
                 LOGOUT
             </Menu.Item>

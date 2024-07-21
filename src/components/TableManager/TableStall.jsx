@@ -21,6 +21,7 @@ import "./TableManager.css";
 import StallChangeMoneyForm from "../modal/StallChangeMoneyForm";
 import { BiMoney } from "react-icons/bi";
 import { changeMoneyStall } from "../../service/ChangeMoney";
+import { useResolvedPath } from "react-router-dom";
 const TableStall = () => {
     const [stallData, setStallData] = useState([]);
     const [visible, setVisible] = useState(false);
@@ -28,6 +29,7 @@ const TableStall = () => {
     const [changeMoney, setChangeMoney] = useState(false);
     const [stallId, setStallId] = useState(false);
     const [staffWorkingId, setStaffWorkingId] = useState();
+    const prams = useResolvedPath();
     useEffect(() => {
         getAlllStalls()
             .then((data) => data.data)
@@ -101,17 +103,19 @@ const TableStall = () => {
                             }}
                         />
                     </Tooltip>
-                    <Tooltip title="Detail stall">
-                        <Button
-                            ghost
-                            type="primary"
-                            icon={<BiMoney />}
-                            onClick={() => {
-                                setStallId(record.stallsSellId);
-                                setChangeMoney(true);
-                            }}
-                        />
-                    </Tooltip>
+                    {prams.pathname.startsWith("/admin") ? (
+                        <Tooltip title="Detail stall">
+                            <Button
+                                ghost
+                                type="primary"
+                                icon={<BiMoney />}
+                                onClick={() => {
+                                    setStallId(record.stallsSellId);
+                                    setChangeMoney(true);
+                                }}
+                            />
+                        </Tooltip>
+                    ) : null}
                 </Flex>
             ),
         },
