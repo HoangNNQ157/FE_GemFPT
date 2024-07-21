@@ -19,29 +19,30 @@ const SidebarLayout = () => {
     const navigate = useNavigate();
 
     const adminLinks = [
-        { path: "/adminRevenue", label: "Admin Dashboard" },
-        { path: "/adminAccount", label: "Admin Account" },
-        { path: "/adminCustomer", label: "Admin Customer" },
-        { path: "/adminMetal", label: "Admin Metal" },
+        { path: "/adminRevenue", label: "Dashboard" },
+        { path: "/adminAccount", label: "Account" },
+        /* { path: "/adminCustomer", label: "Customer" }, */
+        { path: "/adminMetal", label: "Metal" },
+        { path: "/adminStall", label: "Stall" },
     ];
 
     const managerLinks = [
-        { path: "/manager-revenue", label: "Manager Dashboard" },
-        { path: "/manager-product", label: "Manager Product" },
-        { path: "/managerPromotion", label: "Manager Promotion" },
-        { path: "/manager-stall", label: "Manager Stall" },
-        { path: "/manager-discount", label: "Manager Discount" },
-        { path: "/manager-customer", label: "Manager Customer" },
-        { path: "/manager-bill", label: "Manager Bill" },
+        { path: "/manager-revenue", label: "Dashboard" },
+        { path: "/manager-product", label: "Product" },
+        { path: "/managerPromotion", label: "Promotion" },
+        { path: "/manager-stall", label: "Stall" },
+        { path: "/manager-discount", label: "Discount" },
+       /*  { path: "/manager-customer", label: "Manager Customer" }, */
+        /* { path: "/manager-bill", label: "Manager Bill" }, */
         { path: "/manager-gem", label: "Manager Gem" },
     ];
 
     const staffLinks = [
-        { path: "/staff-order", label: "Staff Order" },
-        { path: "/staff-product", label: "Staff Product" },
-        { path: "/staff-customer", label: "Staff Customer" },
-        { path: "/staff-buy-back", label: "Staff Buy Back" },
-        { path: "/staff-bill", label: "Staff Bill" },
+        { path: "/staff-order", label: "Order" },
+        { path: "/staff-product", label: "Product" },
+        { path: "/staff-customer", label: "Customer" },
+        { path: "/staff-buy-back", label: "Buy Back" },
+        { path: "/staff-bill", label: "Bill" },
     ];
 
     const getLinks = (role) => {

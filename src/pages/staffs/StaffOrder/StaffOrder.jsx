@@ -11,7 +11,7 @@ import {
     Divider,
 } from "antd";
 import { CgClose } from "react-icons/cg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useResolvedPath } from "react-router-dom";
 import "./Stafforder.css";
 import CustomerInfoModal from "../../../components/modal/CustomerInfoModal";
 import RequestModal from "../../../components/modal/RequestModal";
@@ -26,7 +26,6 @@ const StaffOrder = () => {
     const [dataProducts, setDataProducts] = useState([]);
     const [customerData, setCustomerData] = useState({});
     const [isModalVisibleDiscount, setIsModalVisibleDiscount] = useState(false);
-    const [checkCheckoutSucces, setCheckCheckoutSucces] = useState(false);
     const [isModalVisibleCustomer, setIsModalVisibleCustomer] = useState(false);
     const [discountData, setDiscountData] = useState({});
     const [discountId, setDiscountId] = useState("");
@@ -35,15 +34,14 @@ const StaffOrder = () => {
     const [amountPaid, setAmountPaid] = useState(0);
     const [change, setChange] = useState(0);
     const discountDebounce = useDebounce(discountId, 1000);
-
     const [form] = Form.useForm();
     const navigate = useNavigate();
 
     const columns = [
-        { title: "ID", dataIndex: "productId", key: "productId" },
-        { title: "NAME", dataIndex: "name", key: "name" },
+        /* { title: "ID", dataIndex: "productId", key: "productId" }, */
+        { title: "Name Product", dataIndex: "name", key: "name" },
         {
-            title: "PRICE",
+            title: "Price",
             dataIndex: "price",
             key: "price",
             render: (text, record) => (
@@ -53,20 +51,20 @@ const StaffOrder = () => {
             ),
         },
         {
-            title: "NEW PRICE",
+            title: "New Price",
             dataIndex: "newPrice",
             key: "newPrice",
             render: (text) => formatVND(text),
         },
-        { title: "CATEGORY", dataIndex: "category", key: "category" },
-        {
-            title: "TIME CREATED",
+        { title: "Category", dataIndex: "category", key: "category" },
+        /* {
+            title: "Time",
             dataIndex: "createTime",
             key: "createTime",
             render: (text) => new Date(text).toLocaleString("vi-VN"),
-        },
+        }, */
         {
-            title: "DESCRIPTION",
+            title: "Descriptions",
             dataIndex: "descriptions",
             key: "descriptions",
         },
@@ -84,7 +82,28 @@ const StaffOrder = () => {
             ),
         },
     ];
-
+    //Gọi API check thanh toán VNPAY
+    useEffect(() => {
+        const currentUrl = window.location.href;
+        const parsedUrl = new URL(currentUrl);
+        const params = new URLSearchParams(parsedUrl.search);
+        const vnp_TransactionStatus = parseInt(params.get("vnp_TransactionStatus"), 10); // Chuyển đổi thành số
+    
+        if (vnp_TransactionStatus === 0) { // Thành công
+            const reqLocal = JSON.parse(localStorage.getItem("orderBill"));
+            createBill(reqLocal).then((response) => {
+                if (response.data) {
+                    toast.success("Created bill successfully");
+                    localStorage.removeItem("card");
+                    localStorage.removeItem("orderBill");
+                    navigate(`/bill/${response.data.bill.id}`);
+                }
+            });
+        } else if (vnp_TransactionStatus === 2) { // Thất bại
+            toast.error("Payment failed! Please try again");
+            localStorage.removeItem("orderBill");
+        }
+    }, []);
     useEffect(() => {
         const storedData = localStorage.getItem("card");
         if (storedData) {
@@ -112,7 +131,7 @@ const StaffOrder = () => {
         setTotalAmount(Math.floor(total));
     };
 
-    const handleCheckout = async (type = "billNomal") => {
+    const handleCheckout = async () => {
         try {
             const listBarcode = dataProducts.map((product) => product.barcode);
             const requestData = {
@@ -125,27 +144,22 @@ const StaffOrder = () => {
                 toast.error("Amount paid is less than total amount");
                 return;
             }
-            if (type === "billVNP") {
-                const response = await createBill(requestData);
-                if (response.data) {
-                    toast.success("Created bill successfully");
-                    localStorage.removeItem("card");
-                    navigate(`/bill/${response.data.bill.id}`);
-                }
-            } else if (paymentMethod === "online" && type !== "billVNP") {
+            if (paymentMethod === "online") {
                 const response = await createBillVNPay({
                     amount: totalAmount,
                     orderInfo: "checkout",
                 });
                 if (response.data) {
-                    setCheckCheckoutSucces(true);
-                    window.open(response.data);
+                    localStorage.setItem(
+                        "orderBill",
+                        JSON.stringify(requestData)
+                    );
+                    window.location.href = response.data;
                 } else {
                     toast.error("Payment Method not found");
                 }
             } else {
                 const response = await createBill(requestData);
-                console.log("response: ", response);
                 if (response.data) {
                     toast.success("Created bill successfully");
                     localStorage.removeItem("card");
@@ -210,23 +224,24 @@ const StaffOrder = () => {
                             <Divider />
                             <div className="customer__wrapper">
                                 <div>
-                                    <BiUser color="black" /> CUSTOMER NAME:{" "}
+                                    <BiUser color="black" /> Name:{" "}
                                     {customerData.name}
                                 </div>
+                                
                                 <div>
-                                    <BiPhone color="black" /> PHONE:{" "}
+                                    <BiPhone color="black" /> Phone:{" "}
                                     {customerData.phone}
                                 </div>
-                                <div>RANK: {customerData.rankCus}</div>
+                                {/* <div>RANK: {customerData.rankCus}</div> */}
                             </div>
                             <div className="customer__wrapper">
-                                <div>
-                                    <BiCalendar color="black" /> CREATE DATE:{" "}
+                                {/* <div>
+                                    <BiCalendar color="black" /> Create Date:{" "}
                                     {new Date(
                                         customerData.createTime
                                     ).toLocaleString("vi-VN")}
-                                </div>
-                                <div>LOYALTY POINTS: {customerData.points}</div>
+                                </div> */}
+                                {/* <div>Loyalty Point: {Math.floor(customerData.points)}</div> */}
                             </div>
                             <Divider />
                         </div>
@@ -236,7 +251,7 @@ const StaffOrder = () => {
                         onClick={() => setIsModalVisibleDiscount(true)}
                         disabled={!customerData.phone}
                     >
-                        DISCOUNT REQUEST
+                        DISCOUNT
                     </button>
                 </div>
                 <Form form={form} onFinish={handleCheckout}>
@@ -258,11 +273,11 @@ const StaffOrder = () => {
                                     color: "red",
                                 }}
                             >
-                                Bạn được giảm: {discountData.requestedDiscount}%
+                                Discounts are accepted: {discountData.requestedDiscount}%
                             </p>
                         )}
                         <div className="total_mount">
-                            <p className="total__label">TOTAL:</p>
+                            <p className="total__label">Total:</p>
                             <p className="total__price">
                                 {formatVND(totalAmount)}
                             </p>
@@ -317,16 +332,6 @@ const StaffOrder = () => {
                         </button>
                     )}
                 </Form>
-                {checkCheckoutSucces && paymentMethod === "online" ? (
-                    <button
-                        className="checkout-btn"
-                        onClick={() => {
-                            handleCheckout("billVNP");
-                        }}
-                    >
-                        CREATE BILL
-                    </button>
-                ) : null}
             </div>
 
             <CustomerInfoModal

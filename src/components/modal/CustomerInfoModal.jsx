@@ -56,7 +56,7 @@ const CustomerInfoModal = ({
                             type="default"
                             onClick={handleCancel}
                         >
-                            CANCEL
+                            OK
                         </Button>
                         <Button
                             key="search"
@@ -84,23 +84,25 @@ const CustomerInfoModal = ({
                     <div className="customer__info">
                         <div className="customer__wrapper">
                             <div>
-                                <BiUser color="black" /> CUSTOMER NAME:{" "}
+                                <BiUser color="black" /> Name:{" "}
                                 {customerData.name}
                             </div>
                             <div>
-                                <BiPhone color="black" /> PHONE:{" "}
+                                <BiPhone color="black" /> Phone:{" "}
                                 {customerData.phone}
                             </div>
-                            <div>RANK: {customerData.rankCus}</div>
+                            <div>Rank: {customerData.rankCus}</div>
                         </div>
                         <div className="customer__wrapper">
-                            <div>
+                            {/* <div>
                                 <BiCalendar color="black" /> CREATE DATE:{" "}
                                 {new Date(
                                     customerData.createTime
                                 ).toLocaleString("vi-VN")}
-                            </div>
-                            <div>LOYALTY POINTS: {customerData.points}</div>
+                            </div> */}
+                            <div>Loyalty Point: {Math.floor(customerData.points)}</div>
+
+
                         </div>
                     </div>
                 ) : null}

@@ -76,7 +76,7 @@ const TableManager = ({
                     toast.success("Filter by barcode");
                 } else if (productActice) {
                     response = await getListProductsActive();
-                    toast.success("Active products");
+                    /* toast.success("Active products"); */
                 } else {
                     response = await getListProducts();
                 }
@@ -140,7 +140,7 @@ const TableManager = ({
                     barcode: barcodeUpdate,
                 });
                 if (response.data.productId) {
-                    toast.success("Cập nhật sản phẩm thành công");
+                    toast.success("Product updated successfully!");
                     //update xong -> call  lại ai product
                     const updatedProducts = productActice
                         ? await getListProductsActive()
@@ -158,7 +158,7 @@ const TableManager = ({
                 // call api tạo product
                 const response = await createProduct(values);
                 if (response.data.productId) {
-                    toast.success("Tạo mới sản phẩm thành công");
+                    toast.success("Product created successfully!");
                     // tạo oke-> call api getProduct
                     const newProducts = productActice
                         ? await getListProductsActive()
@@ -174,7 +174,7 @@ const TableManager = ({
             }
         } catch (err) {
             console.error(err.response?.data);
-            toast.error("Có lỗi xảy ra. Vui lòng thử lại sau.");
+            toast.error("Please separate gem before update the product information");
         } finally {
             setVisible(false);
         }
@@ -184,7 +184,7 @@ const TableManager = ({
             // call api delete
             const response = await deleteProduct({ barcode: record.barcode });
             if (response.data.productId) {
-                toast.success("change status product successfully");
+                toast.success("Change status product successfully");
                 const newProducts = productActice
                     ? await getListProductsActive()
                     : await getListProducts();
@@ -196,17 +196,17 @@ const TableManager = ({
                 );
                 setDataProducts(productsWithKey);
             } else {
-                toast.error("change status product error");
+                toast.error("Change status product error");
             }
         } catch (error) {
-            toast.error("Có lỗi xảy ra. Vui lòng thử lại sau.");
+            toast.error("An error occurred. Please try again later.");
         }
     };
     const handleUnLinkGem = async (record) => {
         try {
             const response = await unLinkGems(record.barcode);
             if (response.data) {
-                toast.success("Unlink gem successfully");
+                toast.success("Successfully separated the gem from product");
                 const newProducts = productActice
                     ? await getListProductsActive()
                     : await getListProducts();
@@ -218,10 +218,10 @@ const TableManager = ({
                 );
                 setDataProducts(productsWithKey);
             } else {
-                toast.error("Unlink gem error");
+                toast.error("Failed to separate the gem from product");
             }
         } catch (error) {
-            toast.error("Có lỗi xảy ra. Vui lòng thử lại sau.");
+            toast.error("An error occurred. Please try again later.");
         }
     };
     const columns = [

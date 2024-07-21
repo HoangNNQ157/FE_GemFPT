@@ -41,7 +41,7 @@ const RequestModal = ({
     return (
         <div>
             <Modal
-                title="REQUEST"
+                title="DISCOUNT REQUEST"
                 visible={isModalVisible}
                 onOk={handleOk}
                 onCancel={handleCancel}
@@ -62,7 +62,7 @@ const RequestModal = ({
                 <Form form={form} layout="vertical">
                     <Form.Item
                         name="discount"
-                        label="DISCOUNT:"
+                        label="Discount:"
                         rules={[
                             {
                                 required: true,
@@ -74,7 +74,7 @@ const RequestModal = ({
                     </Form.Item>
                     <Form.Item
                         name="description"
-                        label="DESCRIPTION:"
+                        label="Description:"
                         rules={[
                             {
                                 required: true,
