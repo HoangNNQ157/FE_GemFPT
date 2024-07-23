@@ -166,12 +166,12 @@ const StaffBuyBack = () => {
             key: "productId",
         },
         {
-            title: "BARCODE",
+            title: "Barcode",
             dataIndex: "barcode",
             key: "barcode",
         },
         {
-            title: "IMAGES",
+            title: "Images",
             dataIndex: "urls",
             key: "urls",
             render: (urls) =>
@@ -189,7 +189,7 @@ const StaffBuyBack = () => {
                 ),
         },
         {
-            title: "NAME",
+            title: "Name",
             dataIndex: "name",
             key: "name",
             render: (text) => (
@@ -208,12 +208,12 @@ const StaffBuyBack = () => {
             ),
         },
         {
-            title: "CATEGORY",
+            title: "Category",
             dataIndex: "category",
             key: "category",
         },
         {
-            title: "STOCK",
+            title: "Quantity",
             dataIndex: "stock",
             key: "stock",
             render: (text, record) => (
@@ -221,24 +221,24 @@ const StaffBuyBack = () => {
             ),
         },
         {
-            title: "PRICE",
+            title: "Price",
             dataIndex: "price",
             key: "price",
             render: (text, record) => <span>{formatVND(record.price)}</span>,
         },
-        {
-            title: "NEW PRICE",
+        /* {
+            title: "New Price",
             dataIndex: "newPrice",
             key: "newPrice",
             render: (text, record) => <span>{formatVND(record.newPrice)}</span>,
-        },
+        }, */
         {
-            title: "TYPE WHEN BUY BACK",
+            title: "Processing Status",
             dataIndex: "typeWhenBuyBack",
             key: "typeWhenBuyBack",
         },
-        {
-            title: "STATUS",
+        /* {
+            title: "Status",
             dataIndex: "status",
             key: "status",
             render: (text, record) => (
@@ -249,7 +249,7 @@ const StaffBuyBack = () => {
                     {record.status ? "ON" : "OFF"}
                 </span>
             ),
-        },
+        }, */
     ];
 
     return (

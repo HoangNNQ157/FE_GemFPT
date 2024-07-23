@@ -7,6 +7,7 @@ import { useReactToPrint } from "react-to-print";
 import PrintableBill from "../../components/PrintableBill/PrintableBill";
 import { FaPrint } from "react-icons/fa";
 import { formatVND } from "../../utils/funUtils";
+import moment from "moment-timezone";
 
 const BillPage = () => {
     const param = useParams();
@@ -15,7 +16,17 @@ const BillPage = () => {
     useEffect(() => {
         getBillForId({ id })
             .then((res) => res.data)
-            .then((data) => setBillData(data));
+            .then((data) => {
+                // Combine discount from items into warrantyCards
+                const warrantyCards = data.warrantyCards.map(card => {
+                    const item = data.items.find(item => item.product_barcode === card.productBarcode);
+                    return {
+                        ...card,
+                        discount: item ? item.discount : 0,
+                    };
+                });
+                setBillData({ ...data, warrantyCards });
+            });
     }, [param]);
     const navigator = useNavigate();
     const printRef = useRef();
@@ -23,6 +34,7 @@ const BillPage = () => {
     const handlePrint = useReactToPrint({
         content: () => printRef.current,
     });
+
     const columns = [
         {
             title: "Product Barcode",
@@ -41,32 +53,6 @@ const BillPage = () => {
         },
         {
             title: "Price",
-            dataIndex: "price",
-            key: "price",
-            render: (text) => (
-                <span
-                    style={{
-                        maxWidth: "100px",
-                        display: "-webkit-box",
-                        WebkitBoxOrient: "vertical",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        WebkitLineClamp: 2,
-                        lineClamp: 2,
-                    }}
-                >
-                    {formatVND(Math.floor(text))}
-                </span>
-            ),
-        },
-        {
-            title: "Discount",
-            dataIndex: "discount",
-            key: "discount",
-            render: (text) => `${text}%`,
-        },
-        {
-            title: "New Price",
             dataIndex: "newPrice",
             key: "newPrice",
             render: (text) => (
@@ -86,6 +72,7 @@ const BillPage = () => {
             ),
         },
     ];
+
     const warrantyColumns = [
         {
             title: "Customer Name",
@@ -98,21 +85,22 @@ const BillPage = () => {
             key: "customerPhone",
         },
         {
-            title: "Product Barcode",
-            dataIndex: "productBarcode",
-            key: "productBarcode",
+            title: "Discount",
+            dataIndex: "discount",
+            key: "discount",
+            render: (text) => `${text}%`,
         },
         {
             title: "Purchase Date",
             dataIndex: "purchaseDate",
             key: "purchaseDate",
-            render: (text) => new Date(text).toLocaleDateString(),
+            render: (text) => moment(text).tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY HH:mm"),
         },
         {
             title: "Warranty Expiry Date",
             dataIndex: "warrantyExpiryDate",
             key: "warrantyExpiryDate",
-            render: (text) => new Date(text).toLocaleDateString(),
+            render: (text) => moment(text).tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY HH:mm"),
         },
     ];
 
@@ -176,8 +164,8 @@ const BillPage = () => {
                 </Row>
                 <Divider />
                 <Row justify="space-between">
-                <Col>
-                        <Typography.Text strong>DATE: {billData?.createTime}</Typography.Text>
+                    <Col>
+                        <Typography.Text strong>DATE: {billData?.createTime ? moment(billData.createTime).tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY HH:mm") : ""}</Typography.Text>
                         <br />
                         <Typography.Text strong>CASHIER: {billData?.cashier}</Typography.Text>
                     </Col>

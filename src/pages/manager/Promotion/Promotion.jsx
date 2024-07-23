@@ -57,6 +57,12 @@ const Promotion = () => {
             ),
         },
         {
+            title: "Apapplicable Products",
+            dataIndex: "applicableProducts",
+            key: "applicableProducts",
+            
+        },
+        {
             title: "Status",
             dataIndex: "status",
             key: "status",

@@ -18,6 +18,10 @@ import { getChangeMoney } from "../../service/ChangeMoney";
 
 const { Option } = Select;
 
+const formatVND = (value) => {
+    return value.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+};
+
 const HistotyMoneyStallForm = ({ isModalVisible, setIsModalVisible }) => {
     const [form] = Form.useForm();
     const [stallData, setStallData] = useState();
@@ -86,16 +90,19 @@ const HistotyMoneyStallForm = ({ isModalVisible, setIsModalVisible }) => {
             title: "Money",
             dataIndex: ["stallsSell", "money"],
             key: "money",
+            render: (money) => formatVND(money),
         },
         {
             title: "Old Total In Stall",
             dataIndex: "oldTotalInStall",
             key: "oldTotalInStall",
+            render: (oldTotalInStall) => formatVND(oldTotalInStall),
         },
         {
             title: "Amount",
             dataIndex: "amount",
             key: "amount",
+            render: (amount) => formatVND(amount),
         },
         {
             title: "Change DateTime",
@@ -118,7 +125,7 @@ const HistotyMoneyStallForm = ({ isModalVisible, setIsModalVisible }) => {
             key: "typeChange",
         },
     ];
-    console.log(stallData);
+
     return (
         <Modal
             title="HISTORY CHANGE MONEY"

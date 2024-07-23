@@ -160,18 +160,18 @@ const DetailProduct = () => {
                         <Text type="secondary">{data.descriptions}</Text>
                         <Divider />
                         <Title level={4} style={{ color: "#f5222d" }}>
-                            {formatVND(data.price)}
+                            {formatVND(data.newPrice ? data.newPrice : data.price)}
                         </Title>
-                        {/* {data?.newPrice ? (
+                        {data.newPrice ? (
                             <>
-                                <Text delete>8.470.000 ₫</Text>
+                                <Text delete>{formatVND(data.price)}</Text>
                                 <Text>
-                                    (Giá sản phẩm thay đổi tuỳ theo trọng lượng
-                                    vàng và đá)
+                                    (Giá sản phẩm thay đổi tuỳ theo trọng lượng vàng và đá)
                                 </Text>
                             </>
-                        ) : null} */}
+                        ) : null}
                         <Divider />
+
                         <Space direction="vertical" style={{ width: "100%" }}>
                             <Button
                                 icon={<ShoppingCartOutlined />}

@@ -1,22 +1,14 @@
+import { Button, Form, Input, Modal, Select, Space } from "antd";
 import React, { useEffect, useState } from "react";
-import { Button, Modal, Form, Input, Select, Space } from "antd";
-import {
-    UserOutlined,
-    PhoneOutlined,
-    CalendarOutlined,
-} from "@ant-design/icons";
-import "./resuableFormStyle.css";
 import { BiCalendar, BiPhone, BiUser } from "react-icons/bi";
-import { getCustomerByPhone } from "../../service/customer";
-import {
-    getRevenueMothCashiersById,
-    getRevenueMothStallById,
-    getRevenueYearCashiersById,
-    getRevenueYearStallById,
-} from "../../service/revenue";
-import { getAlllStalls } from "../../service/manager";
 import { toast } from "react-toastify";
 import { getAllAccout } from "../../service/account";
+import {
+    getRevenueMothCashiersById,
+    getRevenueYearCashiersById,
+} from "../../service/revenue";
+import { formatVND } from "../../utils/funUtils";
+import "./resuableFormStyle.css";
 
 const { Option } = Select;
 
@@ -114,7 +106,7 @@ const RevevenueCashierForm = ({
                         <Select placeholder="Select cashier">
                             {allAcount?.map((account) => (
                                 <Option key={account.name} value={account.name}>
-                                    {account.name}
+                                    {account.email}
                                 </Option>
                             ))}
                         </Select>
@@ -156,7 +148,7 @@ const RevevenueCashierForm = ({
                             </div>
                             <div>
                                 <BiCalendar color="black" /> TOTAL REVENUE:{" "}
-                                {cashierData.totalRevenue}
+                                {formatVND(cashierData.totalRevenue)}
                             </div>
                         </div>
                         <div className="customer__wrapper">

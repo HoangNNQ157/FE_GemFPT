@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, Col, Divider, Row, Table, Typography } from "antd";
 import { formatVND } from "../../utils/funUtils";
+import moment from "moment-timezone";
 
 const PrintableBill = React.forwardRef((props, ref) => {
     const { billData, id, columns, warrantyColumns } = props;
@@ -38,7 +39,7 @@ const PrintableBill = React.forwardRef((props, ref) => {
                 <Divider />
                 <Row justify="space-between">
                     <Col>
-                        <Typography.Text strong>DATE: {billData?.createTime}</Typography.Text>
+                    <Typography.Text strong>DATE: {billData?.createTime ? moment(billData.createTime).tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY HH:mm") : ""}</Typography.Text>
                         <br />
                         <Typography.Text strong>CASHIER: {billData?.cashier}</Typography.Text>
                     </Col>

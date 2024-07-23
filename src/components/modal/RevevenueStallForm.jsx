@@ -14,6 +14,7 @@ import {
 } from "../../service/revenue";
 import { getAlllStalls } from "../../service/manager";
 import { toast } from "react-toastify";
+import { formatVND } from "../../utils/funUtils";
 
 const { Option } = Select;
 
@@ -74,7 +75,7 @@ const RevevenueStallForm = ({
     return (
         <div>
             <Modal
-                title="CUSTOMER"
+                title="STALL"
                 visible={isModalVisible}
                 onCancel={handleCancel}
                 footer={[
@@ -160,11 +161,14 @@ const RevevenueStallForm = ({
                             </div>
                         </div>
                         <div className="customer__wrapper">
-                            <div>
+                            {/* <div>
                                 <BiPhone color="black" /> STAFF ORDER COUNT:{" "}
                                 {stallData.staffOrderCount.string}
+                            </div> */}
+                            <div>
+                                TOTAL REVENUE:{" "}
+                                {formatVND(stallData.totalRevenue)}
                             </div>
-                            <div>TOTAL REVENUE: {stallData.totalRevenue}</div>
                         </div>
                     </div>
                 )}

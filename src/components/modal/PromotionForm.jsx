@@ -65,12 +65,12 @@ const PromotionForm = ({ visible, onCancel, onSave, dataProduct }) => {
                 <Form.Item name="description" label="Description">
                     <Input.TextArea />
                 </Form.Item>
-                <Form.Item
+                {/* <Form.Item
                     name="applicableProducts"
                     label="Applicable Products"
                 >
                     <Input />
-                </Form.Item>
+                </Form.Item> */}
                 
                 <Form.Item
                     name="endTime"

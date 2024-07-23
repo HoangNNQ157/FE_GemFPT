@@ -110,7 +110,7 @@ const BuybackForm = ({
                                     ))}
                                 </Select>
                             </Form.Item>
-                            <Form.Item
+                            {/* <Form.Item
                                 name="typeWhenBuyBack"
                                 label="typeWhenBuyBack"
                             >
@@ -124,18 +124,18 @@ const BuybackForm = ({
                                         </Select.Option>
                                     ))}
                                 </Select>
-                            </Form.Item>
-                            <Form.Item
+                            </Form.Item> */}
+                            {/* <Form.Item
                                 name="priceBuyRate"
                                 label="Price Buy Rate"
                             >
                                 <Input type="number" />
-                            </Form.Item>
-                            <Form.Item name="barcode" label="Barcode">
+                            </Form.Item> */}
+                            {/* <Form.Item name="barcode" label="Barcode">
                                 <Input type="text" />
-                            </Form.Item>
+                            </Form.Item> */}
                         </TabPane>
-                        <TabPane tab="URLs" key="2">
+                        <TabPane tab="Images" key="2">
                             <Form.List name="urls">
                                 {(fields, { add, remove }) => (
                                     <>
@@ -294,7 +294,7 @@ const BuybackForm = ({
                                                 >
                                                     <Input />
                                                 </Form.Item>
-                                                <Form.Item
+                                                {/* <Form.Item
                                                     {...field}
                                                     name={[field.name, "price"]}
                                                     fieldKey={[
@@ -304,8 +304,8 @@ const BuybackForm = ({
                                                     label="Price"
                                                 >
                                                     <Input type="number" />
-                                                </Form.Item>
-                                                <Form.Item
+                                                </Form.Item> */}
+                                                {/* <Form.Item
                                                     {...field}
                                                     name={[
                                                         field.name,
@@ -318,8 +318,8 @@ const BuybackForm = ({
                                                     label="Quantity"
                                                 >
                                                     <Input type="number" />
-                                                </Form.Item>
-                                                <Form.Item
+                                                </Form.Item> */}
+                                                {/* <Form.Item
                                                     {...field}
                                                     name={[
                                                         field.name,
@@ -379,6 +379,20 @@ const BuybackForm = ({
                                                     label="Cut"
                                                 >
                                                     <Input />
+                                                </Form.Item> */}
+                                                <Form.Item
+                                                    {...field}
+                                                    name={[
+                                                        field.fieldKey,
+                                                        "gemBarcode",
+                                                    ]}
+                                                    fieldKey={[
+                                                        field.fieldKey,
+                                                        "gemBarcode",
+                                                    ]}
+                                                    label="Barcode"
+                                                >
+                                                    <Input type="text" />
                                                 </Form.Item>
                                                 <Form.Item
                                                     {...field}

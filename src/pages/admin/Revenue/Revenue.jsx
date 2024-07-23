@@ -57,7 +57,6 @@ const Revenue = () => {
         id: 1,
     });
     const [historyChangeMoney, setHistoryChangeMoney] = useState(false);
-    //1 = month // 2 years
     const [formChart, setFormChart] = useState({
         revenue: 2,
     });
@@ -193,15 +192,19 @@ const Revenue = () => {
                 setIsModalVisible={setRevenueStall}
                 type={revenueStall.id}
             />
-            <RevevenueCashierForm
-                isModalVisible={revenueCashier.status}
-                setIsModalVisible={setRevenueCashier}
-                type={revenueCashier.id}
-            />
-            <HistotyMoneyStallForm
-                isModalVisible={historyChangeMoney}
-                setIsModalVisible={setHistoryChangeMoney}
-            />
+            {revenueCashier.status ? (
+                <RevevenueCashierForm
+                    isModalVisible={revenueCashier.status}
+                    setIsModalVisible={setRevenueCashier}
+                    type={revenueCashier.id}
+                />
+            ) : null}
+            {historyChangeMoney ? (
+                <HistotyMoneyStallForm
+                    isModalVisible={historyChangeMoney}
+                    setIsModalVisible={setHistoryChangeMoney}
+                />
+            ) : null}
         </div>
     );
 };

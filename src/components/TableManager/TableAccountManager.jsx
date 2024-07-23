@@ -168,7 +168,7 @@ const TableAccountManager = () => {
                     .then((res) => res.data)
                     .then((data) => {
                         setAccountData([data]);
-                        toast.success("search bill for Email successfully");
+                        toast.success("Search Email successfully");
                     })
                     .catch((err) => {
                         toast.error("search account for email failed");
