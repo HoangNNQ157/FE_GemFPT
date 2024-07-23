@@ -74,7 +74,7 @@ export default function Login() {
       const response = await signInWithPopup(auth, provider);
       const user = await loginWithGoogle({ token: response.user.accessToken });
       console.log("Login with Google success:", user.data);
-      localStorage.setItem("token", user.data.token);
+      Cookies.set("token", user.data.token);
       dispatch(login(user.data));
       navigate("/staff-product");
       toast.success("Login with Google Successful");
