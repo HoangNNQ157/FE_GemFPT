@@ -1,7 +1,7 @@
 import { Button, Flex, Popconfirm, Table } from "antd";
 import { useEffect, useState } from "react";
 import { BiEdit } from "react-icons/bi";
-import { MdDelete, MdOutlineEditOff } from "react-icons/md";
+import { MdOutlineChangeCircle, MdOutlineEditOff } from "react-icons/md";
 import { toast } from "react-toastify";
 import PromotionForm from "../../../components/modal/PromotionForm";
 import PromotionFormUpdate from "../../../components/modal/PromotionFormUpdate";
@@ -91,16 +91,16 @@ const Promotion = () => {
                         <Button danger icon={<MdOutlineEditOff size={24} />} />
                     )}
                     <Popconfirm
-                        title="Do you want to reduce product prices ? "
+                        title="Do you want to cancel promotion ?"
                         onConfirm={() => handleDelteProduct(record)}
                         onCancel={() => {}}
                         okText="Yes"
                         cancelText="No"
                     >
                         <Button
-                            danger
-                            icon={<MdDelete size={24} />}
-                            style={{ marginLeft: "10px" }}
+                            
+                            icon={<MdOutlineChangeCircle size={24} />}
+                            style={{ marginLeft: "10px",color: "blue"  }}
                         />
                     </Popconfirm>
                 </span>

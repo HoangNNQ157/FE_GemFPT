@@ -174,7 +174,7 @@ const TableManager = ({
             }
         } catch (err) {
             console.error(err.response?.data);
-            toast.error("Please separate gem before update the product information");
+            toast.error("An error occurred. Please try again later");
         } finally {
             setVisible(false);
         }
@@ -202,7 +202,7 @@ const TableManager = ({
             toast.error("An error occurred. Please try again later.");
         }
     };
-    const handleUnLinkGem = async (record) => {
+   /*  const handleUnLinkGem = async (record) => {
         try {
             const response = await unLinkGems(record.barcode);
             if (response.data) {
@@ -223,7 +223,7 @@ const TableManager = ({
         } catch (error) {
             toast.error("An error occurred. Please try again later.");
         }
-    };
+    }; */
     const columns = [
         {
             title: "ID",
@@ -332,7 +332,7 @@ const TableManager = ({
                             navigator(`/product-detail/${record.productId}`)
                         }
                     />
-                    <Popconfirm
+                    {/* <Popconfirm
                         title="You want to remove the gem from the product ? "
                         onConfirm={() => handleUnLinkGem(record)}
                         onCancel={() => {}}
@@ -340,7 +340,7 @@ const TableManager = ({
                         cancelText="No"
                     >
                         <Button type="link" icon={<LiaGemSolid size={24} />} />
-                    </Popconfirm>
+                    </Popconfirm> */}
                     <Popconfirm
                         title="Do you want to change the product's status ?"
                         onConfirm={() => handleDelteProduct(record)}

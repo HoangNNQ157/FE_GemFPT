@@ -23,18 +23,18 @@ const ManagerDiscount = () => {
             key: "id",
         },
         {
-            title: "PERCENT",
+            title: "Dicount",
             dataIndex: "requestedDiscount",
             key: "requestedDiscount",
         },
         {
-            title: "CREATE TIME",
+            title: "Create Time",
             dataIndex: "requestTime",
             key: "requestTime",
             render: (text) => new Date(text).toLocaleString("vi-VN"),
         },
         {
-            title: "STATUS",
+            title: "Verification",
             dataIndex: "approved",
             key: "approved",
             render: (text, record) => (
@@ -52,31 +52,39 @@ const ManagerDiscount = () => {
             ),
         },
         {
-            title: "CUSTOMER NAME",
+            title: "Customer Name",
             dataIndex: ["customer", "name"],
             key: "customerName",
         },
         {
-            title: "CUSTOMER PHONE",
+            title: "Customer Phone",
             dataIndex: ["customer", "phone"],
             key: "customerPhone",
         },
-        {
+        /* {
             title: "CUSTOMER POINTS",
             dataIndex: ["customer", "points"],
             key: "customerPoints",
-        },
+        }, */
         {
-            title: "CUSTOMER RANK",
+            title: "Customer Rank",
             dataIndex: ["customer", "rankCus"],
             key: "customerRank",
         },
         {
-            title: "CUSTOMER CREATE TIME",
-            dataIndex: ["customer", "createTime"],
-            key: "customerCreateTime",
-            render: (text) => new Date(text).toLocaleString("vi-VN"),
+            title: "Status",
+            key: "statusUse",
+            render: (text, record) => {
+                return record.statusUse ? "Đã sử dụng" : "Chưa sử dụng";
+            }
         },
+
+        /*  {
+             title: "CUSTOMER CREATE TIME",
+             dataIndex: ["customer", "createTime"],
+             key: "customerCreateTime",
+             render: (text) => new Date(text).toLocaleString("vi-VN"),
+         }, */
 
         {
             title: "Action",
