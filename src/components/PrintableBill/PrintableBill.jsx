@@ -14,6 +14,13 @@ const PrintableBill = React.forwardRef((props, ref) => {
                     border: "2px dashed #ddd",
                 }}
             >
+                <Row justify="center">
+                    <Typography.Title level={2}>GEM VIETNAM</Typography.Title>
+                </Row>
+                <Row justify="center">
+                    <Typography.Text>40 Lê Văn Việt, Dist 9, HCM</Typography.Text>
+                </Row>
+                <Divider />
                 <Row justify="space-between">
                     <Col>
                         <Typography.Text strong>BILL TO</Typography.Text>
@@ -25,32 +32,17 @@ const PrintableBill = React.forwardRef((props, ref) => {
                         <Typography.Text>
                             {billData?.customerPhone}
                         </Typography.Text>
+
                     </Col>
                 </Row>
                 <Divider />
                 <Row justify="space-between">
                     <Col>
-                        <Typography.Text strong>SHIP TO</Typography.Text>
+                        <Typography.Text strong>DATE: {billData?.createTime}</Typography.Text>
                         <br />
-                        <Typography.Text>
-                            {billData?.customerName}
-                        </Typography.Text>
-                        <br />
-                        <Typography.Text>
-                            {billData?.customerPhone}
-                        </Typography.Text>
+                        <Typography.Text strong>CASHIER: {billData?.cashier}</Typography.Text>
                     </Col>
-                    <Col>
-                        <Typography.Text strong>INVOICE #</Typography.Text>
-                        <br />
-                        <Typography.Text>{id}</Typography.Text>
-                        <br />
-                        <Typography.Text strong>INVOICE DATE</Typography.Text>
-                        <br />
-                        <Typography.Text>
-                            {billData?.createTime}
-                        </Typography.Text>
-                    </Col>
+
                 </Row>
                 <Divider />
                 <Row align="center" justify="space-between">
@@ -78,7 +70,6 @@ const PrintableBill = React.forwardRef((props, ref) => {
                     rowKey="id"
                 />
                 <Divider />
-                <Divider />
                 <Row justify="center">
                     <Typography.Text strong>Terms & Conditions</Typography.Text>
                     <br />
@@ -92,7 +83,7 @@ const PrintableBill = React.forwardRef((props, ref) => {
                         Account number: 1234567890
                     </Typography.Text>
                     <br />
-                    <Typography.Text>Routing: 098765432</Typography.Text>
+                    <Typography.Text>Routing: 0961815703</Typography.Text>
                 </Row>
             </Card>
         </div>

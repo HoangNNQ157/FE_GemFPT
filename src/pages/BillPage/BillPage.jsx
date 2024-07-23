@@ -155,6 +155,12 @@ const BillPage = () => {
                     border: "2px dashed #ddd",
                 }}
             >
+                <Row justify="center">
+                    <Typography.Title level={2}>GEM VIETNAM</Typography.Title>
+                </Row>
+                <Row justify="center">
+                    <Typography.Text>40 Lê Văn Việt, Dist 9, HCM</Typography.Text>
+                </Row>
                 <Row justify="space-between">
                     <Col>
                         <Typography.Text strong>BILL TO</Typography.Text>
@@ -170,16 +176,10 @@ const BillPage = () => {
                 </Row>
                 <Divider />
                 <Row justify="space-between">
-                    <Col>
-                        <Typography.Text strong>SHIP TO</Typography.Text>
+                <Col>
+                        <Typography.Text strong>DATE: {billData?.createTime}</Typography.Text>
                         <br />
-                        <Typography.Text>
-                            {billData?.customerName}
-                        </Typography.Text>
-                        <br />
-                        <Typography.Text>
-                            {billData?.customerPhone}
-                        </Typography.Text>
+                        <Typography.Text strong>CASHIER: {billData?.cashier}</Typography.Text>
                     </Col>
                 </Row>
                 <Divider />
@@ -221,7 +221,7 @@ const BillPage = () => {
                         Account number: 1234567890
                     </Typography.Text>
                     <br />
-                    <Typography.Text>Routing: 098765432</Typography.Text>
+                    <Typography.Text>Routing: 0961815703</Typography.Text>
                 </Row>
             </Card>
         </>
