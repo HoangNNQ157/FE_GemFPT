@@ -13,7 +13,7 @@ import {
     deleteProduct,
     getListProducts,
     getListProductsActive,
-    getProductByBarcode,
+    getProductAllByBarcode,
     getProductByCategory,
     getProductByGem,
     getProductByMetal,
@@ -50,7 +50,7 @@ const TableManager = ({
                 let response;
                 if (searchValue?.length > 0) {
                     response = await getProductByName(searchValue);
-                    toast.success("Search by name");
+                    /* toast.success("Search by name"); */
                 } else if (
                     searchPrice?.minPrice >= 0 &&
                     searchPrice?.maxPrice > searchPrice.minPrice &&
@@ -70,13 +70,23 @@ const TableManager = ({
                     });
                     toast.success("Filter by category");
                 } else if (searchBarcode) {
-                    response = await getProductByBarcode({
-                        barcode: searchBarcode,
-                    });
-                    toast.success("Filter by barcode");
+                    try {
+                        response = await getProductAllByBarcode({
+                            barcode: searchBarcode,
+                        });
+
+                        // Check if response is valid and contains the expected data
+                        if (response && response.data && response.data.length > 0) {
+                            toast.success("Filter by barcode");
+                        }
+                    } catch (error) {
+                        // Handle any errors that occur during the API call
+                        console.error("Error searching by barcode:", error);
+                        
+                    }
                 } else if (productActice) {
                     response = await getListProductsActive();
-                    /* toast.success("Active products"); */
+                    toast.success("Active products");
                 } else {
                     response = await getListProducts();
                 }
@@ -89,14 +99,18 @@ const TableManager = ({
                         key: index + 1,
                     }));
                     setDataProducts(products);
-                } else if (!response?.data[0]?.productId) {
-                    toast.error("product not found");
+                } else if (
+                    !response?.data[0]?.productId &&
+                    !response?.data?.productId
+                ) {
+                    toast.error("Product not found");
                 } else {
                     setDataProducts([response.data]);
                 }
             } catch (error) {
-                toast.error("Failed to fetch products");
-                console.error("Error fetching products:", error);
+                if (error?.response?.data) {
+                    toast.error(error?.response?.data);
+                } else toast.error("Failed to fetch products");
             }
         };
 
@@ -202,28 +216,28 @@ const TableManager = ({
             toast.error("An error occurred. Please try again later.");
         }
     };
-   /*  const handleUnLinkGem = async (record) => {
-        try {
-            const response = await unLinkGems(record.barcode);
-            if (response.data) {
-                toast.success("Successfully separated the gem from product");
-                const newProducts = productActice
-                    ? await getListProductsActive()
-                    : await getListProducts();
-                const productsWithKey = newProducts.data.map(
-                    (product, index) => ({
-                        ...product,
-                        key: index + 1,
-                    })
-                );
-                setDataProducts(productsWithKey);
-            } else {
-                toast.error("Failed to separate the gem from product");
-            }
-        } catch (error) {
-            toast.error("An error occurred. Please try again later.");
-        }
-    }; */
+    /*  const handleUnLinkGem = async (record) => {
+         try {
+             const response = await unLinkGems(record.barcode);
+             if (response.data) {
+                 toast.success("Successfully separated the gem from product");
+                 const newProducts = productActice
+                     ? await getListProductsActive()
+                     : await getListProducts();
+                 const productsWithKey = newProducts.data.map(
+                     (product, index) => ({
+                         ...product,
+                         key: index + 1,
+                     })
+                 );
+                 setDataProducts(productsWithKey);
+             } else {
+                 toast.error("Failed to separate the gem from product");
+             }
+         } catch (error) {
+             toast.error("An error occurred. Please try again later.");
+         }
+     }; */
     const columns = [
         {
             title: "ID",
@@ -344,7 +358,7 @@ const TableManager = ({
                     <Popconfirm
                         title="Do you want to change the product's status ?"
                         onConfirm={() => handleDelteProduct(record)}
-                        onCancel={() => {}}
+                        onCancel={() => { }}
                         okText="Yes"
                         cancelText="No"
                     >

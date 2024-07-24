@@ -40,6 +40,11 @@ const getProductByBarcode = ({ barcode }) => {
         headers: headers,
     });
 };
+const getProductAllByBarcode = ({ barcode }) => {
+    return api.get(`/product-all/${barcode}`, {
+        headers: headers,
+    });
+};
 const getProductByPrice = (searchData) => {
     return api.get(
         `/search/min-max?minPrice=${searchData.minPrice}&maxPrice=${searchData.maxPrice}`,
@@ -78,4 +83,5 @@ export {
     getProductById,
     getProductByBarcode,
     unLinkGems,
+    getProductAllByBarcode,
 };
