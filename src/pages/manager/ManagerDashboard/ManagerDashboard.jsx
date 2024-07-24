@@ -77,7 +77,7 @@ const ManagerDashboard = () => {
     return (
         <>
             <HeaderProduct
-                placeholder={"Search By Name"}
+                placeholder={"SEARCH BY NAME"}
                 role={"MANAGER"}
                 searchValue={searchProduct}
                 onChangeMinMax={onChangeMinMax}

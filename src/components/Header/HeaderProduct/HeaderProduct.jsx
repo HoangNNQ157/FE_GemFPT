@@ -21,6 +21,7 @@ const HeaderProduct = ({
     showModaGem,
     showModaCategory,
     onChangeBarcode,
+    placeholder,
 }) => {
     const userData = useSelector((state) => state.user);
     const navigate = useNavigate();
@@ -96,7 +97,7 @@ const HeaderProduct = ({
                     <div className="headerlayout-search-input">
                         <CiSearch className="search-icon" />
                         <input
-                            placeholder="SEARCH"
+                            placeholder={placeholder ? placeholder : "SEARCH"}
                             className="input-search"
                             type="search"
                             value={searchValue}

@@ -53,40 +53,45 @@ const StaffProduct = () => {
                 let response;
                 if (debouncedSearchProduct) {
                     response = await getProductByName(debouncedSearchProduct);
-                    toast.success("Search by name");
+                   /*  toast.info("Search by name"); */
                 } else if (
                     debouncedSearchPrice.minPrice >= 0 &&
                     debouncedSearchPrice.maxPrice >
                         debouncedSearchPrice.minPrice
                 ) {
                     response = await getProductByPrice(debouncedSearchPrice);
-                    toast.success("Search by price");
+                    toast.info("Search by price");
                 } else if (searchProductByMetal) {
                     response = await getProductByMetal(searchProductByMetal);
-                    toast.success("Filter by metal");
+                    toast.info("Filter by metal");
                 } else if (searchBarcode) {
                     response = await getProductByBarcode({
                         barcode: searchBarcode,
                     });
-                    toast.success("Filter by barcode");
+                    toast.info("Filter by barcode");
                 } else if (searchGem && searchGem.color) {
                     response = await getProductByGem(searchGem);
-                    toast.success("Filter by gem");
+                    toast.info("Filter by gem");
                 } else {
                     response = await getListProductsActive();
                 }
 
-                if (response?.data?.length && response?.data[0]?.productId) {
+                if (
+                    response?.data?.length > 0 &&
+                    response?.data[0]?.productId
+                ) {
                     const products = response.data?.map((product, index) => ({
                         ...product,
                         key: index + 1,
                     }));
                     setDataProducts(products);
+                } else if (!response?.data[0]?.productId) {
+                    toast.error("product not found");
                 } else {
                     setDataProducts([response.data]);
                 }
             } catch (error) {
-                toast.error("Failed to fetch products");
+                toast.error(error.response?.data);
                 console.error("Error fetching products:", error);
             }
         };
@@ -312,6 +317,7 @@ const StaffProduct = () => {
                 showModaGem={() => setIsModalGem(true)}
                 onChangeBarcode={onChangeBarcode}
                 showModaCategory={() => setIsModalCategory(true)}
+                placeholder="SEACH  BY NAME"
             />
             <Table
                 rowSelection={rowSelection}
