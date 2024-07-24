@@ -69,6 +69,11 @@ const ModalManager = ({
             value: "ANKLETS",
             id: 5,
         },
+        {
+            name: "METAL",
+            value: "METAL",
+            id: 6,
+        },
     ];
     return (
         <Modal

@@ -112,7 +112,7 @@ const StaffProduct = () => {
             key: "productId",
         },
         {
-            title: "BARCODE",
+            title: "Barcode",
             dataIndex: "barcode",
             key: "barcode",
             render: (text) => (
@@ -132,12 +132,12 @@ const StaffProduct = () => {
             ),
         },
         {
-            title: "STOCK",
+            title: "Quantity",
             dataIndex: "stock",
             key: "stock",
         },
         {
-            title: "IMAGES",
+            title: "Images",
             dataIndex: "urls",
             key: "urls",
             render: (urls) =>
@@ -155,7 +155,7 @@ const StaffProduct = () => {
                 ),
         },
         {
-            title: "NAME",
+            title: "Name",
             dataIndex: "name",
             key: "name",
             render: (text) => (
@@ -174,32 +174,32 @@ const StaffProduct = () => {
             ),
         },
         {
-            title: "CATEGORY",
+            title: "Category",
             dataIndex: "category",
             key: "category",
         },
-        {
-            title: "STOCK",
+       /*  {
+            title: "Stock",
             dataIndex: "stock",
             key: "stock",
             render: (text, record) => (
                 <span> {record.stock > 0 ? record.stock : "Hết hàng"}</span>
             ),
-        },
+        }, */
         {
-            title: "PRICE",
+            title: "Price",
             dataIndex: "price",
             key: "price",
             render: (text, record) => <span>{formatVND(record.price)}</span>,
         },
         {
-            title: "NEW PRICE",
+            title: "New Price",
             dataIndex: "newPrice",
             key: "newPrice",
             render: (text, record) => <span>{formatVND(record.newPrice)}</span>,
         },
         {
-            title: "STATUS",
+            title: "Status",
             dataIndex: "status",
             key: "status",
             render: (text, record) => (
@@ -212,7 +212,7 @@ const StaffProduct = () => {
             ),
         },
         {
-            title: "ACCTIONS",
+            title: "Action",
             key: "actions",
             render: (text, record) => (
                 <Button

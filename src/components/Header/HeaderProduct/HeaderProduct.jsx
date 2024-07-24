@@ -108,7 +108,7 @@ const HeaderProduct = ({
                         Reset
                     </Button>
                     <div className="sort-item">
-                        <AntdDropdown title={"SORT"} menu={menuSort} />
+                        <AntdDropdown title={"SEARCH"} menu={menuSort} />
                     </div>
                 </div>
                 <div className="headerlayout-profile">

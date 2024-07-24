@@ -36,46 +36,46 @@ const StaffBill = () => {
             key: "id",
         },
         {
-            title: "TYPE",
+            title: "Type",
             dataIndex: "typeBill",
             key: "typeBill",
         },
         {
-            title: "CUSTOMER NAME",
+            title: "Customer Name",
             dataIndex: "customerName",
             key: "customerName",
         },
         {
-            title: "PHONE",
+            title: "Phone",
             dataIndex: "customerPhone",
             key: "customerPhone",
         },
         {
-            title: "TOTAL AMOUNT",
+            title: "Total Amount",
             dataIndex: "totalAmount",
             key: "totalAmount",
             render: (text) => formatVND(text),
         },
         {
-            title: "DISCOUNT",
+            title: "Discount",
             dataIndex: "discount",
             key: "discount",
             render: (text) => <span>{text}%</span>,
         },
         {
-            title: "VOUCHER",
+            title: "Voucher",
             dataIndex: "voucher",
             key: "voucher",
             render: (text) => <span>{text}</span>,
         },
         {
-            title: "TIME CREATE",
+            title: "Create Time",
             dataIndex: "createTime",
             key: "createTime",
             render: (text) => moment(text).format("YYYY-MM-DD HH:mm:ss"),
         },
         {
-            title: "STATUS",
+            title: "Status",
             dataIndex: "status",
             key: "status",
             render: (text, record) => (
@@ -88,12 +88,12 @@ const StaffBill = () => {
             ),
         },
         {
-            title: "CASHIER",
+            title: "Cashier",
             dataIndex: "cashier",
             key: "cashier",
         },
         {
-            title: "PRODUCTS",
+            title: "Product",
             dataIndex: "items",
             key: "items",
             render: (items) => (

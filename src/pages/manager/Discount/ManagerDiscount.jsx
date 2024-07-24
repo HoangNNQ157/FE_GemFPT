@@ -1,5 +1,3 @@
-// src/components/CustomTable/CustomTable.js
-
 import { Button, Flex, Table, Tooltip } from "antd";
 import React, { useEffect, useState } from "react";
 import { MdModeEditOutline, MdPublishedWithChanges } from "react-icons/md";
@@ -7,15 +5,27 @@ import { toast } from "react-toastify";
 import { getAllDiscount, respondtDiscount } from "../../../service/discount";
 import { formatVND } from "../../../utils/funUtils";
 import RespondForm from "../../../components/modal/RespondForm";
+import { useResolvedPath } from "react-router-dom";
+
 const ManagerDiscount = () => {
+    const pathName = useResolvedPath();
     const [stallData, setStallData] = useState([]);
     const [visible, setVisible] = useState(false);
     const [idResponse, setIdResponse] = useState(null);
+
     useEffect(() => {
         getAllDiscount()
             .then((data) => data.data)
-            .then((data) => setStallData(data));
+            .then((data) => {
+                // Update the statusUse field based on some condition
+                const updatedData = data.map(item => ({
+                    ...item,
+                    statusUse: item.statusUse ? "Đã Sử Dụng" : "Chưa Sử Dụng"
+                }));
+                setStallData(updatedData);
+            });
     }, []);
+
     const columns = [
         {
             title: "ID",
@@ -23,9 +33,10 @@ const ManagerDiscount = () => {
             key: "id",
         },
         {
-            title: "Dicount",
+            title: "Discount",
             dataIndex: "requestedDiscount",
             key: "requestedDiscount",
+            render: (text) => <span>{text}%</span>,
         },
         {
             title: "Create Time",
@@ -61,32 +72,21 @@ const ManagerDiscount = () => {
             dataIndex: ["customer", "phone"],
             key: "customerPhone",
         },
-        /* {
-            title: "CUSTOMER POINTS",
-            dataIndex: ["customer", "points"],
-            key: "customerPoints",
-        }, */
         {
             title: "Customer Rank",
             dataIndex: ["customer", "rankCus"],
             key: "customerRank",
         },
         {
-            title: "Status",
+            title: "Status Use",
+            dataIndex: "statusUse",
             key: "statusUse",
-            render: (text, record) => {
-                return record.statusUse ? "Đã sử dụng" : "Chưa sử dụng";
-            }
+            render: (text) => <span>{text}</span>,
         },
+    ];
 
-        /*  {
-             title: "CUSTOMER CREATE TIME",
-             dataIndex: ["customer", "createTime"],
-             key: "customerCreateTime",
-             render: (text) => new Date(text).toLocaleString("vi-VN"),
-         }, */
-
-        {
+    if (!pathName.pathname.startsWith("/staff")) {
+        columns.push({
             title: "Action",
             key: "actions",
             render: (text, record) => (
@@ -104,8 +104,8 @@ const ManagerDiscount = () => {
                     </Tooltip>
                 </Flex>
             ),
-        },
-    ];
+        });
+    }
 
     const showModal = () => {
         setVisible(true);
@@ -114,6 +114,7 @@ const ManagerDiscount = () => {
     const handleCancel = () => {
         setVisible(false);
     };
+
     const handleSave = async (values) => {
         try {
             const res = await respondtDiscount({
@@ -123,7 +124,13 @@ const ManagerDiscount = () => {
             });
             getAllDiscount()
                 .then((data) => data.data)
-                .then((data) => setStallData(data));
+                .then((data) => {
+                    const updatedData = data.map(item => ({
+                        ...item,
+                        statusUse: item.statusUse ? "Đã Sử Dụng" : "Chưa Sử Dụng"
+                    }));
+                    setStallData(updatedData);
+                });
             if (res) {
                 toast.success("Respond discount successfully");
             }
@@ -133,12 +140,13 @@ const ManagerDiscount = () => {
             setVisible(false);
         }
     };
+
     return (
         <>
             <Table
                 dataSource={stallData.reverse()}
                 columns={columns}
-                pagination={{ defaultPageSize: 8 }}
+                pagination={{ defaultPageSize: 4 }}
             />
             <RespondForm
                 visible={visible}

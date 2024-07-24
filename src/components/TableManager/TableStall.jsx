@@ -42,18 +42,18 @@ const TableStall = () => {
             key: "stallsSellId",
         },
         {
-            title: "NAME",
+            title: "Name",
             dataIndex: "stallsSellName",
             key: "stallsSellName",
         },
         {
-            title: "CREATE TIME",
+            title: "Create Time",
             dataIndex: "stallsSellCreateTime",
             key: "stallsSellCreateTime",
             render: (text) => new Date(text).toLocaleString("vi-VN"),
         },
         {
-            title: "STATUS",
+            title: "Status",
             dataIndex: "stallsSellStatus",
             key: "stallsSellStatus",
             render: (text, record) => (
@@ -82,7 +82,7 @@ const TableStall = () => {
             ),
         },
         {
-            title: "MONEY",
+            title: "Money",
             dataIndex: "money",
             key: "money",
             render: (text) => <span>{formatVND(text)}</span>,

@@ -36,7 +36,7 @@ import StaffBuyBack from "./pages/staffs/StaffBuyBack/StaffBuyBack";
 import StaffOrder from "./pages/staffs/StaffOrder/StaffOrder";
 import Product from "./pages/staffs/StaffProduct/StaffProduct";
 import ManagerGem from "./pages/manager/ManagerGem/ManagerGem";
-
+import ManagerHistory from "./pages/manager/ManagerHistory/ManagerHistory";
 
 const App = () => {
     const userData = useSelector((state) => state.user);
@@ -149,10 +149,10 @@ const App = () => {
                                     />
                                 </Route>
                                 <Route element={<ManagerSidebarLayout />}>
-                                    {/* <Route
+                                    <Route
                                         path="manager-history"
                                         element={<ManagerHistory />}
-                                    /> */}
+                                    />
                                     <Route
                                         path="manager-product"
                                         element={<ManagerDashboard />}

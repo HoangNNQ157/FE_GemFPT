@@ -30,28 +30,28 @@ const TableStall = () => {
             key: "id",
         },
         {
-            title: "NAME",
+            title: "Name",
             dataIndex: "name",
             key: "name",
         },
         {
-            title: "PHONE",
+            title: "Phone",
             dataIndex: "phone",
             key: "phone",
         },
         {
-            title: "CREATE TIME",
+            title: "Create Time",
             dataIndex: "createTime",
             key: "createTime",
             render: (text) => new Date(text).toLocaleString("vi-VN"),
         },
         {
-            title: "RANK",
+            title: "Rank",
             dataIndex: "rankCus",
             key: "rankCus",
         },
         {
-            title: "STATUS",
+            title: "Status",
             dataIndex: "status",
             key: "status",
             render: (text, record) => (

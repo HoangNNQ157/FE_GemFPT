@@ -66,6 +66,8 @@ const BuybackForm = ({
         { name: "NECKLACE", value: "NECKLACE", id: 3 },
         { name: "EARRINGS", value: "EARRINGS", id: 4 },
         { name: "ANKLETS", value: "ANKLETS", id: 5 },
+        { name: "METAL", value: "METAL", id: 6 },
+        { name: "GEM", value: "GEM", id: 7 },
     ];
     const typeWhenBuyBack = [
         { name: "PROCESSING", value: "PROCESSING", id: 1 },

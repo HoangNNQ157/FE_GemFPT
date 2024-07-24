@@ -136,11 +136,11 @@ const StaffBuyBack = () => {
             key: "actions",
             render: (text, record) => (
                 <Flex align="center" gap={10}>
-                    <Button
+                   {/*  <Button
                         onClick={() => showModal(record)}
                         type="link"
                         icon={<EditOutlined />}
-                    />
+                    /> */}
                     <Button
                         style={{
                             border: "none",
@@ -153,7 +153,7 @@ const StaffBuyBack = () => {
                             toast.info("Viewing buyback details");
                         }}
                     >
-                        Details
+                        Detail
                     </Button>{" "}
                 </Flex>
             ),

@@ -51,7 +51,7 @@ const Metal = () => {
             key: "metalPriceId",
         },
         {
-            title: "TIME UPDATED",
+            title: "Update Time",
             dataIndex: "updateDate",
             key: "updateDate",
             render: (text) => new Date(text).toLocaleString(),
@@ -70,7 +70,7 @@ const Metal = () => {
             ),
         },
         {
-            title: "List metals",
+            title: "Metals",
             dataIndex: "typeOfMetals",
             key: "typeOfMetals",
             render: (text) => <span> {text.length} metal</span>,

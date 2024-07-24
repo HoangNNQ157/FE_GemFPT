@@ -24,7 +24,7 @@ import {
 } from "../../service/productService";
 import { formatVND } from "../../utils/funUtils";
 import CarouselImg from "../Carousel/Carousel";
-import ModalManager from "../modal/ModalManager";
+import ModalManagerProduct from "../modal/ModalManagerProduct";
 import "./TableManager.css";
 import { useNavigate } from "react-router-dom";
 import { LiaGemSolid } from "react-icons/lia";
@@ -312,6 +312,11 @@ const TableManager = ({
             render: (text, record) => <span>{formatVND(record.newPrice)}</span>,
         },
         {
+            title: "Buyback Mode",
+            dataIndex: "typeWhenBuyBack",
+            key: "btypeWhenBuyBack",
+        },
+        {
             title: "Status",
             dataIndex: "status",
             key: "status",
@@ -397,7 +402,7 @@ const TableManager = ({
                 columns={columns}
                 pagination={{ defaultPageSize: 4 }}
             />
-            <ModalManager
+            <ModalManagerProduct
                 metalData={metalData}
                 initialData={dataUpdate ? dataUpdate : null}
                 visible={visible}

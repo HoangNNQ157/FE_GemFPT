@@ -132,7 +132,12 @@ const ManagerGem = () => {
     { title: "Cut", dataIndex: "cut", key: "cut" },
     { title: "Carat", dataIndex: "carat", key: "carat" },
     { title: "Color", dataIndex: "color", key: "color" },
-    { title: "Price", dataIndex: "price", key: "price" },
+    {
+      title: "Price",
+      dataIndex: "price",
+      key: "price",
+      render: (text) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(text),
+  },
     {
       title: "Action",
       key: "actions",

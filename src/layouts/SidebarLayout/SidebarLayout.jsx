@@ -32,8 +32,8 @@ const SidebarLayout = () => {
         { path: "/managerPromotion", label: "Promotion" },
         { path: "/manager-stall", label: "Stall" },
         { path: "/manager-discount", label: "Discount" },
-       /*  { path: "/manager-customer", label: "Manager Customer" }, */
-        /* { path: "/manager-bill", label: "Manager Bill" }, */
+        /* { path: "/manager-customer", label: "Customer" }, */
+       /*  { path: "/manager-bill", label: "Bill" }, */
         { path: "/manager-gem", label: "Gem" },
         { path: "/manager-history", label: "History" },
     ];
@@ -44,6 +44,8 @@ const SidebarLayout = () => {
         { path: "/staff-customer", label: "Customer" },
         { path: "/staff-buy-back", label: "Buy Back" },
         { path: "/staff-bill", label: "Bill" },
+        { path: "/staff-discount", label: "Discount" },
+        { path: "/staff-gem", label: "Gem" },
         { path: "/policy", label: "Policy" },
     ];
 

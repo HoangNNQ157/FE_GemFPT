@@ -55,7 +55,7 @@ const ManagerHistory = () => {
 
     const columns = [
         {
-            title: "BARCODE",
+            title: "Barcode",
             dataIndex: "barcode",
             key: "barcode",
             render: (text) => (
@@ -74,7 +74,7 @@ const ManagerHistory = () => {
             ),
         },
         {
-            title: "DESCRIPTION",
+            title: "Description",
             dataIndex: "descriptions",
             key: "descriptions",
             render: (text) => (
@@ -93,13 +93,13 @@ const ManagerHistory = () => {
             ),
         },
         {
-            title: "CREATE TIME",
+            title: "Create Time",
             dataIndex: "createTime",
             key: "createTime",
             render: (text) => new Date(text).toLocaleString("vi-VN"),
         },
         {
-            title: "UPDATE TIME",
+            title: "Update Time",
             dataIndex: "updateTime",
             key: "updateTime",
             render: (text) => new Date(text).toLocaleString("vi-VN"),

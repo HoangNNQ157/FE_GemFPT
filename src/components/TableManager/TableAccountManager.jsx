@@ -90,22 +90,22 @@ const TableAccountManager = () => {
             key: "id",
         },
         {
-            title: "NAME",
+            title: "Name",
             dataIndex: "name",
             key: "name",
         },
         {
-            title: "EMAIL",
+            title: "Email",
             dataIndex: "email",
             key: "email",
         },
         {
-            title: "PHONE",
+            title: "Phone Number",
             dataIndex: "phone",
             key: "phone",
         },
         {
-            title: "STATUS",
+            title: "Status",
             dataIndex: "status",
             key: "status",
             render: (text, record) => (
@@ -118,18 +118,18 @@ const TableAccountManager = () => {
             ),
         },
         {
-            title: "ROLE",
+            title: "Role",
             dataIndex: "role",
             key: "role",
         },
         {
-            title: "CREATEDATE",
+            title: "Create Date",
             dataIndex: "createDate",
             key: "createDate",
             render: (text) => new Date(text).toLocaleString("vi-VN"),
         },
         {
-            title: "ACCTIONS",
+            title: "Action",
             key: "actions",
             render: (text, record) => (
                 <span>
