@@ -122,7 +122,10 @@ const App = () => {
                                         path="adminRevenue"
                                         element={<Revenue />}
                                     />
-                                    <Route
+                                    
+                                </Route>
+                                <Route element={<AdminLayout/>}>
+                                <Route
                                         path="adminStall"
                                         element={<ManagerStall />}
                                     />

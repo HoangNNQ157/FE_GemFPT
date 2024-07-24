@@ -216,4 +216,15 @@ export const CategoryOption = [
         value: "ANKLETS",
         id: 5,
     },
+    {
+        name: "METAL",
+        value: "METAL",
+        id: 6,
+    },
+    {
+        name: "GEMSTONE",
+        value: "GEMSTONE",
+        id: 7,
+    },
+    
 ];
