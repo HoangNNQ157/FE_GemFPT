@@ -43,6 +43,7 @@ const SidebarLayout = () => {
         { path: "/staff-customer", label: "Customer" },
         { path: "/staff-buy-back", label: "Buy Back" },
         { path: "/staff-bill", label: "Bill" },
+        { path: "/policy", label: "Policy" },
     ];
 
     const getLinks = (role) => {
