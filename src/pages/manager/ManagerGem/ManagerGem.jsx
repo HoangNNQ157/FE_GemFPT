@@ -2,6 +2,7 @@ import { Button, Flex, Select, Table, Tooltip, Image } from "antd";
 import React, { useEffect, useState } from "react";
 import { MdModeEditOutline } from "react-icons/md";
 import { toast } from "react-toastify";
+import { useLocation } from "react-router-dom";  // Import useLocation
 import HeaderSearch from "../../../components/Header/HeaderSearch/HeaderSearch";
 import GemModal from "../../../components/modal/GemModal";
 import {
@@ -29,6 +30,7 @@ const ManagerGem = () => {
   const [selectUserValue, setSelectUserValue] = useState(
     userStatusOptions[0].value
   );
+  const location = useLocation();  // Use useLocation to get the pathname
   const debouncedSearchBarcode = useDebounce(searchBarcode, 500);
 
   useEffect(() => {
@@ -136,14 +138,19 @@ const ManagerGem = () => {
       title: "Price",
       dataIndex: "price",
       key: "price",
-      render: (text) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(text),
-  },
-    {
+      render: (text) =>
+        new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(text),
+    },
+  ];
+
+  // Conditionally add the "Action" column if the pathname does not start with "/staff"
+  if (!location.pathname.startsWith("/staff")) {
+    columns.push({
       title: "Action",
       key: "actions",
       render: (text, record) => (
         <Flex justify="center" align="center" gap={4}>
-          <Tooltip title="Create Respond gem">
+          <Tooltip title="Create Respond Discount">
             <Button
               ghost
               type="primary"
@@ -156,8 +163,8 @@ const ManagerGem = () => {
           </Tooltip>
         </Flex>
       ),
-    },
-  ];
+    });
+  }
 
   return (
     <>

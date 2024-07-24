@@ -13,14 +13,14 @@ const columns = [
         className: "gold-type-column",
     },
     {
-        title: "Giá mua",
+        title: "Giá bán",
         dataIndex: "buyPrice",
         key: "buyPrice",
         className: "gold-price-column",
         render: (text) => formatVND(text),
     },
     {
-        title: "Giá bán",
+        title: "Giá mua",
         dataIndex: "sellPrice",
         key: "sellPrice",
         className: "gold-price-column",
