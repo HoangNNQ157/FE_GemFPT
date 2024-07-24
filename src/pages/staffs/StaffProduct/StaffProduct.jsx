@@ -53,7 +53,7 @@ const StaffProduct = () => {
                 let response;
                 if (debouncedSearchProduct) {
                     response = await getProductByName(debouncedSearchProduct);
-                   /*  toast.info("Search by name"); */
+                    toast.info("Search by name");
                 } else if (
                     debouncedSearchPrice.minPrice >= 0 &&
                     debouncedSearchPrice.maxPrice >
@@ -85,10 +85,10 @@ const StaffProduct = () => {
                         key: index + 1,
                     }));
                     setDataProducts(products);
+                } else if (response?.data?.productId) {
+                    setDataProducts([response.data]);
                 } else if (!response?.data[0]?.productId) {
                     toast.error("product not found");
-                } else {
-                    setDataProducts([response.data]);
                 }
             } catch (error) {
                 toast.error(error.response?.data);

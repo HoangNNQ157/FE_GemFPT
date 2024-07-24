@@ -21,6 +21,10 @@ const BuybackForm = ({
         console.log("Initial Data:", initialData);
         if (visible && type === "create") {
             form.resetFields();
+            // Set default values for gemstones if creating
+            form.setFieldsValue({
+                gemstones: [{ description: 'description' }],
+            });
         } else if (visible && type === "update") {
             form.setFieldsValue(initialData);
         }
@@ -69,10 +73,7 @@ const BuybackForm = ({
         { name: "METAL", value: "METAL", id: 6 },
         { name: "GEM", value: "GEM", id: 7 },
     ];
-    const typeWhenBuyBack = [
-        { name: "PROCESSING", value: "PROCESSING", id: 1 },
-        { name: "PROCESSDONE", value: "PROCESSDONE", id: 2 },
-    ];
+
     return (
         <>
             <Modal
@@ -112,30 +113,6 @@ const BuybackForm = ({
                                     ))}
                                 </Select>
                             </Form.Item>
-                            {/* <Form.Item
-                                name="typeWhenBuyBack"
-                                label="typeWhenBuyBack"
-                            >
-                                <Select>
-                                    {typeWhenBuyBack.map((item, index) => (
-                                        <Select.Option
-                                            key={index}
-                                            value={item.value}
-                                        >
-                                            {item.name}
-                                        </Select.Option>
-                                    ))}
-                                </Select>
-                            </Form.Item> */}
-                            {/* <Form.Item
-                                name="priceBuyRate"
-                                label="Price Buy Rate"
-                            >
-                                <Input type="number" />
-                            </Form.Item> */}
-                            {/* <Form.Item name="barcode" label="Barcode">
-                                <Input type="text" />
-                            </Form.Item> */}
                         </TabPane>
                         <TabPane tab="Images" key="2">
                             <Form.List name="urls">
@@ -277,135 +254,30 @@ const BuybackForm = ({
                                             <div key={index}>
                                                 <Form.Item
                                                     {...field}
-                                                    name={[
-                                                        field.name,
-                                                        "description",
-                                                    ]}
-                                                    fieldKey={[
-                                                        field.fieldKey,
-                                                        "description",
-                                                    ]}
+                                                    name={[field.name, "description"]}
+                                                    fieldKey={[field.fieldKey, "description"]}
                                                     label="Description"
                                                     rules={[
                                                         {
                                                             required: true,
-                                                            message:
-                                                                "Please input the description!",
+                                                            message: "Please input the description!",
                                                         },
                                                     ]}
                                                 >
                                                     <Input />
                                                 </Form.Item>
-                                                {/* <Form.Item
-                                                    {...field}
-                                                    name={[field.name, "price"]}
-                                                    fieldKey={[
-                                                        field.fieldKey,
-                                                        "price",
-                                                    ]}
-                                                    label="Price"
-                                                >
-                                                    <Input type="number" />
-                                                </Form.Item> */}
-                                                {/* <Form.Item
-                                                    {...field}
-                                                    name={[
-                                                        field.name,
-                                                        "quantity",
-                                                    ]}
-                                                    fieldKey={[
-                                                        field.fieldKey,
-                                                        "quantity",
-                                                    ]}
-                                                    label="Quantity"
-                                                >
-                                                    <Input type="number" />
-                                                </Form.Item> */}
-                                                {/* <Form.Item
-                                                    {...field}
-                                                    name={[
-                                                        field.name,
-                                                        "certificateCode",
-                                                    ]}
-                                                    fieldKey={[
-                                                        field.fieldKey,
-                                                        "certificateCode",
-                                                    ]}
-                                                    label="Certificate Code"
-                                                >
-                                                    <Input />
-                                                </Form.Item>
                                                 <Form.Item
                                                     {...field}
-                                                    name={[field.name, "carat"]}
-                                                    fieldKey={[
-                                                        field.fieldKey,
-                                                        "carat",
-                                                    ]}
-                                                    label="Carat"
-                                                >
-                                                    <Input type="number" />
-                                                </Form.Item>
-                                                <Form.Item
-                                                    {...field}
-                                                    name={[field.name, "color"]}
-                                                    fieldKey={[
-                                                        field.fieldKey,
-                                                        "color",
-                                                    ]}
-                                                    label="Color"
-                                                >
-                                                    <Input />
-                                                </Form.Item>
-                                                <Form.Item
-                                                    {...field}
-                                                    name={[
-                                                        field.name,
-                                                        "clarity",
-                                                    ]}
-                                                    fieldKey={[
-                                                        field.fieldKey,
-                                                        "clarity",
-                                                    ]}
-                                                    label="Clarity"
-                                                >
-                                                    <Input />
-                                                </Form.Item>
-                                                <Form.Item
-                                                    {...field}
-                                                    name={[field.name, "cut"]}
-                                                    fieldKey={[
-                                                        field.fieldKey,
-                                                        "cut",
-                                                    ]}
-                                                    label="Cut"
-                                                >
-                                                    <Input />
-                                                </Form.Item> */}
-                                                <Form.Item
-                                                    {...field}
-                                                    name={[
-                                                        field.fieldKey,
-                                                        "gemBarcode",
-                                                    ]}
-                                                    fieldKey={[
-                                                        field.fieldKey,
-                                                        "gemBarcode",
-                                                    ]}
+                                                    name={[field.name, "gemBarcode"]}
+                                                    fieldKey={[field.fieldKey, "gemBarcode"]}
                                                     label="Barcode"
                                                 >
                                                     <Input type="text" />
                                                 </Form.Item>
                                                 <Form.Item
                                                     {...field}
-                                                    name={[
-                                                        field.fieldKey,
-                                                        "buyRate",
-                                                    ]}
-                                                    fieldKey={[
-                                                        field.fieldKey,
-                                                        "buyRate",
-                                                    ]}
+                                                    name={[field.name, "buyRate"]}
+                                                    fieldKey={[field.fieldKey, "buyRate"]}
                                                     label="Buy Rate"
                                                 >
                                                     <Input type="number" />
@@ -435,14 +307,14 @@ const BuybackForm = ({
                     </Tabs>
                 </Form>
             </Modal>
-            {type === "create" ? (
+            {type === "create" && (
                 <CustomerInfoModal
                     isModalVisible={isShowUserInfo && visible}
                     setIsModalVisible={() => setShowIsUserInfo(false)}
                     customerData={customerInfo}
                     setCustomerData={setCustomerInfo}
                 />
-            ) : null}
+            )}
         </>
     );
 };
