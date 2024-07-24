@@ -34,7 +34,8 @@ const SidebarLayout = () => {
         { path: "/manager-discount", label: "Discount" },
        /*  { path: "/manager-customer", label: "Manager Customer" }, */
         /* { path: "/manager-bill", label: "Manager Bill" }, */
-        { path: "/manager-gem", label: "Manager Gem" },
+        { path: "/manager-gem", label: "Gem" },
+        { path: "/manager-history", label: "History" },
     ];
 
     const staffLinks = [
