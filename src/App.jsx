@@ -28,6 +28,7 @@ import ManagerDashboard from "./pages/manager/ManagerDashboard/ManagerDashboard"
 import ManagerStall from "./pages/manager/ManagerStall/ManagerStall";
 import Promotion from "./pages/manager/Promotion/Promotion";
 import PageNotFound from "./pages/NotFound/PageNotFound";
+import Policy from "./pages/Policy/Policy";
 import PriceTable from "./pages/PriceTable/PriceTable";
 import Profile from "./pages/Profile/Profile";
 import StaffBill from "./pages/staffs/StaffBill/StaffBill";
@@ -35,6 +36,7 @@ import StaffBuyBack from "./pages/staffs/StaffBuyBack/StaffBuyBack";
 import StaffOrder from "./pages/staffs/StaffOrder/StaffOrder";
 import Product from "./pages/staffs/StaffProduct/StaffProduct";
 import ManagerGem from "./pages/manager/ManagerGem/ManagerGem";
+
 
 const App = () => {
     const userData = useSelector((state) => state.user);
@@ -64,6 +66,10 @@ const App = () => {
                                         path="staff-buy-back"
                                         element={<StaffBuyBack />}
                                     />
+                                    <Route
+                                        path="staff-discount"
+                                        element={<ManagerDiscount />}
+                                    />
                                 </Route>
                                 <Route element={<StaffSidebarLayout />}>
                                     <Route
@@ -78,6 +84,10 @@ const App = () => {
                                         path="staff-customer"
                                         element={<Customer />}
                                     />
+                                    <Route
+                                        path="staff-gem"
+                                        element={<ManagerGem />}
+                                    />
                                 </Route>
                                 <Route
                                     path="profile/:id"
@@ -87,6 +97,7 @@ const App = () => {
                                     path="product-detail/:id"
                                     element={<DetailProduct />}
                                 />
+                                <Route path="policy" element={<Policy />} />
                             </>
                         )}
                         {/* Admin routes */}
@@ -103,10 +114,10 @@ const App = () => {
                                         path="adminAccount"
                                         element={<Account />}
                                     />
-                                    {/* <Route
+                                    <Route
                                         path="adminCustomer"
                                         element={<Customer />}
-                                    /> */}
+                                    />
                                     <Route
                                         path="adminRevenue"
                                         element={<Revenue />}
@@ -138,6 +149,10 @@ const App = () => {
                                     />
                                 </Route>
                                 <Route element={<ManagerSidebarLayout />}>
+                                    {/* <Route
+                                        path="manager-history"
+                                        element={<ManagerHistory />}
+                                    /> */}
                                     <Route
                                         path="manager-product"
                                         element={<ManagerDashboard />}
@@ -146,10 +161,10 @@ const App = () => {
                                         path="manager-customer"
                                         element={<Customer />}
                                     />
-                                    {/* <Route
+                                    <Route
                                         path="manager-bill"
                                         element={<StaffBill />}
-                                    /> */}
+                                    />
                                     <Route
                                         path="manager-revenue"
                                         element={<Revenue />}
