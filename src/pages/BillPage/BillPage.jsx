@@ -17,12 +17,11 @@ const BillPage = () => {
         getBillForId({ id })
             .then((res) => res.data)
             .then((data) => {
-                // Combine discount from items into warrantyCards
+                // Add discount from the main bill data to each warranty card
                 const warrantyCards = data.warrantyCards.map(card => {
-                    const item = data.items.find(item => item.product_barcode === card.productBarcode);
                     return {
                         ...card,
-                        discount: item ? item.discount : 0,
+                        discount: data.discount,
                     };
                 });
                 setBillData({ ...data, warrantyCards });

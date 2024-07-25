@@ -64,7 +64,7 @@ export default function Register() {
                 },
             });
             if (userRigister.data) {
-                toast.success("Đăng kí thành viên thành công");
+                toast.success("Successfully registered as a member");
                 navigate("/login");
             }
         } catch (error) {
@@ -78,7 +78,7 @@ export default function Register() {
             } else {
                 console.log(error);
                 toast.error(
-                    error.response?.data || "Đăng kí thất bại - lỗi bất định"
+                    error.response?.data || "Registration failed - unknown error"
                 );
             }
         }
