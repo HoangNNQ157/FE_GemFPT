@@ -1,60 +1,93 @@
 import { Table } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { getMetalActive } from "../../service/metalPriceService";
 
 import "./PriceTable.css";
 import HeaderDefault from "../../components/Header/HeaderDefault/HeaderDefault";
 import { formatVND } from "../../utils/funUtils";
+import { FullscreenOutlined } from "@ant-design/icons"; // Import icon from antd
+
 const columns = [
-    {
-        title: "Loại vàng | ĐVT: 1.000đ/Chỉ",
-        dataIndex: "metalType",
-        key: "metalType",
-        className: "gold-type-column",
-    },
-    {
-        title: "Giá mua",
-        dataIndex: "buyPrice",
-        key: "buyPrice",
-        className: "gold-price-column",
-        render: (text) => formatVND(text),
-    },
-    {
-        title: "Giá bán",
-        dataIndex: "sellPrice",
-        key: "sellPrice",
-        className: "gold-price-column",
-        render: (text) => formatVND(text),
-    },
+  {
+    title: "Loại vàng | ĐVT: 1.000đ/Chỉ",
+    dataIndex: "metalType",
+    key: "metalType",
+    className: "gold-type-column",
+  },
+  {
+    title: "Giá mua",
+    dataIndex: "buyPrice",
+    key: "buyPrice",
+    className: "gold-price-column",
+    render: (text) => formatVND(text),
+  },
+  {
+    title: "Giá bán",
+    dataIndex: "sellPrice",
+    key: "sellPrice",
+    className: "gold-price-column",
+    render: (text) => formatVND(text),
+  },
 ];
 
 const PriceTable = () => {
-    const [data, setData] = useState();
-    useEffect(() => {
-        getMetalActive()
-            .then((res) => res.data)
-            .then((data) => setData(data));
-    }, []);
-    return (
-        <div className="gold-prices-container">
-            <HeaderDefault />
-            {data?.length ? (
-                <h2 className="table-title">
-                    CẬP NHẬT NGÀY:{" "}
-                    {new Date(data[0].updateDate).toLocaleString("vi-VN")}
-                </h2>
-            ) : null}
-            <div className="table__container">
-                <Table
-                    columns={columns}
-                    dataSource={data}
-                    pagination={false}
-                    className="gold-prices-table"
-                    bordered
-                />
-            </div>
-        </div>
-    );
+  const [data, setData] = useState([]);
+  const tableRef = useRef(null);
+
+  useEffect(() => {
+    getMetalActive()
+      .then((res) => {
+        console.log("Fetched data:", res.data); // Add this line to debug data
+        return res.data;
+      })
+      .then((data) => setData(data));
+  }, []);
+
+  const toggleFullscreen = () => {
+    if (tableRef.current) {
+      if (!document.fullscreenElement) {
+        tableRef.current.requestFullscreen().catch((err) => {
+          console.log(
+            `Error attempting to enable full-screen mode: ${err.message} (${err.name})`
+          );
+        });
+      } else {
+        document.exitFullscreen();
+      }
+    }
+  };
+
+  const getTitle = () => {
+    if (data.length) {
+      return (
+        <h2 className="table-title">
+          CẬP NHẬT NGÀY:{" "}
+          {new Date(data[0].updateDate).toLocaleDateString("vi-VN")} -{" "}
+          {new Date(data[0].updateDate).toLocaleTimeString("vi-VN")}
+        </h2>
+      );
+    }
+    return <h2 className="table-title">Đang tải dữ liệu...</h2>;
+  };
+
+  return (
+    <div className="gold-prices-container">
+      <HeaderDefault />
+      <div className="table__container" ref={tableRef}>
+        <Table
+          title={getTitle}
+          columns={columns}
+          dataSource={data}
+          pagination={false}
+          className="gold-prices-table"
+          bordered
+        />
+      </div>
+      <div className="fullscreen-icon" onClick={toggleFullscreen}>
+        <FullscreenOutlined style={{ fontSize: "24px", cursor: "pointer" }} />
+      </div>
+    </div>
+  );
 };
 
 export default PriceTable;
