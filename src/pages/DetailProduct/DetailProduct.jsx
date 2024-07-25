@@ -96,6 +96,10 @@ const DetailProduct = () => {
                                                     Kim cương
                                                 </Title>
                                                 <Text>
+                                                    Barcode: {gem.gemBarcode}
+                                                </Text>
+                                                <br/>
+                                                <Text>
                                                     Mô tả: {gem.description}
                                                 </Text>
                                                 <br />

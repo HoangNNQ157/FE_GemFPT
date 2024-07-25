@@ -183,13 +183,11 @@ const StaffOrder = () => {
             getDiscountById({ discountId: discountDebounce })
                 .then((res) => {
                     const data = res.data;
-                    console.log(data, customerData.id);
-                    if (data?.customer?.id === customerData.id) {
+                    if (data?.customer?.id === customerData.id && data.approved) {
                         setDiscountData(data);
                         setTotalAmount((prevTotal) =>
                             Math.floor(
-                                prevTotal *
-                                    (1 - Number(data.requestedDiscount) / 100)
+                                prevTotal * (1 - Number(data.requestedDiscount) / 100)
                             )
                         );
                         toast.success("Discount was applied successfully");
@@ -202,6 +200,7 @@ const StaffOrder = () => {
                 });
         }
     }, [discountDebounce, customerData.id]);
+    
 
     return dataProducts.length ? (
         <div className="order-container">

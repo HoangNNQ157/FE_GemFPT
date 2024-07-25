@@ -58,7 +58,7 @@ const StaffWorkingForm = ({ visible, onCancel, onSave }) => {
                         },
                     ]}
                 >
-                    <Select mode="multiple" placeholder="Select accounts">
+                    <Select placeholder="Select accounts">
                         {listAccount.map((account) => (
                             <Option key={account.id} value={account.id}>
                                 {`${account.email} - ${account.name}`}
