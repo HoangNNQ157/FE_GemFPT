@@ -1,7 +1,5 @@
-import { Button, DatePicker, Form, Modal, Switch, Select } from "antd";
-import moment from "moment";
+import { Button, DatePicker, Form, Modal, Select, Switch } from "antd";
 import React, { useEffect, useState } from "react";
-import { getManagerActiveAccount } from "../../service/manager";
 import { getAllAccout } from "../../service/account";
 
 const { Option } = Select;
@@ -58,7 +56,7 @@ const StaffWorkingForm = ({ visible, onCancel, onSave }) => {
                         },
                     ]}
                 >
-                    <Select placeholder="Select accounts">
+                    <Select mode="multiple" placeholder="Select accounts">
                         {listAccount.map((account) => (
                             <Option key={account.id} value={account.id}>
                                 {`${account.email} - ${account.name}`}
@@ -85,7 +83,7 @@ const StaffWorkingForm = ({ visible, onCancel, onSave }) => {
                     ]}
                 >
                     <DatePicker showTime style={{ width: "100%" }} />
-                </Form.Item>
+                    </Form.Item>
                 <Form.Item
                     name="endWorkingDateTime"
                     label="End Working Date and Time"
