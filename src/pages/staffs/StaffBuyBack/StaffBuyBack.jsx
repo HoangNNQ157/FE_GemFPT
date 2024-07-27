@@ -81,7 +81,7 @@ const StaffBuyBack = () => {
             console.error("Error saving buyback data: ", error);
             if (error.response && error.response.data) {
                 // Hiển thị tất cả các lỗi trả về từ response
-                const errorMessages = Object.values(error.response.data).join(', ');
+                const errorMessages = Object.values(error.response.data).join('');
                 toast.error(`Error: ${errorMessages}`);
             } else {
                 toast.error("An unexpected error occurred");

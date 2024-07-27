@@ -252,6 +252,11 @@ const TableManager = ({
             key: "productId",
         },
         {
+            title: "Stall",
+            dataIndex: "stallId",
+            key: "stallId",
+        },
+        {
             title: "Barcode",
             dataIndex: "barcode",
             key: "barcode",

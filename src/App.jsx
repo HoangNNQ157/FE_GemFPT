@@ -37,6 +37,7 @@ import StaffOrder from "./pages/staffs/StaffOrder/StaffOrder";
 import Product from "./pages/staffs/StaffProduct/StaffProduct";
 import ManagerGem from "./pages/manager/ManagerGem/ManagerGem";
 import ManagerHistory from "./pages/manager/ManagerHistory/ManagerHistory";
+import './App.css'; 
 
 const App = () => {
     const userData = useSelector((state) => state.user);
