@@ -24,10 +24,17 @@ const StaffBuyBack = () => {
                 console.log("Fetching buyback data...");
                 const response = await getAllBuyBack();
                 console.log("Fetch response: ", response);
+                if (response.data.length === 0) {
+                    throw new Error("Customer not found");
+                }
                 setDataBuyback(response.data);
             } catch (error) {
                 console.error("Error fetching buyback data: ", error);
-                toast.error("Error fetching buyback data");
+                if (error.message === "Customer not found") {
+                    toast.error("Customer not found");
+                } else {
+                    toast.error("Error fetching buyback data");
+                }
             }
         };
         fetchMetal();
@@ -42,6 +49,7 @@ const StaffBuyBack = () => {
         setDataUpdate(null);
         setVisible(false);
     };
+
     const handleSave = async ({ values, userData, type }) => {
         try {
             console.log("Saving buyback data...");
@@ -70,7 +78,6 @@ const StaffBuyBack = () => {
                 }
             }
         } catch (error) {
-            // In ra chi tiết lỗi từ API
             console.error("Error saving buyback data: ", error);
             if (error.response && error.response.data) {
                 // Hiển thị tất cả các lỗi trả về từ response
@@ -83,7 +90,6 @@ const StaffBuyBack = () => {
             setVisible(false);
         }
     };
-    
 
     const handleDeleteProduct = (product) => {};
 
