@@ -54,8 +54,8 @@ const RespondForm = ({ visible, onCancel, onSave, idResponse }) => {
                     ]}
                 >
                     <Select>
-                        <Select.Option value={true}>True</Select.Option>
-                        <Select.Option value={false}>False</Select.Option>
+                        <Select.Option value={true}>Agree</Select.Option>
+                        <Select.Option value={false}>Disagree</Select.Option>
                     </Select>
                 </Form.Item>
                 <Form.Item name="discountRequestId" label="Discount Request ID">

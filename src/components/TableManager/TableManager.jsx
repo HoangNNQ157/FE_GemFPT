@@ -155,7 +155,7 @@ const TableManager = ({
                 });
                 if (response.data.productId) {
                     toast.success("Product updated successfully!");
-                    //update xong -> call  lại ai product
+                    //update xong -> call lại api getProduct
                     const updatedProducts = productActice
                         ? await getListProductsActive()
                         : await getListProducts();
@@ -173,7 +173,7 @@ const TableManager = ({
                 const response = await createProduct(values);
                 if (response.data.productId) {
                     toast.success("Product created successfully!");
-                    // tạo oke-> call api getProduct
+                    // tạo oke -> call api getProduct
                     const newProducts = productActice
                         ? await getListProductsActive()
                         : await getListProducts();
@@ -188,11 +188,18 @@ const TableManager = ({
             }
         } catch (err) {
             console.error(err.response?.data);
-            toast.error("An error occurred. Please try again later");
+            // Hiển thị thông báo lỗi chi tiết từ API
+            if (err.response && err.response.data) {
+                const errorMessage = err.response.data.message || err.response.data;
+                toast.error(`Error: ${errorMessage}`);
+            } else {
+                toast.error("An error occurred. Please try again later");
+            }
         } finally {
             setVisible(false);
         }
     };
+    
     const handleDelteProduct = async (record) => {
         try {
             // call api delete
@@ -306,7 +313,7 @@ const TableManager = ({
             render: (text, record) => <span>{formatVND(record.price)}</span>,
         },
         {
-            title: "New Price",
+            title: "Promotion Price",
             dataIndex: "newPrice",
             key: "newPrice",
             render: (text, record) => <span>{formatVND(record.newPrice)}</span>,

@@ -5,7 +5,7 @@ import { getMetalActive } from "../../service/metalPriceService";
 import "./PriceTable.css";
 import HeaderDefault from "../../components/Header/HeaderDefault/HeaderDefault";
 import { formatVND } from "../../utils/funUtils";
-import { FullscreenOutlined } from "@ant-design/icons"; // Import icon from antd
+import { FullscreenOutlined } from "@ant-design/icons"; 
 
 const columns = [
   {

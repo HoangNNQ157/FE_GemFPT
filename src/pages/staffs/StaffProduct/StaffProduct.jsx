@@ -91,8 +91,8 @@ const StaffProduct = () => {
                     toast.error("product not found");
                 }
             } catch (error) {
-                toast.error(error.response?.data);
-                console.error("Error fetching products:", error);
+                toast.error("Error fetching products",error.response?.data);
+                /* console.error("Error fetching products:", error); */
             }
         };
 
@@ -193,7 +193,7 @@ const StaffProduct = () => {
             render: (text, record) => <span>{formatVND(record.price)}</span>,
         },
         {
-            title: "New Price",
+            title: "Promotion Price",
             dataIndex: "newPrice",
             key: "newPrice",
             render: (text, record) => <span>{formatVND(record.newPrice)}</span>,

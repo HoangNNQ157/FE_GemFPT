@@ -17,13 +17,22 @@ const StaffBuyBack = () => {
     const [dataBuyback, setDataBuyback] = useState([]);
     const [dataUpdate, setDataUpdate] = useState();
     const [indexView, setIndexView] = useState(0);
+
     useEffect(() => {
         const fetchMetal = async () => {
-            const response = await getAllBuyBack();
-            setDataBuyback(response.data);
+            try {
+                console.log("Fetching buyback data...");
+                const response = await getAllBuyBack();
+                console.log("Fetch response: ", response);
+                setDataBuyback(response.data);
+            } catch (error) {
+                console.error("Error fetching buyback data: ", error);
+                toast.error("Error fetching buyback data");
+            }
         };
         fetchMetal();
     }, []);
+
     const showModal = (record) => {
         setVisible(true);
         setDataUpdate(record);
@@ -33,17 +42,18 @@ const StaffBuyBack = () => {
         setDataUpdate(null);
         setVisible(false);
     };
-
     const handleSave = async ({ values, userData, type }) => {
         try {
+            console.log("Saving buyback data...");
             if (type === "create") {
                 const response = await createBuyBack({
                     formData: [values],
                     customerName: userData.name,
                     customerPhone: userData.phone,
                 });
+                console.log("Create response: ", response);
                 if (response.data) {
-                    toast.success("create buy back successfully");
+                    toast.success("Create buy back successfully");
                     const newBuyback = await getAllBuyBack();
                     setDataBuyback(newBuyback.data);
                 }
@@ -52,21 +62,31 @@ const StaffBuyBack = () => {
                     formData: values,
                     barcode: values.barcode,
                 });
+                console.log("Update response: ", response);
                 if (response.data) {
-                    toast.success("update buy back successfully");
+                    toast.success("Update buy back successfully");
                     const newBuyback = await getAllBuyBack();
                     setDataBuyback(newBuyback.data);
                 }
             }
-        } catch (err) {
-            if (err.response.data) {
-                toast.error("Create buy back failed");
-            } else toast.error("error from server");
+        } catch (error) {
+            // In ra chi tiết lỗi từ API
+            console.error("Error saving buyback data: ", error);
+            if (error.response && error.response.data) {
+                // Hiển thị tất cả các lỗi trả về từ response
+                const errorMessages = Object.values(error.response.data).join(', ');
+                toast.error(`Error: ${errorMessages}`);
+            } else {
+                toast.error("An unexpected error occurred");
+            }
         } finally {
             setVisible(false);
         }
     };
+    
+
     const handleDeleteProduct = (product) => {};
+
     const columns = [
         {
             title: "ID",
@@ -136,11 +156,6 @@ const StaffBuyBack = () => {
             key: "actions",
             render: (text, record) => (
                 <Flex align="center" gap={10}>
-                   {/*  <Button
-                        onClick={() => showModal(record)}
-                        type="link"
-                        icon={<EditOutlined />}
-                    /> */}
                     <Button
                         style={{
                             border: "none",
@@ -154,11 +169,12 @@ const StaffBuyBack = () => {
                         }}
                     >
                         Detail
-                    </Button>{" "}
+                    </Button>
                 </Flex>
             ),
         },
     ];
+
     const productColumns = [
         {
             title: "ID",
@@ -226,30 +242,11 @@ const StaffBuyBack = () => {
             key: "price",
             render: (text, record) => <span>{formatVND(record.price)}</span>,
         },
-        /* {
-            title: "New Price",
-            dataIndex: "newPrice",
-            key: "newPrice",
-            render: (text, record) => <span>{formatVND(record.newPrice)}</span>,
-        }, */
         {
             title: "Processing Status",
             dataIndex: "typeWhenBuyBack",
             key: "typeWhenBuyBack",
         },
-        /* {
-            title: "Status",
-            dataIndex: "status",
-            key: "status",
-            render: (text, record) => (
-                <span
-                    className="status"
-                    style={{ color: record.status ? "green" : "red" }}
-                >
-                    {record.status ? "ON" : "OFF"}
-                </span>
-            ),
-        }, */
     ];
 
     return (
