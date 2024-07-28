@@ -68,6 +68,12 @@ const ManagerDiscount = () => {
             key: "customerName",
         },
         {
+            title: "Duration",
+            dataIndex: "expirationTime",
+            key: "expirationTime",
+            render: (text) => new Date(text).toLocaleString("vi-VN"),
+        },
+        {
             title: "Customer Phone",
             dataIndex: ["customer", "phone"],
             key: "customerPhone",
@@ -121,6 +127,7 @@ const ManagerDiscount = () => {
                 approved: values.approved,
                 discountRequestId: idResponse,
                 managerResponse: values.managerResponse,
+                expirationTime: values.expirationTime,
             });
             getAllDiscount()
                 .then((data) => data.data)

@@ -26,9 +26,9 @@ const requestDiscount = ({
         }
     );
 };
-const respondtDiscount = ({ discountRequestId, approved, managerResponse }) => {
+const respondtDiscount = ({ discountRequestId, approved, managerResponse,expirationTime }) => {
     return api.post(
-        `discount/respond?discountRequestId=${discountRequestId}&approved=${approved}&managerResponse=${managerResponse}`,
+        `/discount/respond?discountRequestId=${discountRequestId}&approved=${approved}&managerResponse=${managerResponse}&expirationTime=${expirationTime}`,
         {},
         {
             headers: headers,
