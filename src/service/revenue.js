@@ -1,5 +1,6 @@
 import api from "../config/axios";
 import Cookies from "js-cookie";
+
 const TOKEN = Cookies.get("token");
 const headers = {
     "Content-Type": "application/json",
@@ -42,6 +43,17 @@ const getRevenueMothStallById = ({ stallId, yearMonth }) => {
         headers: headers,
     });
 };
+const getRevenueMonthStallCashierById = ({ stallId, cashier, yearMonth }) => {
+    return api.get(`monthly-revenue/stall/${stallId}/cashier/${cashier}?yearMonth=${yearMonth}`, {
+        headers: headers,
+    });
+};
+
+const getRevenueYearStallCashierById = ({ stallId, cashier, year }) => {
+    return api.get(`yearly-revenue/stall/${stallId}/cashier/${cashier}?year=${year}`, {
+        headers: headers,
+    });
+};
 
 export {
     getRevenueDataMonth,
@@ -52,4 +64,6 @@ export {
     getRevenueMothStallById,
     getRevenueMothCashiersById,
     getRevenueYearCashiersById,
+    getRevenueYearStallCashierById,
+    getRevenueMonthStallCashierById,
 };
