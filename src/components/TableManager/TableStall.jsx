@@ -1,11 +1,10 @@
-// src/components/CustomTable/CustomTable.js
-
-import { Button, Flex, Table, Tooltip } from "antd";
 import React, { useEffect, useState } from "react";
+import { Button, Flex, Table, Tooltip } from "antd";
 import {
     MdModeEditOutline,
     MdOutlineDetails,
     MdPublishedWithChanges,
+    MdVisibility,
 } from "react-icons/md";
 import { toast } from "react-toastify";
 import {
@@ -13,6 +12,7 @@ import {
     getAlllStalls,
     updateStaffWorking,
     updateStallStatus,
+    getStallAccounts,
 } from "../../service/manager";
 import { formatVND } from "../../utils/funUtils";
 import CreateStallForm from "../modal/CreateStallForm";
@@ -22,6 +22,9 @@ import StallChangeMoneyForm from "../modal/StallChangeMoneyForm";
 import { BiMoney } from "react-icons/bi";
 import { changeMoneyStall } from "../../service/ChangeMoney";
 import { useResolvedPath } from "react-router-dom";
+import ViewStallModal from "../modal/ViewStallModal";
+
+
 const TableStall = () => {
     const [stallData, setStallData] = useState([]);
     const [visible, setVisible] = useState(false);
@@ -29,12 +32,17 @@ const TableStall = () => {
     const [changeMoney, setChangeMoney] = useState(false);
     const [stallId, setStallId] = useState(false);
     const [staffWorkingId, setStaffWorkingId] = useState();
+    const [viewModalVisible, setViewModalVisible] = useState(false);
+    const [currentStallAccounts, setCurrentStallAccounts] = useState([]);
+
     const prams = useResolvedPath();
+
     useEffect(() => {
         getAlllStalls()
             .then((data) => data.data)
             .then((data) => setStallData(data));
     }, []);
+
     const columns = [
         {
             title: "ID",
@@ -103,6 +111,22 @@ const TableStall = () => {
                             }}
                         />
                     </Tooltip>
+                    <Tooltip title="View stall">
+                        <Button
+                            ghost
+                            type="primary"
+                            icon={<MdVisibility />}
+                            onClick={async () => {
+                                try {
+                                    const response = await getStallAccounts(record.stallsSellId);
+                                    setCurrentStallAccounts(response.data);
+                                    setViewModalVisible(true);
+                                } catch (error) {
+                                    toast.error("Failed to fetch stall accounts");
+                                }
+                            }}
+                        />
+                    </Tooltip>
                     {prams.pathname.startsWith("/admin") ? (
                         <Tooltip title="Detail stall">
                             <Button
@@ -120,6 +144,7 @@ const TableStall = () => {
             ),
         },
     ];
+
     const showModal = () => {
         setVisible(true);
     };
@@ -209,6 +234,7 @@ const TableStall = () => {
             toast.error("Update status stall failed");
         }
     };
+
     return (
         <>
             <Flex align="center" gap={10}>
@@ -239,6 +265,11 @@ const TableStall = () => {
                     stallId={stallId}
                 />
             ) : null}
+            <ViewStallModal
+                visible={viewModalVisible}
+                onCancel={() => setViewModalVisible(false)}
+                stallAccounts={currentStallAccounts}
+            />
         </>
     );
 };

@@ -39,6 +39,11 @@ const getAlllStalls = () => {
         headers: headers,
     });
 };
+const getStallAccounts = (stallsSellId) => {
+    return api.get(`api/Manager/${stallsSellId}/accounts`, {
+        headers: headers,
+    });
+};
 
 export {
     createStalls,
@@ -46,4 +51,5 @@ export {
     getAlllStalls,
     updateStaffWorking,
     updateStallStatus,
+    getStallAccounts,
 };

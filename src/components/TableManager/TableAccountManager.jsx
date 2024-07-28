@@ -1,8 +1,8 @@
 // src/components/CustomTable/CustomTable.js
 
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Button, Popconfirm, Table } from "antd";
 import React, { useEffect, useState } from "react";
+import { Button, Popconfirm, Table } from "antd";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
 import {
     deleteAccountAdmin,
@@ -11,16 +11,20 @@ import {
     updateAccountAdmin,
 } from "../../service/account";
 import ModalAccount from "../modal/ModalAccount";
+import ModalGoogleRegister from "../modal/ModalGoogleRegister";
 import "./TableManager.css";
 import { registerApi } from "../../service/auth";
 import useDebounce from "../../hook/debound";
 import HeaderSearch from "../Header/HeaderSearch/HeaderSearch";
+
 const TableAccountManager = () => {
     const [accountData, setAccountData] = useState([]);
     const [dataUpdate, setDataUpdate] = useState();
     const [visible, setVisible] = useState(false);
+    const [googleModalVisible, setGoogleModalVisible] = useState(false);
     const [searchEmail, setSearchEmail] = useState();
     const debouncedSearcEmail = useDebounce(searchEmail, 500);
+
     const handleCancel = () => {
         if (dataUpdate) setDataUpdate(null);
         setVisible(false);
@@ -61,9 +65,9 @@ const TableAccountManager = () => {
         }
         setVisible(false);
     };
+
     const handleDelteProduct = async (record) => {
         try {
-            // call api delete
             const response = await deleteAccountAdmin({
                 email: record.email,
             });
@@ -78,11 +82,13 @@ const TableAccountManager = () => {
             toast.error("An error occurred. Please try again later.");
         }
     };
+
     useEffect(() => {
         getAllAccout()
             .then((data) => data.data)
             .then((data) => setAccountData(data));
     }, [getAllAccout]);
+
     const columns = [
         {
             title: "ID",
@@ -158,9 +164,11 @@ const TableAccountManager = () => {
             ),
         },
     ];
+
     const handleChange = (value) => {
         setSearchEmail(value);
     };
+
     useEffect(() => {
         try {
             if (debouncedSearcEmail) {
@@ -187,6 +195,7 @@ const TableAccountManager = () => {
             toast.error("search bill for Email failed");
         }
     }, [debouncedSearcEmail]);
+
     return (
         <>
             <HeaderSearch
@@ -197,10 +206,13 @@ const TableAccountManager = () => {
             <button className="btn-add" onClick={() => setVisible(true)}>
                 Add Account
             </button>
+            <button className="btn-add" onClick={() => setGoogleModalVisible(true)}>
+                Register Account Google
+            </button>
             <Table
                 dataSource={accountData.reverse()}
                 columns={columns}
-                pagination={{ defaultPageSize: 4 }}
+                pagination={{ defaultPageSize: 6 }}
             />
             <ModalAccount
                 initialData={dataUpdate ? dataUpdate : null}
@@ -208,6 +220,16 @@ const TableAccountManager = () => {
                 onCancel={handleCancel}
                 onSave={handleSave}
                 type={dataUpdate ? "update" : "create"}
+            />
+            <ModalGoogleRegister
+                visible={googleModalVisible}
+                onCancel={() => setGoogleModalVisible(false)}
+                onSave={() => {
+                    setGoogleModalVisible(false);
+                    getAllAccout()
+                        .then((data) => data.data)
+                        .then((data) => setAccountData(data));
+                }}
             />
         </>
     );
