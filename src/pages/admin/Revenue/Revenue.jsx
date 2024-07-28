@@ -1,5 +1,6 @@
-import { Button, Flex } from "antd";
 import React, { useEffect, useState } from "react";
+import { Button, Flex, Dropdown, Menu } from "antd";
+import { DownOutlined } from "@ant-design/icons";
 import CashChart from "../../../components/Chart/CashChart";
 import RevenueChart from "../../../components/Chart/RevenueChart";
 import StallsChart from "../../../components/Chart/StallsChart";
@@ -13,6 +14,7 @@ import "./Revenue.css";
 import RevevenueStallForm from "../../../components/modal/RevevenueStallForm";
 import RevevenueCashierForm from "../../../components/modal/RevevenueCashierForm";
 import HistotyMoneyStallForm from "../../../components/modal/HistotyMoneyStallForm";
+import RevevenueStallCashierForm from "../../../components/modal/RevevenueStallCashierForm";
 
 const convertData = (data) => {
     const result = [];
@@ -53,6 +55,10 @@ const Revenue = () => {
         id: 1,
     });
     const [revenueCashier, setRevenueCashier] = useState({
+        status: false,
+        id: 1,
+    });
+    const [revenueStallCashier, setRevenueStallCashier] = useState({
         status: false,
         id: 1,
     });
@@ -112,6 +118,32 @@ const Revenue = () => {
         fetchCashiersData();
     }, []);
 
+    const menu = (
+        <Menu>
+            <Menu.Item key="1" onClick={() => setHistoryChangeMoney(true)}>
+                HISTORY CHANGE MONEY
+            </Menu.Item>
+            <Menu.Item key="2" onClick={() => setRevenueStall({ status: true, id: 1 })}>
+                REVENUE STALL MONTH
+            </Menu.Item>
+            <Menu.Item key="3" onClick={() => setRevenueStall({ status: true, id: 2 })}>
+                REVENUE STALL YEAR
+            </Menu.Item>
+            <Menu.Item key="4" onClick={() => setRevenueCashier({ status: true, id: 1 })}>
+                REVENUE CASHIER MONTH
+            </Menu.Item>
+            <Menu.Item key="5" onClick={() => setRevenueCashier({ status: true, id: 2 })}>
+                REVENUE CASHIER YEAR
+            </Menu.Item>
+            <Menu.Item key="6" onClick={() => setRevenueStallCashier({ status: true, id: 1 })}>
+                REVENUE STALL & CASHIER MONTH
+            </Menu.Item>
+            <Menu.Item key="7" onClick={() => setRevenueStallCashier({ status: true, id: 2 })}>
+                REVENUE STALL & CASHIER YEAR
+            </Menu.Item>
+        </Menu>
+    );
+
     return (
         <div className="revenue__container">
             <p className="title">DASHBOARD</p>
@@ -121,17 +153,13 @@ const Revenue = () => {
                     <Flex gap={6}>
                         <Button
                             onClick={() => setFormChart({ revenue: 1 })}
-                            type={
-                                formChart.revenue === 1 ? "primary" : "default"
-                            }
+                            type={formChart.revenue === 1 ? "primary" : "default"}
                         >
                             Month
                         </Button>
                         <Button
                             onClick={() => setFormChart({ revenue: 2 })}
-                            type={
-                                formChart.revenue === 2 ? "primary" : "default"
-                            }
+                            type={formChart.revenue === 2 ? "primary" : "default"}
                         >
                             Year
                         </Button>
@@ -142,36 +170,11 @@ const Revenue = () => {
                 ) : null}
             </div>
             <div className="revenue__btn-wrapper">
-                <Button
-                    type="primary"
-                    onClick={() => setHistoryChangeMoney(true)}
-                >
-                    CHECK HISTORY CHANGE MONY
-                </Button>
-                <Button
-                    type="primary"
-                    onClick={() => setRevenueStall({ status: true, id: 1 })}
-                >
-                    SELECT REVENUE STALL MONTH
-                </Button>
-                <Button
-                    type="primary"
-                    onClick={() => setRevenueStall({ status: true, id: 2 })}
-                >
-                    SELECT REVENUE STALL YEAR
-                </Button>
-                <Button
-                    type="primary"
-                    onClick={() => setRevenueCashier({ status: true, id: 1 })}
-                >
-                    SELECT REVENUE CASHIER MONTH
-                </Button>
-                <Button
-                    type="primary"
-                    onClick={() => setRevenueCashier({ status: true, id: 2 })}
-                >
-                    SELECT REVENUE CASHIER YEAR
-                </Button>
+                <Dropdown overlay={menu} trigger={['click']} placement="bottomLeft">
+                    <Button>
+                    REVENUE REPORTS <DownOutlined />
+                    </Button>
+                </Dropdown>
             </div>
             <div style={{ marginTop: "20px" }}>
                 <Flex gap={10} style={{ marginTop: "20px" }}>
@@ -197,6 +200,13 @@ const Revenue = () => {
                     isModalVisible={revenueCashier.status}
                     setIsModalVisible={setRevenueCashier}
                     type={revenueCashier.id}
+                />
+            ) : null}
+            {revenueStallCashier.status ? (
+                <RevevenueStallCashierForm
+                    isModalVisible={revenueStallCashier.status}
+                    setIsModalVisible={setRevenueStallCashier}
+                    type={revenueStallCashier.id}
                 />
             ) : null}
             {historyChangeMoney ? (

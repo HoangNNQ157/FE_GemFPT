@@ -1,24 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Button, Modal, Form, Input, Select, Space } from "antd";
-import {
-    UserOutlined,
-    PhoneOutlined,
-    CalendarOutlined,
-} from "@ant-design/icons";
+import { BiCalendar, BiUser } from "react-icons/bi";
 import "./resuableFormStyle.css";
-import { BiCalendar, BiPhone, BiUser } from "react-icons/bi";
-import { getCustomerByPhone } from "../../service/customer";
 import {
-    getRevenueMothStallById,
-    getRevenueYearStallById,
+    getRevenueMonthStallCashierById,
+    getRevenueYearStallCashierById,
 } from "../../service/revenue";
 import { getAlllStalls } from "../../service/manager";
+import { getAllAccout } from "../../service/account";
 import { toast } from "react-toastify";
 import { formatVND } from "../../utils/funUtils";
 
 const { Option } = Select;
 
-const RevevenueStallForm = ({
+const RevevenueStallCashierForm = ({
     isModalVisible,
     setIsModalVisible,
     type = 1,
@@ -26,6 +21,7 @@ const RevevenueStallForm = ({
     const [form] = Form.useForm();
     const [stallData, setStallData] = useState();
     const [allStall, setAllStall] = useState();
+    const [allAccount, setAllAccount] = useState();
 
     const handleCancel = () => {
         setIsModalVisible({
@@ -40,15 +36,17 @@ const RevevenueStallForm = ({
         try {
             const values = await form.validateFields();
             if (type === 1) {
-                const res = await getRevenueMothStallById({
+                const res = await getRevenueMonthStallCashierById({
                     stallId: values.stallId,
+                    cashier: values.cashier,
                     yearMonth: values.yearMonth,
                 });
                 setStallData(res.data);
                 toast.success("Search Stall successfully");
             } else {
-                const res = await getRevenueYearStallById({
+                const res = await getRevenueYearStallCashierById({
                     stallId: values.stallId,
+                    cashier: values.cashier,
                     year: values.year,
                 });
                 setStallData(res.data);
@@ -69,7 +67,17 @@ const RevevenueStallForm = ({
             }
         };
 
+        const fetchAccounts = async () => {
+            try {
+                const res = await getAllAccout();
+                setAllAccount(res.data);
+            } catch (error) {
+                toast.error("Failed to fetch accounts");
+            }
+        };
+
         fetchStalls();
+        fetchAccounts();
     }, []);
 
     return (
@@ -120,6 +128,24 @@ const RevevenueStallForm = ({
                             ))}
                         </Select>
                     </Form.Item>
+                    <Form.Item
+                        name="cashier"
+                        label="Cashier"
+                        rules={[
+                            {
+                                required: true,
+                                message: "Please select a cashier!",
+                            },
+                        ]}
+                    >
+                        <Select placeholder="Select cashier">
+                            {allAccount?.map((account) => (
+                                <Option key={account.name} value={account.name}>
+                                    {account.email}
+                                </Option>
+                            ))}
+                        </Select>
+                    </Form.Item>
                     {type === 1 ? (
                         <Form.Item
                             name="yearMonth"
@@ -155,16 +181,16 @@ const RevevenueStallForm = ({
                                 <BiUser color="black" /> STALL ID:{" "}
                                 {stallData.stallId}
                             </div>
-                           {/*  <div>
+                            <div>
+                                <BiUser color="black" /> CASHIER:{" "}
+                                {stallData.cashier}
+                            </div>
+                            {/* <div>
                                 <BiCalendar color="black" /> YEAR & MONTH:{" "}
                                 {stallData.yearMonth}
                             </div> */}
                         </div>
                         <div className="customer__wrapper">
-                            {/* <div>
-                                <BiPhone color="black" /> STAFF ORDER COUNT:{" "}
-                                {stallData.staffOrderCount.string}
-                            </div> */}
                             <div>
                                 TOTAL REVENUE:{" "}
                                 {formatVND(stallData.totalRevenue)}
@@ -177,4 +203,4 @@ const RevevenueStallForm = ({
     );
 };
 
-export default RevevenueStallForm;
+export default RevevenueStallCashierForm;
