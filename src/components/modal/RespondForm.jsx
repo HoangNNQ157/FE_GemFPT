@@ -58,6 +58,25 @@ const RespondForm = ({ visible, onCancel, onSave, idResponse }) => {
                         <Select.Option value={false}>Disagree</Select.Option>
                     </Select>
                 </Form.Item>
+                <Form.Item
+                        name="expirationTime"
+                        label="Duration"
+                        rules={[
+                            {
+                                required: true,
+                                message: "Please select the time!",
+                            },
+                        ]}
+                    >
+                        <Select placeholder="Select duration">
+                            <Option value="10">10 minutes</Option>
+                            <Option value="20">20 minutes</Option>
+                            <Option value="30">30 minutes</Option>
+                            <Option value="40">40 minutes</Option>
+                            <Option value="50">50 minutes</Option>
+                            <Option value="60">60 minutes</Option>
+                        </Select>
+                    </Form.Item>
                 <Form.Item name="discountRequestId" label="Discount Request ID">
                     <Input
                         defaultValue={idResponse}

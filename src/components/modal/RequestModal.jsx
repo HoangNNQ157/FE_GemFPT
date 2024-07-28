@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { Button, Modal, Form, Input } from "antd";
+import { Button, Modal, Form, Input, Select } from "antd";
 import { requestDiscount } from "../../service/discount";
 import { toast } from "react-toastify";
+
+const { Option } = Select;
 
 const RequestModal = ({
     isModalVisible,
@@ -23,6 +25,7 @@ const RequestModal = ({
                     customerPhone,
                     discountReason: values.description,
                     requestedDiscount: values.discount,
+                    expirationTime: values.expirationTime,
                 });
                 if (data.data) {
                     toast.success("Create request discount success!");
@@ -47,12 +50,12 @@ const RequestModal = ({
                 onCancel={handleCancel}
                 footer={[
                     <Button
-                        key="search"
+                        key="cancel"
                         danger
                         type="default"
                         onClick={handleCancel}
                     >
-                        CANCEl
+                        CANCEL
                     </Button>,
                     <Button key="submit" type="primary" onClick={handleOk}>
                         SUBMIT
