@@ -4,7 +4,7 @@ import { MdProductionQuantityLimits } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import CarouselImg from "../../../components/Carousel/Carousel";
-import HeaderProduct from "../../../components/Header/HeaderProduct/HeaderProduct";
+import HeaderProductStaff from "../../../components/Header/HeaderProduct/HeaderProductStaff";
 import SearchGemstoneForm from "../../../components/modal/SearchGemstoneForm";
 import { CategoryOption } from "../../../data/data";
 import useDebounce from "../../../hook/debound";
@@ -14,7 +14,7 @@ import {
     getProductByCategory,
     getProductByGem,
     getProductByMetal,
-    getProductByName,
+    getProductStaffByName,
     getProductByPrice,
 } from "../../../service/productService";
 import { formatVND } from "../../../utils/funUtils";
@@ -40,6 +40,8 @@ const StaffProduct = () => {
     const debouncedSearchPrice = useDebounce(searchPrice, 500);
     const [form] = Form.useForm();
     const navigator = useNavigate();
+    const [errorMessage, setErrorMessage] = useState("");
+
     useEffect(() => {
         const data = JSON.parse(localStorage.getItem("card"));
         if (data?.length) {
@@ -47,52 +49,51 @@ const StaffProduct = () => {
             setSelectedRowKeys(data.map((product) => product.key));
         }
     }, []);
+
     useEffect(() => {
         const fetchProducts = async () => {
             try {
                 let response;
                 if (debouncedSearchProduct) {
-                    response = await getProductByName(debouncedSearchProduct);
-                    toast.info("Search by name");
+                    response = await getProductStaffByName(debouncedSearchProduct);
                 } else if (
                     debouncedSearchPrice.minPrice >= 0 &&
-                    debouncedSearchPrice.maxPrice >
-                        debouncedSearchPrice.minPrice
+                    debouncedSearchPrice.maxPrice > debouncedSearchPrice.minPrice
                 ) {
                     response = await getProductByPrice(debouncedSearchPrice);
-                    toast.info("Search by price");
+                    /* toast.info("Search by price"); */
                 } else if (searchProductByMetal) {
                     response = await getProductByMetal(searchProductByMetal);
-                    toast.info("Filter by metal");
+                    /* toast.info("Filter by metal"); */
                 } else if (searchBarcode) {
-                    response = await getProductByBarcode({
-                        barcode: searchBarcode,
-                    });
-                    toast.info("Filter by barcode");
+                    response = await getProductByBarcode({ barcode: searchBarcode });
+                    /* toast.info("Filter by barcode"); */
                 } else if (searchGem && searchGem.color) {
+             
                     response = await getProductByGem(searchGem);
-                    toast.info("Filter by gem");
+                    /* toast.info("Filter by gem"); */
                 } else {
                     response = await getListProductsActive();
                 }
 
-                if (
-                    response?.data?.length > 0 &&
-                    response?.data[0]?.productId
-                ) {
+                if (response?.data?.length > 0 && response?.data[0]?.productId) {
                     const products = response.data?.map((product, index) => ({
                         ...product,
                         key: index + 1,
                     }));
                     setDataProducts(products);
+                    setErrorMessage(""); // Clear error message if products are found
                 } else if (response?.data?.productId) {
                     setDataProducts([response.data]);
-                } else if (!response?.data[0]?.productId) {
-                    toast.error("product not found");
+                    setErrorMessage(""); // Clear error message if a product is found
+                } else {
+
+                    toast.error("Product not found");
                 }
             } catch (error) {
-                toast.error("Error fetching products",error.response?.data);
-                /* console.error("Error fetching products:", error); */
+                if (error?.response?.data) {
+                    toast.error(error?.response?.data);
+                }
             }
         };
 
@@ -178,14 +179,6 @@ const StaffProduct = () => {
             dataIndex: "category",
             key: "category",
         },
-       /*  {
-            title: "Stock",
-            dataIndex: "stock",
-            key: "stock",
-            render: (text, record) => (
-                <span> {record.stock > 0 ? record.stock : "Hết hàng"}</span>
-            ),
-        }, */
         {
             title: "Price",
             dataIndex: "price",
@@ -257,7 +250,7 @@ const StaffProduct = () => {
             return;
         }
         localStorage.setItem("card", JSON.stringify(selectedProducts));
-        navigator(`/staff-order`);
+        navigator('/staff-order');
         toast.success("Add order card successfully");
         setIsModalVisible(false);
         form.resetFields();
@@ -304,9 +297,10 @@ const StaffProduct = () => {
             form.resetFields();
         });
     };
+
     return (
         <>
-            <HeaderProduct
+            <HeaderProductStaff
                 role={"STAFF"}
                 searchValue={searchProduct}
                 onChangeMinMax={onChangeMinMax}
@@ -319,6 +313,11 @@ const StaffProduct = () => {
                 showModaCategory={() => setIsModalCategory(true)}
                 placeholder="SEACH  BY NAME"
             />
+            {errorMessage && (
+                <div style={{ color: 'red', textAlign: 'center', margin: '10px 0' }}>
+                    {errorMessage}
+                </div>
+            )}
             <Table
                 rowSelection={rowSelection}
                 dataSource={dataProducts}
@@ -367,7 +366,7 @@ const StaffProduct = () => {
                         <Input placeholder="Enter your metalType" />
                     </Form.Item>
                 </Form>
-            </Modal>{" "}
+            </Modal>
             <Modal
                 title="Search by category"
                 visible={isModalCategory}

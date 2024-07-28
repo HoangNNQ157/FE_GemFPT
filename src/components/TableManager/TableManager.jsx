@@ -12,7 +12,7 @@ import {
     createProduct,
     deleteProduct,
     getListProducts,
-    getListProductsActive,
+    getListProductsActiveTrue,
     getProductAllByBarcode,
     getProductByCategory,
     getProductByGem,
@@ -85,7 +85,7 @@ const TableManager = ({
                         
                     }
                 } else if (productActice) {
-                    response = await getListProductsActive();
+                    response = await getListProductsActiveTrue();
                     toast.success("Active products");
                 } else {
                     response = await getListProducts();
@@ -157,7 +157,7 @@ const TableManager = ({
                     toast.success("Product updated successfully!");
                     //update xong -> call lại api getProduct
                     const updatedProducts = productActice
-                        ? await getListProductsActive()
+                        ? await getListProductsActiveTrue()
                         : await getListProducts();
                     const productsWithKey = updatedProducts.data.map(
                         (product, index) => ({
@@ -175,7 +175,7 @@ const TableManager = ({
                     toast.success("Product created successfully!");
                     // tạo oke -> call api getProduct
                     const newProducts = productActice
-                        ? await getListProductsActive()
+                        ? await getListProductsActiveTrue()
                         : await getListProducts();
                     const productsWithKey = newProducts.data.map(
                         (product, index) => ({
@@ -207,7 +207,7 @@ const TableManager = ({
             if (response.data.productId) {
                 toast.success("Change status product successfully");
                 const newProducts = productActice
-                    ? await getListProductsActive()
+                    ? await getListProductsActiveTrue()
                     : await getListProducts();
                 const productsWithKey = newProducts.data.map(
                     (product, index) => ({
@@ -321,8 +321,15 @@ const TableManager = ({
             title: "Promotion Price",
             dataIndex: "newPrice",
             key: "newPrice",
-            render: (text, record) => <span>{formatVND(record.newPrice)}</span>,
+            render: (text, record) => {
+                if (record.newPrice === 0 || !record.newPrice) {
+                    return <span>N/A</span>;
+                } else {
+                    return <span>{formatVND(record.newPrice)}</span>;
+                }
+            },
         },
+        
         {
             title: "Buyback Mode",
             dataIndex: "typeWhenBuyBack",
