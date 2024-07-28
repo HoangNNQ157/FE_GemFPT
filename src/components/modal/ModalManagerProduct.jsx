@@ -1,6 +1,5 @@
 import { Button, Form, Input, Modal, Select, Tabs } from "antd";
-import React, { useEffect, useState } from "react";
-import { getAlllStalls } from "../../service/manager"; // Adjust the import path accordingly
+import React, { useEffect } from "react";
 
 const { TabPane } = Tabs;
 
@@ -13,25 +12,14 @@ const ModalManager = ({
     type,
 }) => {
     const [form] = Form.useForm();
-    const [stalls, setStalls] = useState([]);
 
     useEffect(() => {
         if (visible && type === "create") {
             form.resetFields();
-            fetchStalls();
         } else {
             form.setFieldsValue(initialData);
         }
     }, [type, visible]);
-
-    const fetchStalls = async () => {
-        try {
-            const response = await getAlllStalls();
-            setStalls(response.data);
-        } catch (error) {
-            console.error("Failed to fetch stalls:", error);
-        }
-    };
 
     const handleOk = () => {
         form.validateFields()
@@ -56,14 +44,37 @@ const ModalManager = ({
 
     const metalTypes = extractMetalTypes(metalData);
     const CategoryOption = [
-        { name: "RING", value: "RING", id: 1 },
-        { name: "BRACELET", value: "BRACELET", id: 2 },
-        { name: "NECKLACE", value: "NECKLACE", id: 3 },
-        { name: "EARRINGS", value: "EARRINGS", id: 4 },
-        { name: "ANKLETS", value: "ANKLETS", id: 5 },
-        { name: "METAL", value: "METAL", id: 6 },
+        {
+            name: "RING",
+            value: "RING",
+            id: 1,
+        },
+        {
+            name: "BRACELET",
+            value: "BRACELET",
+            id: 2,
+        },
+        {
+            name: "NECKLACE",
+            value: "NECKLACE",
+            id: 3,
+        },
+        {
+            name: "EARRINGS",
+            value: "EARRINGS",
+            id: 4,
+        },
+        {
+            name: "ANKLETS",
+            value: "ANKLETS",
+            id: 5,
+        },
+        {
+            name: "METAL",
+            value: "METAL",
+            id: 6,
+        },
     ];
-
     return (
         <Modal
             title={type === "update" ? "Edit Information" : "Add Product"}
@@ -93,20 +104,17 @@ const ModalManager = ({
                         <Form.Item name="category" label="Category">
                             <Select>
                                 {CategoryOption.map((item, index) => (
-                                    <Select.Option key={index} value={item.value}>
+                                    <Select.Option
+                                        key={index}
+                                        value={item.value}
+                                    >
                                         {item.name}
                                     </Select.Option>
                                 ))}
                             </Select>
                         </Form.Item>
                         <Form.Item name="stallId" label="Stall">
-                            <Select>
-                                {stalls.map((stall) => (
-                                    <Select.Option key={stall.stallsSellId} value={stall.stallsSellId}>
-                                        {stall.stallsSellName}
-                                    </Select.Option>
-                                ))}
-                            </Select>
+                            <Input type="text" />
                         </Form.Item>
                         <Form.Item name="priceRate" label="Price Rate">
                             <Input type="number" />
@@ -127,24 +135,37 @@ const ModalManager = ({
                                             <Form.Item
                                                 {...field}
                                                 name={[field.name, "urls"]}
-                                                fieldKey={[field.fieldKey, "urls"]}
+                                                fieldKey={[
+                                                    field.fieldKey,
+                                                    "urls",
+                                                ]}
                                                 label={`URL ${index + 1}`}
                                                 rules={[
                                                     {
                                                         required: true,
-                                                        message: "Please input the URL!",
+                                                        message:
+                                                            "Please input the URL!",
                                                     },
                                                 ]}
                                             >
                                                 <Input />
                                             </Form.Item>
-                                            <Button type="dashed" onClick={() => remove(field.name)}>
+                                            <Button
+                                                type="dashed"
+                                                onClick={() =>
+                                                    remove(field.name)
+                                                }
+                                            >
                                                 Remove
                                             </Button>
                                         </div>
                                     ))}
                                     <Form.Item>
-                                        <Button type="dashed" onClick={() => add()} block>
+                                        <Button
+                                            type="dashed"
+                                            onClick={() => add()}
+                                            block
+                                        >
                                             Add URL
                                         </Button>
                                     </Form.Item>
@@ -161,27 +182,42 @@ const ModalManager = ({
                                             <Form.Item
                                                 {...field}
                                                 name={[field.name, "name"]}
-                                                fieldKey={[field.fieldKey, "name"]}
+                                                fieldKey={[
+                                                    field.fieldKey,
+                                                    "name",
+                                                ]}
                                                 label="Metal Name"
                                                 rules={[
                                                     {
                                                         required: true,
-                                                        message: "Please select the metal name!",
+                                                        message:
+                                                            "Please select the metal name!",
                                                     },
                                                 ]}
                                             >
                                                 <Select>
-                                                    {metalTypes.map((type, index) => (
-                                                        <Select.Option key={index} value={type}>
-                                                            {type}
-                                                        </Select.Option>
-                                                    ))}
+                                                    {metalTypes.map(
+                                                        (type, index) => (
+                                                            <Select.Option
+                                                                key={index}
+                                                                value={type}
+                                                            >
+                                                                {type}
+                                                            </Select.Option>
+                                                        )
+                                                    )}
                                                 </Select>
                                             </Form.Item>
                                             <Form.Item
                                                 {...field}
-                                                name={[field.name, "description"]}
-                                                fieldKey={[field.fieldKey, "description"]}
+                                                name={[
+                                                    field.name,
+                                                    "description",
+                                                ]}
+                                                fieldKey={[
+                                                    field.fieldKey,
+                                                    "description",
+                                                ]}
                                                 label="Description"
                                             >
                                                 <Input />
@@ -189,18 +225,29 @@ const ModalManager = ({
                                             <Form.Item
                                                 {...field}
                                                 name={[field.name, "weight"]}
-                                                fieldKey={[field.fieldKey, "weight"]}
+                                                fieldKey={[
+                                                    field.fieldKey,
+                                                    "weight",
+                                                ]}
                                                 label="Weight/Gram"
                                             >
                                                 <Input type="number" />
                                             </Form.Item>
-                                            <Button onClick={() => remove(field.name)}>
+                                            <Button
+                                                onClick={() =>
+                                                    remove(field.name)
+                                                }
+                                            >
                                                 Remove
                                             </Button>
                                         </div>
                                     ))}
                                     <Form.Item>
-                                        <Button type="dashed" onClick={() => add()} block>
+                                        <Button
+                                            type="dashed"
+                                            onClick={() => add()}
+                                            block
+                                        >
                                             Add Metal
                                         </Button>
                                     </Form.Item>
@@ -214,21 +261,136 @@ const ModalManager = ({
                                 <>
                                     {fields.map((field, index) => (
                                         <div key={index}>
+                                            {/* <Form.Item
+                                                {...field}
+                                                name={[
+                                                    field.name,
+                                                    "description",
+                                                ]}
+                                                fieldKey={[
+                                                    field.fieldKey,
+                                                    "description",
+                                                ]}
+                                                label="Description"
+                                                rules={[
+                                                    {
+                                                        required: true,
+                                                        message:
+                                                            "Please input the description!",
+                                                    },
+                                                ]}
+                                            >
+                                                <Input />
+                                            </Form.Item>
                                             <Form.Item
                                                 {...field}
-                                                name={[field.name, "gemBarcode"]}
-                                                fieldKey={[field.fieldKey, "gemBarcode"]}
+                                                name={[field.name, "price"]}
+                                                fieldKey={[
+                                                    field.fieldKey,
+                                                    "price",
+                                                ]}
+                                                label="Price"
+                                            >
+                                                <Input type="number" />
+                                            </Form.Item>
+                                            <Form.Item
+                                                {...field}
+                                                name={[field.name, "quantity"]}
+                                                fieldKey={[
+                                                    field.fieldKey,
+                                                    "quantity",
+                                                ]}
+                                                label="Quantity"
+                                            >
+                                                <Input type="number" />
+                                            </Form.Item>
+                                            <Form.Item
+                                                {...field}
+                                                name={[
+                                                    field.name,
+                                                    "certificateCode",
+                                                ]}
+                                                fieldKey={[
+                                                    field.fieldKey,
+                                                    "certificateCode",
+                                                ]}
+                                                label="Certificate Code"
+                                            >
+                                                <Input />
+                                            </Form.Item> */}
+                                            <Form.Item
+                                                {...field}
+                                                name={[
+                                                    field.name,
+                                                    "gemBarcode",
+                                                ]}
+                                                fieldKey={[
+                                                    field.fieldKey,
+                                                    "gemBarcode",
+                                                ]}
                                                 label="Barcode"
                                             >
                                                 <Input />
                                             </Form.Item>
-                                            <Button onClick={() => remove(field.name)}>
+                                            {/* <Form.Item
+                                                {...field}
+                                                name={[field.name, "carat"]}
+                                                fieldKey={[
+                                                    field.fieldKey,
+                                                    "carat",
+                                                ]}
+                                                label="Carat"
+                                            >
+                                                <Input type="number" />
+                                            </Form.Item>
+                                            <Form.Item
+                                                {...field}
+                                                name={[field.name, "color"]}
+                                                fieldKey={[
+                                                    field.fieldKey,
+                                                    "color",
+                                                ]}
+                                                label="Color"
+                                            >
+                                                <Input />
+                                            </Form.Item>
+                                            <Form.Item
+                                                {...field}
+                                                name={[field.name, "clarity"]}
+                                                fieldKey={[
+                                                    field.fieldKey,
+                                                    "clarity",
+                                                ]}
+                                                label="Clarity"
+                                            >
+                                                <Input />
+                                            </Form.Item>
+                                            <Form.Item
+                                                {...field}
+                                                name={[field.name, "cut"]}
+                                                fieldKey={[
+                                                    field.fieldKey,
+                                                    "cut",
+                                                ]}
+                                                label="Cut"
+                                            >
+                                                <Input />
+                                            </Form.Item> */}
+                                            <Button
+                                                onClick={() =>
+                                                    remove(field.name)
+                                                }
+                                            >
                                                 Remove
                                             </Button>
                                         </div>
                                     ))}
                                     <Form.Item>
-                                        <Button type="dashed" onClick={() => add()} block>
+                                        <Button
+                                            type="dashed"
+                                            onClick={() => add()}
+                                            block
+                                        >
                                             Add Gemstone
                                         </Button>
                                     </Form.Item>

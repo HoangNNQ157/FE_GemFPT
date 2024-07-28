@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal, Select, Switch } from "antd";
+import { Button, Form, Input, Modal, Select, Switch, message } from "antd";
 import React, { useEffect } from "react";
 
 const { Option } = Select;
@@ -18,7 +18,13 @@ const ModalAccount = ({ visible, onCancel, onSave, initialData, type }) => {
         form.validateFields()
             .then((values) => {
                 form.resetFields();
-                onSave(values);
+                onSave(values)
+                    .then(() => {
+                        message.success(type === "update" ? "Account updated successfully" : "Account created successfully");
+                    })
+                    .catch((error) => {
+                        message.error(error.response?.data || "An error occurred. Please try again.");
+                    });
             })
             .catch((info) => {
                 console.log("Validate Failed:", info);
@@ -48,7 +54,7 @@ const ModalAccount = ({ visible, onCancel, onSave, initialData, type }) => {
                 </Form.Item>
                 <Form.Item
                     name="email"
-                    label="email"
+                    label="Email"
                     rules={[
                         {
                             required: true,
@@ -101,7 +107,16 @@ const ModalAccount = ({ visible, onCancel, onSave, initialData, type }) => {
                         </Form.Item>
                     </>
                 ) : (
-                    <Form.Item name="password" label="password">
+                    <Form.Item
+                        name="password"
+                        label="Password"
+                        rules={[
+                            {
+                                required: true,
+                                message: "Please input the password!",
+                            },
+                        ]}
+                    >
                         <Input.Password />
                     </Form.Item>
                 )}

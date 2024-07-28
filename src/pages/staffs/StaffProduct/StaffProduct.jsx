@@ -189,7 +189,13 @@ const StaffProduct = () => {
             title: "Promotion Price",
             dataIndex: "newPrice",
             key: "newPrice",
-            render: (text, record) => <span>{formatVND(record.newPrice)}</span>,
+            render: (text, record) => {
+                if (record.newPrice === 0 || !record.newPrice) {
+                    return <span>N/A</span>;
+                } else {
+                    return <span>{formatVND(record.newPrice)}</span>;
+                }
+            },
         },
         {
             title: "Status",
