@@ -27,6 +27,12 @@ const updatePromotion = ({ formData }) => {
 const deletePromotion = ({ id }) => {
     return api.delete(`api/promotion/${id}`, { headers: headers });
 };
+const getPromotionDetails = (id) => {
+    return api.get(`/api/promotion/${id}`, {
+        headers: headers,
+    });
+};
+
 export {
     getListPromotion,
     createPromotion,
@@ -34,4 +40,5 @@ export {
     updatePromotion,
     createAllPromotion,
     createCatePromotion,
+    getPromotionDetails
 };
