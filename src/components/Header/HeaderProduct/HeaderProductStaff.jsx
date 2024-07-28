@@ -69,7 +69,7 @@ const HeaderProduct = ({
 
     const menuSort = (
         <Menu>
-            {/* <Menu.Item key="price" onClick={() => setIsPriceModalVisible(true)}>
+            <Menu.Item key="price" onClick={() => setIsPriceModalVisible(true)}>
                 <span>Filter by Price</span>
             </Menu.Item>
             <Menu.Item key="metal" onClick={showModalMetal}>
@@ -80,7 +80,7 @@ const HeaderProduct = ({
             </Menu.Item>
             <Menu.Item key="category" onClick={showModaCategory}>
                 <span>Category</span>
-            </Menu.Item> */}
+            </Menu.Item>
             <Menu.Item
                 key="barcode"
                 onClick={() => setIsBarocdeModalVisible(true)}

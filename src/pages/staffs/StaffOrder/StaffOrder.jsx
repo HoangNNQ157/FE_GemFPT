@@ -167,8 +167,9 @@ const StaffOrder = () => {
                 }
             }
         } catch (error) {
-            console.log(error.data);
-            toast.error(error.response.data);
+            if (error?.response?.data) {
+                toast.error(error?.response?.data);
+            } 
         }
     };
 

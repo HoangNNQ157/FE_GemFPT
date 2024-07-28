@@ -5,7 +5,7 @@ import { getMetalActive } from "../../service/metalPriceService";
 import "./PriceTable.css";
 import HeaderDefault from "../../components/Header/HeaderDefault/HeaderDefault";
 import { formatVND } from "../../utils/funUtils";
-import { FullscreenOutlined } from "@ant-design/icons"; 
+import { FullscreenOutlined } from "@ant-design/icons";
 
 const columns = [
   {
@@ -35,12 +35,20 @@ const PriceTable = () => {
   const tableRef = useRef(null);
 
   useEffect(() => {
-    getMetalActive()
-      .then((res) => {
-        console.log("Fetched data:", res.data); // Add this line to debug data
-        return res.data;
-      })
-      .then((data) => setData(data));
+    const fetchData = () => {
+      getMetalActive()
+        .then((res) => {
+          console.log("Fetched data:", res.data);
+          return res.data;
+        })
+        .then((data) => setData(data));
+    };
+
+    fetchData();
+
+    const intervalId = setInterval(fetchData, 60000); // Fetch data every 1 minute
+
+    return () => clearInterval(intervalId); // Cleanup interval on component unmount
   }, []);
 
   const toggleFullscreen = () => {
@@ -91,3 +99,4 @@ const PriceTable = () => {
 };
 
 export default PriceTable;
+

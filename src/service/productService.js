@@ -13,11 +13,17 @@ const getListProducts = () => {
 const getListProductsActive = () => {
     return api.get("products-true", { headers: headers });
 };
+const getListProductsActiveTrue = () => {
+    return api.get("/mana-products-true", { headers: headers });
+};
 const getProductById = ({ id }) => {
     return api.get(`products/id/${id}`, { headers: headers });
 };
 const getProductByName = (search) => {
     return api.get(`/search/name?name=${search}`, { headers: headers });
+};
+const getProductStaffByName = (search) => {
+    return api.get(`/staff-search/name?name=${search}`, { headers: headers });
 };
 const getProductByMetal = (search) => {
     return api.get(`/search/metaltype?metalType=${search}`, {
@@ -84,4 +90,6 @@ export {
     getProductByBarcode,
     unLinkGems,
     getProductAllByBarcode,
+    getListProductsActiveTrue,
+    getProductStaffByName,
 };
