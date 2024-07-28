@@ -14,6 +14,9 @@ const loginWithEmail = ({ formData }) => {
     return api.post("login", formData);
 };
 const loginWithGoogle = ({ token }) => {
+    return api.post("staff-login_google", { token });
+};
+const loginWithGoogleRegister = ({ token }) => {
     return api.post("login_google", { token });
 };
 const forgotPassword = ({ email }) => {
@@ -28,4 +31,5 @@ export {
     loginWithGoogle,
     forgotPassword,
     getProfileById,
+    loginWithGoogleRegister,
 };
