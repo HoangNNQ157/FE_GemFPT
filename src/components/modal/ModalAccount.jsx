@@ -20,7 +20,7 @@ const ModalAccount = ({ visible, onCancel, onSave, initialData, type }) => {
                 form.resetFields();
                 onSave(values)
                     .then(() => {
-                        message.success(type === "update" ? "Account updated successfully" : "Account created successfully");
+                        
                     })
                     .catch((error) => {
                         message.error(error.response?.data || "An error occurred. Please try again.");

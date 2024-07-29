@@ -1,5 +1,3 @@
-// src/components/CustomTable/CustomTable.js
-
 import React, { useEffect, useState } from "react";
 import { Button, Popconfirm, Table } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
@@ -45,7 +43,8 @@ const TableAccountManager = () => {
                     setDataUpdate(null);
                 }
             } catch (error) {
-                toast.error("An error occurred. Please try again later.");
+                
+                toast.error(error.response?.data);
             }
         } else {
             try {
@@ -60,12 +59,13 @@ const TableAccountManager = () => {
                     setDataUpdate(null);
                 }
             } catch (error) {
-                toast.error("An error occurred. Please try again later.");
+                
+                toast.error(error.response?.data);
             }
         }
         setVisible(false);
     };
-
+    
     const handleDelteProduct = async (record) => {
         try {
             const response = await deleteAccountAdmin({
@@ -78,7 +78,7 @@ const TableAccountManager = () => {
                     .then((data) => setAccountData(data));
             }
         } catch (error) {
-            console.error(err.response?.data);
+            console.error(error.response?.data);
             toast.error("An error occurred. Please try again later.");
         }
     };
@@ -87,7 +87,7 @@ const TableAccountManager = () => {
         getAllAccout()
             .then((data) => data.data)
             .then((data) => setAccountData(data));
-    }, [getAllAccout]);
+    }, []);
 
     const columns = [
         {
@@ -192,7 +192,7 @@ const TableAccountManager = () => {
                     });
             }
         } catch (error) {
-            toast.error("search bill for Email failed");
+            toast.error("search account for Email failed");
         }
     }, [debouncedSearcEmail]);
 
