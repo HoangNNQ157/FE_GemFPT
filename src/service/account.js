@@ -13,7 +13,7 @@ const getAccoutByEmail = ({ email }) => {
   return api.get(`/email/${email}`, { headers: headers });
 };
 const updateAccountAdmin = ({ fromData, email }) => {
-  return api.put(`admin_edit_account/${email}`, fromData, {
+  return api.put(`/admin_edit_account/${email}`, fromData, {
     headers: headers,
   });
 };

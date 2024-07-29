@@ -79,9 +79,9 @@ const ManagerDiscount = () => {
             key: "customerPhone",
         },
         {
-            title: "Customer Rank",
-            dataIndex: ["customer", "rankCus"],
-            key: "customerRank",
+            title: "Comments",
+            dataIndex: ["managerResponse"],
+            key: "managerResponse",
         },
         {
             title: "Status Use",
