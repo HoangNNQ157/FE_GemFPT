@@ -75,6 +75,10 @@ const unLinkGems = (barcode) => {
         { headers: headers }
     );
 };
+
+const getStallById = (stallId) => {
+    return api.get(`/by-stall/${stallId}`, { headers: headers });
+};
 export {
     createProduct,
     deleteProduct,
@@ -92,4 +96,5 @@ export {
     getProductAllByBarcode,
     getListProductsActiveTrue,
     getProductStaffByName,
+    getStallById,
 };

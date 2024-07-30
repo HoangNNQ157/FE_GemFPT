@@ -19,6 +19,7 @@ import {
     getProductByMetal,
     getProductByName,
     getProductByPrice,
+    getStallById,
     unLinkGems,
     updateProduct,
 } from "../../service/productService";
@@ -36,6 +37,7 @@ const TableManager = ({
     searchGem,
     searchCategory,
     searchBarcode,
+    searchStallId,
 }) => {
     const [visible, setVisible] = useState(false);
     const [dataProducts, setDataProducts] = useState([]);
@@ -50,7 +52,6 @@ const TableManager = ({
                 let response;
                 if (searchValue?.length > 0) {
                     response = await getProductByName(searchValue);
-                    /* toast.success("Search by name"); */
                 } else if (
                     searchPrice?.minPrice >= 0 &&
                     searchPrice?.maxPrice > searchPrice.minPrice &&
@@ -68,21 +69,30 @@ const TableManager = ({
                     response = await getProductByCategory({
                         category: searchCategory,
                     });
-                    toast.success("Filter by category");
+                    /* toast.success("Filter by category"); */
                 } else if (searchBarcode) {
                     try {
                         response = await getProductAllByBarcode({
                             barcode: searchBarcode,
                         });
 
-                        // Check if response is valid and contains the expected data
                         if (response && response.data && response.data.length > 0) {
-                            toast.success("Filter by barcode");
+                           /*  toast.success("Filter by barcode"); */
+                        } else {
+                            setDataProducts([]);
+                            toast.error("Product not found by barcode");
                         }
                     } catch (error) {
-                        // Handle any errors that occur during the API call
                         console.error("Error searching by barcode:", error);
-                        
+                        toast.error("Failed to search by barcode");
+                    }
+                }  else if (searchStallId) {
+                    response = await getStallById(searchStallId);
+                    if (response && response.data && response.data.length > 0) {
+                       /*  toast.success("Filter by Stall ID"); */
+                    } else {
+                        setDataProducts([]);
+                        toast.error("Product not found by Stall ID");
                     }
                 } else if (productActice) {
                     response = await getListProductsActiveTrue();
@@ -90,22 +100,19 @@ const TableManager = ({
                 } else {
                     response = await getListProducts();
                 }
-                if (
-                    response?.data?.length > 0 &&
-                    response?.data[0]?.productId
-                ) {
-                    const products = response.data?.map((product, index) => ({
-                        ...product,
-                        key: index + 1,
-                    }));
+                
+                if (response && response.data) {
+                    const products = Array.isArray(response.data)
+                        ? response.data.map((product, index) => ({
+                            ...product,
+                            key: index + 1,
+                        }))
+                        : [response.data];
+                    
                     setDataProducts(products);
-                } else if (
-                    !response?.data[0]?.productId &&
-                    !response?.data?.productId
-                ) {
-                    toast.error("Product not found");
                 } else {
-                    setDataProducts([response.data]);
+                    setDataProducts([]);
+                    toast.error("Product not found");
                 }
             } catch (error) {
                 if (error?.response?.data) {
@@ -123,9 +130,9 @@ const TableManager = ({
         searchGem,
         searchCategory,
         searchBarcode,
+        searchStallId,
     ]);
     useEffect(() => {
-        //call apu  metals
         const fetchMetals = async () => {
             const response = await getAllMetal();
             setMetalData(response.data);
@@ -148,14 +155,12 @@ const TableManager = ({
     const handleSave = async (values) => {
         try {
             if (dataUpdate) {
-                // call api update
                 const response = await updateProduct({
                     formData: values,
                     barcode: barcodeUpdate,
                 });
                 if (response.data.productId) {
                     toast.success("Product updated successfully!");
-                    //update xong -> call lại api getProduct
                     const updatedProducts = productActice
                         ? await getListProductsActiveTrue()
                         : await getListProducts();
@@ -169,11 +174,9 @@ const TableManager = ({
                     setDataUpdate(null);
                 }
             } else {
-                // call api tạo product
                 const response = await createProduct(values);
                 if (response.data.productId) {
                     toast.success("Product created successfully!");
-                    // tạo oke -> call api getProduct
                     const newProducts = productActice
                         ? await getListProductsActiveTrue()
                         : await getListProducts();
@@ -188,7 +191,6 @@ const TableManager = ({
             }
         } catch (err) {
             console.error(err.response?.data);
-            // Hiển thị thông báo lỗi chi tiết từ API
             if (err.response && err.response.data) {
                 const errorMessage = err.response.data.message || err.response.data;
                 toast.error(`Error: ${errorMessage}`);
@@ -199,10 +201,9 @@ const TableManager = ({
             setVisible(false);
         }
     };
-    
+
     const handleDelteProduct = async (record) => {
         try {
-            // call api delete
             const response = await deleteProduct({ barcode: record.barcode });
             if (response.data.productId) {
                 toast.success("Change status product successfully");
@@ -223,28 +224,6 @@ const TableManager = ({
             toast.error("An error occurred. Please try again later.");
         }
     };
-    /*  const handleUnLinkGem = async (record) => {
-         try {
-             const response = await unLinkGems(record.barcode);
-             if (response.data) {
-                 toast.success("Successfully separated the gem from product");
-                 const newProducts = productActice
-                     ? await getListProductsActive()
-                     : await getListProducts();
-                 const productsWithKey = newProducts.data.map(
-                     (product, index) => ({
-                         ...product,
-                         key: index + 1,
-                     })
-                 );
-                 setDataProducts(productsWithKey);
-             } else {
-                 toast.error("Failed to separate the gem from product");
-             }
-         } catch (error) {
-             toast.error("An error occurred. Please try again later.");
-         }
-     }; */
     const columns = [
         {
             title: "ID",
@@ -329,7 +308,7 @@ const TableManager = ({
                 }
             },
         },
-        
+
         {
             title: "Buyback Mode",
             dataIndex: "typeWhenBuyBack",
@@ -370,19 +349,10 @@ const TableManager = ({
                             navigator(`/product-detail/${record.productId}`)
                         }
                     />
-                    {/* <Popconfirm
-                        title="You want to remove the gem from the product ? "
-                        onConfirm={() => handleUnLinkGem(record)}
-                        onCancel={() => {}}
-                        okText="Yes"
-                        cancelText="No"
-                    >
-                        <Button type="link" icon={<LiaGemSolid size={24} />} />
-                    </Popconfirm> */}
                     <Popconfirm
                         title="Do you want to change the product's status ?"
                         onConfirm={() => handleDelteProduct(record)}
-                        onCancel={() => { }}
+                        onCancel={() => {}}
                         okText="Yes"
                         cancelText="No"
                     >

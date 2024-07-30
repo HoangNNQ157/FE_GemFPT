@@ -17,6 +17,7 @@ const ManagerDashboard = () => {
     const [isModalMetal, setIsModalMetal] = useState(false);
     const [typeCategory, setTypeCategory] = useState("");
     const [searchBarcode, setSearchBarcode] = useState("");
+    const [searchStallId, setSearchStallId] = useState("");
     const [isModalGem, setIsModalGem] = useState(false);
     const debouncedSearchProduct = useDebounce(searchProduct, 500);
     const debouncedSearchPrice = useDebounce(searchPrice, 500);
@@ -36,6 +37,9 @@ const ManagerDashboard = () => {
     const onChangeBarcode = (values) => {
         setSearchBarcode(values.barcode);
     };
+    const onChangeStallId = (values) => {
+        setSearchStallId(values.stallId);
+    };
     const onReset = () => {
         if (searchPrice)
             setSearchPrice({
@@ -47,6 +51,7 @@ const ManagerDashboard = () => {
         if (searchGem) setSearchGem(null);
         if (typeCategory) setTypeCategory("");
         if (searchBarcode) setSearchBarcode("");
+        if (searchStallId) setSearchStallId("");
         form.resetFields();
     };
     const showModalMetal = () => {
@@ -88,6 +93,7 @@ const ManagerDashboard = () => {
                 showModaGem={() => setIsModalGem(true)}
                 showModaCategory={() => setIsModalCategory(true)}
                 onChangeBarcode={onChangeBarcode}
+                onChangeStallId={onChangeStallId}
             />
             <TableManager
                 searchValue={debouncedSearchProduct}
@@ -96,6 +102,7 @@ const ManagerDashboard = () => {
                 searchGem={searchGem}
                 searchCategory={typeCategory}
                 searchBarcode={searchBarcode}
+                searchStallId={searchStallId}
             />
             <SearchGemstoneForm
                 visible={isModalGem}

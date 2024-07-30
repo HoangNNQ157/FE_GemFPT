@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Button, Dropdown, Menu, Input, Modal, Form } from "antd";
+import React, { useState, useEffect } from "react";
+import { Button, Dropdown, Menu, Input, Modal, Form, Select } from "antd";
 import Cookies from "js-cookie";
 import { BiLogOut, BiUser } from "react-icons/bi";
 import { CiSearch } from "react-icons/ci";
@@ -9,6 +9,7 @@ import "./HeaderProduct.css";
 import { logout } from "../../../redux/features/counterSlice";
 import AntdDropdown from "../../AntdDropdown/AntdDropdown";
 import { getInitials } from "../../../utils/funUtils";
+import { getAlllStalls } from "../../../service/manager"; // Import API để lấy danh sách quầy
 
 const HeaderProduct = ({
     role,
@@ -21,16 +22,33 @@ const HeaderProduct = ({
     showModaGem,
     showModaCategory,
     onChangeBarcode,
+    onChangeStallId,
     placeholder,
 }) => {
     const userData = useSelector((state) => state.user);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [stalls, setStalls] = useState([]); // State để lưu danh sách quầy
 
     const [isPriceModalVisible, setIsPriceModalVisible] = useState(false);
     const [isBarocdeModalVisible, setIsBarocdeModalVisible] = useState(false);
+    const [isStallIdModalVisible, setIsStallIdModalVisible] = useState(false);
     const [priceForm] = Form.useForm();
     const [barcodeForm] = Form.useForm();
+    const [stallIdForm] = Form.useForm();
+
+    useEffect(() => {
+        const fetchStalls = async () => {
+            try {
+                const response = await getAlllStalls();
+                setStalls(response.data); // Lưu danh sách quầy vào state
+            } catch (error) {
+                console.error("Failed to fetch stalls", error);
+            }
+        };
+        fetchStalls();
+    }, []);
+
     const handleLogout = () => {
         dispatch(logout());
         Cookies.remove("token");
@@ -52,6 +70,14 @@ const HeaderProduct = ({
             barcodeForm.resetFields();
         });
     };
+    const handleStallIdFilter = () => {
+        stallIdForm.validateFields().then((values) => {
+            onChangeStallId(values);
+            setIsStallIdModalVisible(false);
+            stallIdForm.resetFields();
+        });
+    };
+
     const menu = (
         <Menu>
             <Menu.Item
@@ -69,23 +95,17 @@ const HeaderProduct = ({
 
     const menuSort = (
         <Menu>
-            {/* <Menu.Item key="price" onClick={() => setIsPriceModalVisible(true)}>
-                <span>Filter by Price</span>
-            </Menu.Item>
-            <Menu.Item key="metal" onClick={showModalMetal}>
-                <span>Metal type</span>
-            </Menu.Item>
-            <Menu.Item key="gem" onClick={showModaGem}>
-                <span>Gemstone</span>
-            </Menu.Item>
-            <Menu.Item key="category" onClick={showModaCategory}>
-                <span>Category</span>
-            </Menu.Item> */}
             <Menu.Item
                 key="barcode"
                 onClick={() => setIsBarocdeModalVisible(true)}
             >
                 <span>Barcode</span>
+            </Menu.Item>
+            <Menu.Item
+                key="stallId"
+                onClick={() => setIsStallIdModalVisible(true)}
+            >
+                <span>Stall</span>
             </Menu.Item>
         </Menu>
     );
@@ -191,6 +211,33 @@ const HeaderProduct = ({
                         ]}
                     >
                         <Input placeholder="Enter barcode" />
+                    </Form.Item>
+                </Form>
+            </Modal>
+            <Modal
+                title="Stall"
+                visible={isStallIdModalVisible}
+                onOk={handleStallIdFilter}
+                onCancel={() => setIsStallIdModalVisible(false)}
+            >
+                <Form form={stallIdForm}>
+                    <Form.Item
+                        name="stallId"
+                        label="Stall"
+                        rules={[
+                            {
+                                required: true,
+                                message: "Please select a stall",
+                            },
+                        ]}
+                    >
+                        <Select placeholder="Select a stall">
+                            {stalls.map((stall) => (
+                                <Select.Option key={stall.stallsSellId} value={stall.stallsSellId}>
+                                    {stall.stallsSellName}
+                                </Select.Option>
+                            ))}
+                        </Select>
                     </Form.Item>
                 </Form>
             </Modal>
