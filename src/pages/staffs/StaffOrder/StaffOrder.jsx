@@ -156,7 +156,7 @@ const StaffOrder = () => {
                     );
                     window.location.href = response.data;
                 } else {
-                    toast.error("Payment Method not found");
+                    toast.error(error?.response?.data);
                 }
             } else {
                 const response = await createBill(requestData);

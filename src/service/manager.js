@@ -45,6 +45,7 @@ const getStallAccounts = (stallsSellId) => {
     });
 };
 
+
 export {
     createStalls,
     getManagerActiveAccount,
@@ -52,4 +53,5 @@ export {
     updateStaffWorking,
     updateStallStatus,
     getStallAccounts,
+    
 };
