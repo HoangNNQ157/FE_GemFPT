@@ -76,15 +76,15 @@ const TableManager = ({
                             barcode: searchBarcode,
                         });
 
-                        if (response && response.data && response.data.length > 0) {
-                           /*  toast.success("Filter by barcode"); */
+                       /*  if (response && response.data && response.data.length > 0) {
+                            toast.success("Filter by barcode");
                         } else {
                             setDataProducts([]);
                             toast.error("Product not found by barcode");
-                        }
+                        } */
                     } catch (error) {
                         console.error("Error searching by barcode:", error);
-                        toast.error("Failed to search by barcode");
+                        toast.error(error?.response?.data);
                     }
                 }  else if (searchStallId) {
                     response = await getStallById(searchStallId);
@@ -112,7 +112,7 @@ const TableManager = ({
                     setDataProducts(products);
                 } else {
                     setDataProducts([]);
-                    toast.error("Product not found");
+                    
                 }
             } catch (error) {
                 if (error?.response?.data) {

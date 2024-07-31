@@ -11,7 +11,7 @@ import useDebounce from "../../../hook/debound";
 import {
     getListProductsActive,
     getProductByBarcode,
-    getProductByCategory,
+    getProductAllByBarcode,
     getProductByGem,
     getProductByMetal,
     getProductStaffByName,
@@ -66,7 +66,7 @@ const StaffProduct = () => {
                     response = await getProductByMetal(searchProductByMetal);
                     /* toast.info("Filter by metal"); */
                 } else if (searchBarcode) {
-                    response = await getProductByBarcode({ barcode: searchBarcode });
+                    response = await getProductAllByBarcode({ barcode: searchBarcode });
                     /* toast.info("Filter by barcode"); */
                 } else if (searchGem && searchGem.color) {
              

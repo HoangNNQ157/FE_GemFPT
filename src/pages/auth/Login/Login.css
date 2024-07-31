@@ -66,11 +66,6 @@
   background-color: #0056b3;
 }
 
-/* .login-gg {
-  margin-top: 10px;
-} */
-
-/* Add this CSS to your stylesheet */
 
 .login-gg {
   display: inline-flex;
@@ -89,20 +84,7 @@
   text-decoration: none;
 }
 
-.login-gg:hover {
-  background-color: #c33427; /* Darker red for hover */
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-}
 
-.login-gg:active {
-  background-color: #a92b1b; /* Even darker red for active */
-  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2);
-}
-
-.login-gg:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(219, 68, 55, 0.5);
-}
 
 .login-gg-icon {
   display: inline-block;
@@ -124,7 +106,7 @@
 }
 
 .login-google {
-  background-color: #db4437;
+ 
   color: #fff;
   padding: 10px;
   border: none;
@@ -134,9 +116,7 @@
   width: 100%;
 }
 
-.login-google:hover {
-  background-color: #c23321;
-}
+
 
 .forgot-password {
   text-align: right;
