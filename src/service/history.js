@@ -14,7 +14,7 @@ const getAllHistory = () => {
     });
 };
 const getHistoryByBarcode = ({ barcode }) => {
-    return api.get(`/history-${barcode}`, {
+    return api.get(`/history/${barcode}`, {
         headers: headers,
     });
 };

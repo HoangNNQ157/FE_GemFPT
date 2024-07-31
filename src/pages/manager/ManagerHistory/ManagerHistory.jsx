@@ -42,14 +42,15 @@ const ManagerHistory = () => {
     const fetchHistoryByBarcode = async (barcode) => {
         try {
             const res = await getHistoryByBarcode({ barcode });
-            if (res.data) {
-                setHistoryData([res.data]);
-                toast.success("Search by barcode succeeded");
+            if (res.data && res.data.length > 0) {
+                setHistoryData(res.data);
+               /*  toast.success("Search by barcode succeeded"); */
             } else {
+                setHistoryData([]);
                 toast.error("Gem not found");
             }
         } catch (error) {
-            toast.error("Error fetching gem data");
+            toast.error(error?.response?.data);
         }
     };
 
@@ -111,7 +112,7 @@ const ManagerHistory = () => {
             <HeaderSearch
                 onChange={(value) => setSearchBarcode(value)}
                 searchValue={searchBarcode}
-                placeholder="SEARCH BY barcode..."
+                placeholder="SEARCH BY BARCODE"
             />
             <Flex gap={6} align="center" style={{ marginTop: "10px" }}></Flex>
             <Table
