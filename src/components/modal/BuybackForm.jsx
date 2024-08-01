@@ -18,10 +18,8 @@ const BuybackForm = ({
     const [isShowUserInfo, setShowIsUserInfo] = useState(true);
 
     useEffect(() => {
-        console.log("Initial Data:", initialData);
         if (visible && type === "create") {
             form.resetFields();
-            // Set default values for gemstones if creating
             form.setFieldsValue({
                 gemstones: [{ description: 'description' }],
             });
@@ -41,21 +39,15 @@ const BuybackForm = ({
     const handleOk = () => {
         form.validateFields()
             .then((values) => {
-                // Kiểm tra và loại bỏ mảng kim loại nếu rỗng
                 if (!values.metals || values.metals.length === 0) {
                     delete values.metals;
                 }
-
-                // Kiểm tra và loại bỏ mảng đá quý nếu rỗng
                 if (!values.gemstones || values.gemstones.length === 0) {
                     delete values.gemstones;
                 }
-
-                // Kiểm tra và loại bỏ URLs nếu rỗng
                 if (!values.urls || values.urls.length === 0) {
                     delete values.urls;
                 }
-
                 form.resetFields();
                 onSave({
                     values: values,
@@ -274,7 +266,6 @@ const BuybackForm = ({
                                                     label="Description"
                                                     rules={[
                                                         {
-                                                            required: true,
                                                             message: "Please input the description!",
                                                         },
                                                     ]}
@@ -288,7 +279,6 @@ const BuybackForm = ({
                                                     label="Barcode"
                                                     rules={[
                                                         {
-                                                            required: true,
                                                             message: "Please input the barcode!",
                                                         },
                                                     ]}
@@ -302,7 +292,6 @@ const BuybackForm = ({
                                                     label="Buy Rate"
                                                     rules={[
                                                         {
-                                                            required: true,
                                                             message: "Please input the buy rate!",
                                                         },
                                                     ]}
