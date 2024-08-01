@@ -14,6 +14,7 @@ import {
     getProductAllByBarcode,
     getProductByGem,
     getProductByMetal,
+    getProductByCategory,
     getProductStaffByName,
     getProductByPrice,
 } from "../../../service/productService";

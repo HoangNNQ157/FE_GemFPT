@@ -96,7 +96,7 @@ const Promotion = () => {
           <Popconfirm
             title="Do you want to cancel promotion ?"
             onConfirm={() => handleDelteProduct(record)}
-            onCancel={() => {}}
+            onCancel={() => { }}
             okText="Yes"
             cancelText="No"
           >
@@ -173,9 +173,9 @@ const Promotion = () => {
           .then((data) => data.data)
           .then((data) => setDataPromotion(data));
       }
-    } catch (err) {
-      console.error(err.response?.data);
-      toast.error("An error occurred. Please try again later.");
+    } catch (error) {
+
+      toast.error(error.response?.data);
     } finally {
       setVisible(false);
     }
@@ -192,10 +192,11 @@ const Promotion = () => {
           .then((data) => setDataPromotion(data));
       }
       setDataUpdate(null);
-    } catch (err) {
-      console.error(err.response?.data);
-      toast.error("An error occurred. Please try again later.");
-    } finally {
+    } catch (error) {
+
+      toast.error(error.response?.data);
+    }
+    finally {
       setShowModalUpdate(false);
     }
   };
@@ -210,9 +211,9 @@ const Promotion = () => {
           .then((data) => data.data)
           .then((data) => setDataPromotion(data));
       }
-    } catch (err) {
-      console.error(err.response?.data);
-      toast.error("An error occurred. Please try again later.");
+    } catch (error) {
+
+      toast.error(error.response?.data);
     } finally {
       setShowAllPromotion(false);
     }
@@ -260,8 +261,8 @@ const Promotion = () => {
           .then((data) => setDataPromotion(data));
       }
     } catch (error) {
-      console.error(err.response?.data);
-      toast.error("An error occurred. Please try again later.");
+
+      toast.error(error.response?.data);
     }
   };
 

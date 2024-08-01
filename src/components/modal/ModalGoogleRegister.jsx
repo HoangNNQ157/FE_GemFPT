@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth, provider } from "../../config/firebase";
 import { useNavigate } from "react-router-dom";
+import { loginWithGoogleRegister } from "../../service/auth";
 
 const ModalGoogleRegister = ({ visible, onCancel, onSave }) => {
   const [loading, setLoading] = useState(false);
@@ -24,7 +25,7 @@ const ModalGoogleRegister = ({ visible, onCancel, onSave }) => {
       };
       console.log("Register with Google success:", user);
       // Call your API to register the user with the email and token
-      const registerResponse = await loginWithGoogle({ token: user.token, email: user.email });
+      const registerResponse = await loginWithGoogleRegister({ token: user.token, email: user.email });
       Cookies.set("token", registerResponse.data.token);
       dispatch(login(registerResponse.data));
       navigate("/staff-product");
@@ -32,7 +33,7 @@ const ModalGoogleRegister = ({ visible, onCancel, onSave }) => {
       onSave();
     } catch (error) {
       console.log(error);
-      toast.error(error.response?.data || "Register with Google failed");
+      toast.error(error.response?.data);
     } finally {
       setLoading(false);
     }

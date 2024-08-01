@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal, DatePicker, Select } from "antd";
+import { Button, Form, Input, Modal, DatePicker } from "antd";
 import React, { useEffect } from "react";
 
 const PromotionForm = ({ visible, onCancel, onSave, dataProduct }) => {
@@ -65,12 +65,6 @@ const PromotionForm = ({ visible, onCancel, onSave, dataProduct }) => {
                 <Form.Item name="description" label="Description">
                     <Input.TextArea />
                 </Form.Item>
-                {/* <Form.Item
-                    name="applicableProducts"
-                    label="Applicable Products"
-                >
-                    <Input />
-                </Form.Item> */}
                 
                 <Form.Item
                     name="endTime"
@@ -104,18 +98,7 @@ const PromotionForm = ({ visible, onCancel, onSave, dataProduct }) => {
                                             },
                                         ]}
                                     >
-                                        <Select>
-                                            {dataProduct.map(
-                                                (product, index) => (
-                                                    <Select.Option
-                                                        key={index}
-                                                        value={product.barcode}
-                                                    >
-                                                        {`${product.name} - ${product.barcode}`}
-                                                    </Select.Option>
-                                                )
-                                            )}
-                                        </Select>
+                                        <Input />
                                     </Form.Item>
                                     <Button
                                         type="dashed"

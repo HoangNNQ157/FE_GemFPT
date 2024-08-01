@@ -310,7 +310,7 @@ const TableManager = ({
         },
 
         {
-            title: "Buyback Mode",
+            title: "Buy back",
             dataIndex: "typeWhenBuyBack",
             key: "btypeWhenBuyBack",
         },

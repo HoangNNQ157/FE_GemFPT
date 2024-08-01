@@ -171,18 +171,20 @@ const ManagerGem = () => {
       <HeaderSearch
         onChange={(value) => setSearchBarcode(value)}
         searchValue={searchBarcode}
-        placeholder="SEARCH BY barcode..."
+        placeholder="SEARCH BY BARCODE"
       />
       <Flex gap={6} align="center" style={{ marginTop: "10px" }}>
-        <Button
-          type="primary"
-          onClick={() => {
-            setVisible(true);
-            setDataUpdate(null);
-          }}
-        >
-          Add New Gem
-        </Button>
+        {!location.pathname.startsWith("/staff") && (
+          <Button
+            type="primary"
+            onClick={() => {
+              setVisible(true);
+              setDataUpdate(null);
+            }}
+          >
+            Add New Gem
+          </Button>
+        )}
         <Select
           options={userStatusOptions}
           style={{ minWidth: "200px" }}

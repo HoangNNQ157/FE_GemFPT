@@ -1,5 +1,6 @@
 import { Button, Form, Input, Modal, Select, Tabs } from "antd";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { getAlllStalls } from "../../service/manager"; 
 
 const { TabPane } = Tabs;
 
@@ -12,6 +13,7 @@ const ModalManager = ({
     type,
 }) => {
     const [form] = Form.useForm();
+    const [stalls, setStalls] = useState([]);
 
     useEffect(() => {
         if (visible && type === "create") {
@@ -20,6 +22,12 @@ const ModalManager = ({
             form.setFieldsValue(initialData);
         }
     }, [type, visible]);
+
+    useEffect(() => {
+        getAlllStalls().then((response) => {
+            setStalls(response.data);
+        });
+    }, []);
 
     const handleOk = () => {
         form.validateFields()
@@ -80,6 +88,7 @@ const ModalManager = ({
             id: 7,
         },
     ];
+
     return (
         <Modal
             title={type === "update" ? "Edit Information" : "Add Product"}
@@ -119,7 +128,16 @@ const ModalManager = ({
                             </Select>
                         </Form.Item>
                         <Form.Item name="stallId" label="Stall">
-                            <Input type="text" />
+                            <Select>
+                                {stalls.map((stall) => (
+                                    <Select.Option
+                                        key={stall.stallsSellId}
+                                        value={stall.stallsSellId}
+                                    >
+                                        {`${stall.stallsSellId}-VIP ${stall.stallsSellName}`}
+                                    </Select.Option>
+                                ))}
+                            </Select>
                         </Form.Item>
                         <Form.Item name="priceRate" label="Price Rate">
                             <Input type="number" />
@@ -266,63 +284,6 @@ const ModalManager = ({
                                 <>
                                     {fields.map((field, index) => (
                                         <div key={index}>
-                                            {/* <Form.Item
-                                                {...field}
-                                                name={[
-                                                    field.name,
-                                                    "description",
-                                                ]}
-                                                fieldKey={[
-                                                    field.fieldKey,
-                                                    "description",
-                                                ]}
-                                                label="Description"
-                                                rules={[
-                                                    {
-                                                        required: true,
-                                                        message:
-                                                            "Please input the description!",
-                                                    },
-                                                ]}
-                                            >
-                                                <Input />
-                                            </Form.Item>
-                                            <Form.Item
-                                                {...field}
-                                                name={[field.name, "price"]}
-                                                fieldKey={[
-                                                    field.fieldKey,
-                                                    "price",
-                                                ]}
-                                                label="Price"
-                                            >
-                                                <Input type="number" />
-                                            </Form.Item>
-                                            <Form.Item
-                                                {...field}
-                                                name={[field.name, "quantity"]}
-                                                fieldKey={[
-                                                    field.fieldKey,
-                                                    "quantity",
-                                                ]}
-                                                label="Quantity"
-                                            >
-                                                <Input type="number" />
-                                            </Form.Item>
-                                            <Form.Item
-                                                {...field}
-                                                name={[
-                                                    field.name,
-                                                    "certificateCode",
-                                                ]}
-                                                fieldKey={[
-                                                    field.fieldKey,
-                                                    "certificateCode",
-                                                ]}
-                                                label="Certificate Code"
-                                            >
-                                                <Input />
-                                            </Form.Item> */}
                                             <Form.Item
                                                 {...field}
                                                 name={[
@@ -337,50 +298,6 @@ const ModalManager = ({
                                             >
                                                 <Input />
                                             </Form.Item>
-                                            {/* <Form.Item
-                                                {...field}
-                                                name={[field.name, "carat"]}
-                                                fieldKey={[
-                                                    field.fieldKey,
-                                                    "carat",
-                                                ]}
-                                                label="Carat"
-                                            >
-                                                <Input type="number" />
-                                            </Form.Item>
-                                            <Form.Item
-                                                {...field}
-                                                name={[field.name, "color"]}
-                                                fieldKey={[
-                                                    field.fieldKey,
-                                                    "color",
-                                                ]}
-                                                label="Color"
-                                            >
-                                                <Input />
-                                            </Form.Item>
-                                            <Form.Item
-                                                {...field}
-                                                name={[field.name, "clarity"]}
-                                                fieldKey={[
-                                                    field.fieldKey,
-                                                    "clarity",
-                                                ]}
-                                                label="Clarity"
-                                            >
-                                                <Input />
-                                            </Form.Item>
-                                            <Form.Item
-                                                {...field}
-                                                name={[field.name, "cut"]}
-                                                fieldKey={[
-                                                    field.fieldKey,
-                                                    "cut",
-                                                ]}
-                                                label="Cut"
-                                            >
-                                                <Input />
-                                            </Form.Item> */}
                                             <Button
                                                 onClick={() =>
                                                     remove(field.name)
