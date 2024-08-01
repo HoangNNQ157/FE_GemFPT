@@ -37,7 +37,7 @@ const getProductByGem = (search) => {
     });
 };
 const getProductByCategory = ({ category }) => {
-    return api.get(`category?category=${category}`, {
+    return api.get(`/category?category=${category}`, {
         headers: headers,
     });
 };

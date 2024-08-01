@@ -3,8 +3,11 @@ import React, { useEffect } from "react";
 
 const SearchGemstoneForm = ({ visible, onCancel, onSave }) => {
     const [form] = Form.useForm();
+
     useEffect(() => {
-        form.resetFields();
+        if (visible) {
+            form.resetFields();
+        }
     }, [visible]);
 
     const handleOk = () => {
@@ -26,12 +29,13 @@ const SearchGemstoneForm = ({ visible, onCancel, onSave }) => {
             onCancel={onCancel}
             width={600}
         >
-            <Form form={form} layout="vertical" name="metal_form">
+            <Form form={form} layout="vertical" name="search_gemstone_form">
                 <Form.Item
                     name="color"
                     label="Color"
                     rules={[
                         {
+                            required: true,
                             message: "Please input the color!",
                         },
                     ]}
@@ -43,6 +47,7 @@ const SearchGemstoneForm = ({ visible, onCancel, onSave }) => {
                     label="Clarity"
                     rules={[
                         {
+                            required: true,
                             message: "Please input the clarity!",
                         },
                     ]}
@@ -54,22 +59,24 @@ const SearchGemstoneForm = ({ visible, onCancel, onSave }) => {
                     label="Cut"
                     rules={[
                         {
+                            required: true,
                             message: "Please input the cut!",
                         },
                     ]}
                 >
                     <Input />
-                </Form.Item>{" "}
+                </Form.Item>
                 <Form.Item
                     name="carat"
                     label="Carat"
                     rules={[
                         {
+                            required: true,
                             message: "Please input the carat!",
                         },
                     ]}
                 >
-                    <Input type="number" />
+                    <InputNumber style={{ width: "100%" }} />
                 </Form.Item>
             </Form>
         </Modal>

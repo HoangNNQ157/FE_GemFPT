@@ -14,6 +14,7 @@ import {
     getProductAllByBarcode,
     getProductByGem,
     getProductByMetal,
+    getProductByCategory,
     getProductStaffByName,
     getProductByPrice,
 } from "../../../service/productService";
@@ -61,21 +62,16 @@ const StaffProduct = () => {
                     debouncedSearchPrice.maxPrice > debouncedSearchPrice.minPrice
                 ) {
                     response = await getProductByPrice(debouncedSearchPrice);
-                    /* toast.info("Search by price"); */
                 } else if (searchProductByMetal) {
                     response = await getProductByMetal(searchProductByMetal);
-                    /* toast.info("Filter by metal"); */
                 } else if (searchBarcode) {
                     response = await getProductAllByBarcode({ barcode: searchBarcode });
-                    /* toast.info("Filter by barcode"); */
                 } else if (searchGem && searchGem.color) {
-             
                     response = await getProductByGem(searchGem);
-                    /* toast.info("Filter by gem"); */
                 } else {
                     response = await getListProductsActive();
                 }
-
+    
                 if (response?.data?.length > 0 && response?.data[0]?.productId) {
                     const products = response.data?.map((product, index) => ({
                         ...product,
@@ -87,7 +83,7 @@ const StaffProduct = () => {
                     setDataProducts([response.data]);
                     setErrorMessage(""); // Clear error message if a product is found
                 } else {
-
+                    setDataProducts([]); // Update state to an empty array if no products are found
                     toast.error("Product not found");
                 }
             } catch (error) {
@@ -96,7 +92,7 @@ const StaffProduct = () => {
                 }
             }
         };
-
+    
         fetchProducts();
     }, [
         debouncedSearchProduct,
@@ -105,6 +101,8 @@ const StaffProduct = () => {
         searchGem,
         searchBarcode,
     ]);
+    
+
 
     const columns = [
         {
@@ -227,14 +225,18 @@ const StaffProduct = () => {
     const rowSelection = {
         selectedRowKeys, // Set the selected row keys
         onChange: (selectedRowKeys, selectedRows) => {
-            setSelectedRowKeys(selectedRowKeys); // Update selected row keys
-            setSelectedProducts(selectedRows); // Update selected products
+            const filteredSelectedRows = selectedRows.filter(row => row.status);
+            setSelectedRowKeys(filteredSelectedRows.map(row => row.key)); // Update selected row keys
+            setSelectedProducts(filteredSelectedRows); // Update selected products
         },
         selections: [
             Table.SELECTION_ALL,
             Table.SELECTION_INVERT,
             Table.SELECTION_NONE,
         ],
+        getCheckboxProps: (record) => ({
+            disabled: !record.status, // Disable checkbox if status is false
+        }),
     };
 
     const onChange = (value) => {
@@ -304,6 +306,11 @@ const StaffProduct = () => {
         });
     };
 
+    const handleCancel = () => {
+        setSelectedProducts([]);
+        setSelectedRowKeys([]);
+    };
+
     return (
         <>
             <HeaderProductStaff
@@ -317,7 +324,7 @@ const StaffProduct = () => {
                 showModaGem={() => setIsModalGem(true)}
                 onChangeBarcode={onChangeBarcode}
                 showModaCategory={() => setIsModalCategory(true)}
-                placeholder="SEACH  BY NAME"
+                placeholder="SEARCH BY NAME"
             />
             {errorMessage && (
                 <div style={{ color: 'red', textAlign: 'center', margin: '10px 0' }}>
@@ -342,7 +349,7 @@ const StaffProduct = () => {
                 <Button
                     danger
                     className="btn-staff"
-                    onClick={() => setSelectedProducts([])}
+                    onClick={handleCancel} // Reset selection on cancel
                 >
                     Cancel
                 </Button>

@@ -70,7 +70,7 @@ const ModalAccount = ({ visible, onCancel, onSave, initialData, type }) => {
                     label="Phone"
                     rules={[
                         {
-                            required: true,
+                            
                             message: "Please input the phone number!",
                         },
                     ]}

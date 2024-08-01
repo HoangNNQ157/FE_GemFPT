@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { login } from "../../redux/features/counterSlice";
 import Cookies from "js-cookie";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { loginWithEmail, loginWithGoogleRegister } from "../../service/auth";
 import { auth, provider } from "../../config/firebase";
 import { useNavigate } from "react-router-dom";
 
@@ -22,17 +23,17 @@ const ModalGoogleRegister = ({ visible, onCancel, onSave }) => {
         email,
         token: response.user.accessToken,
       };
-      console.log("Register with Google success:", user);
+      
       // Call your API to register the user with the email and token
-      const registerResponse = await loginWithGoogle({ token: user.token, email: user.email });
+      const registerResponse = await loginWithGoogleRegister({ token: user.token, email: user.email });
       Cookies.set("token", registerResponse.data.token);
       dispatch(login(registerResponse.data));
       navigate("/staff-product");
       toast.success("Register with Google Successful");
       onSave();
     } catch (error) {
-      console.log(error);
-      toast.error(error.response?.data || "Register with Google failed");
+      
+      toast.error(error.response?.data);
     } finally {
       setLoading(false);
     }

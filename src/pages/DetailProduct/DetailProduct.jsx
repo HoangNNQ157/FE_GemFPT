@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
     Row,
     Col,
@@ -10,7 +11,7 @@ import {
     Tabs,
 } from "antd";
 import { ShoppingCartOutlined, PhoneOutlined } from "@ant-design/icons";
-import React, { useEffect, useState } from "react";
+
 import "./DetailProduct.css";
 import { useParams } from "react-router-dom";
 import { getProductById } from "../../service/productService";
@@ -40,7 +41,13 @@ const DetailProduct = () => {
     const handleImageClick = (url) => {
         setMainImage(url);
     };
+
     const addProductOrder = () => {
+        if (!data.status) { // Kiểm tra nếu trạng thái là false thì không cho thêm vào giỏ hàng
+            toast.error("Product is currently unavailable for purchase");
+            return;
+        }
+
         const card = JSON.parse(localStorage.getItem("card"));
         if (card?.length > 0) {
             const check = card.filter(
@@ -58,6 +65,7 @@ const DetailProduct = () => {
             localStorage.setItem("card", JSON.stringify([{ ...data, key: 1 }]));
         }
     };
+
     return data ? (
         <>
             <HeaderDefault backPage />
@@ -182,6 +190,7 @@ const DetailProduct = () => {
                                 block
                                 type="primary"
                                 onClick={addProductOrder}
+                                disabled={!data.status} // Thêm disabled nếu status là false
                             >
                                 Thêm vào giỏ hàng
                             </Button>
