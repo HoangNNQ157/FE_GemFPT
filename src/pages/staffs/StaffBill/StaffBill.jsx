@@ -242,7 +242,7 @@ const StaffBill = () => {
                 <Table
                     dataSource={billData.reverse()}
                     columns={columns}
-                    pagination={{ defaultPageSize: 4 }}
+                    pagination={{ defaultPageSize: 5 }}
                 />
             )}
         </>

@@ -29,7 +29,7 @@ const PromotionFormUpdate = ({ visible, onCancel, onSave, initialData }) => {
     };
     return (
         <Modal
-            title={"Add Promotion"}
+            title={"Update Promotion"}
             visible={visible}
             onOk={handleOk}
             onCancel={onCancel}
@@ -72,14 +72,14 @@ const PromotionFormUpdate = ({ visible, onCancel, onSave, initialData }) => {
                 <Form.Item name="description" label="Description">
                     <Input.TextArea />
                 </Form.Item>
-                <Form.Item name="category" label="Category">
+                {/* <Form.Item name="category" label="Category">
                     <Input
                         disabled={true}
                         value={"RING"}
                         defaultValue={"RING"}
                     />
-                </Form.Item>
-                <Form.Item name="pointsCondition" label="Points Condition">
+                </Form.Item> */}
+                <Form.Item name="applicableProducts" label="Applicable Products">
                     <Input />
                 </Form.Item>
                 <Form.Item

@@ -201,7 +201,7 @@ const StaffOrder = () => {
                     }
                 })
                 .catch((error) => {
-                    toast.error(error?.response?.data || "Discount application failed");
+                    toast.error(error?.response?.data);
                 });
         }
     }, [discountDebounce, customerData.id]);
