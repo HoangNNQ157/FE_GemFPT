@@ -1,23 +1,13 @@
-import {
-    Row,
-    Col,
-    Card,
-    Typography,
-    Button,
-    Divider,
-    Image,
-    Space,
-    Tabs,
-} from "antd";
-import { ShoppingCartOutlined, PhoneOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
-import "./DetailProduct.css";
 import { useParams } from "react-router-dom";
 import { getProductById } from "../../service/productService";
 import { formatVND } from "../../utils/funUtils";
 import { Box } from "@mui/material";
 import HeaderDefault from "../../components/Header/HeaderDefault/HeaderDefault";
 import { toast } from "react-toastify";
+import { Row, Col, Card, Typography, Button, Divider, Image, Space, Tabs } from "antd";
+import { ShoppingCartOutlined, PhoneOutlined } from "@ant-design/icons";
+import "./DetailProduct.css";
 
 const { Title, Text } = Typography;
 const { TabPane } = Tabs;
@@ -33,31 +23,37 @@ const DetailProduct = () => {
             .then((res) => res.data)
             .then((product) => {
                 setData(product);
-                setMainImage(product.urls[0].urls); // Đặt ảnh chính mặc định là URL đầu tiên
+                setMainImage(product.urls[0].urls);
             });
     }, [param]);
 
     const handleImageClick = (url) => {
         setMainImage(url);
     };
+
     const addProductOrder = () => {
-        const card = JSON.parse(localStorage.getItem("card"));
-        if (card?.length > 0) {
-            const check = card.filter(
-                (product) => product.productId === data.productId
-            );
-            if (check.length > 0) {
-                toast.info("The product is already in the shopping cart");
+        if (data?.status) {
+            const card = JSON.parse(localStorage.getItem("card"));
+            if (card?.length > 0) {
+                const check = card.filter(
+                    (product) => product.productId === data.productId
+                );
+                if (check.length > 0) {
+                    toast.info("The product is already in the shopping cart");
+                } else {
+                    toast.success("Added product to cart successfully");
+                    card.push({ ...data, key: card.length + 1 });
+                    localStorage.setItem("card", JSON.stringify(card));
+                }
             } else {
                 toast.success("Added product to cart successfully");
-                card.push({ ...data, key: card.length + 1 });
-                localStorage.setItem("card", JSON.stringify(card));
+                localStorage.setItem("card", JSON.stringify([{ ...data, key: 1 }]));
             }
         } else {
-            toast.success("Added product to cart successfully");
-            localStorage.setItem("card", JSON.stringify([{ ...data, key: 1 }]));
+            toast.warning("This product is sold out or no longer available.");
         }
     };
+
     return data ? (
         <>
             <HeaderDefault backPage />
@@ -182,8 +178,9 @@ const DetailProduct = () => {
                                 block
                                 type="primary"
                                 onClick={addProductOrder}
+                                disabled={!data.status} // Disable button if status is false
                             >
-                                Thêm vào giỏ hàng
+                                {data.status ? "Thêm vào giỏ hàng" : "Sản phẩm đã hết hàng"}
                             </Button>
                             <Button icon={<PhoneOutlined />} block>
                                 Gọi ngay (0123456789)

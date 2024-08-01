@@ -69,7 +69,6 @@ const StaffProduct = () => {
                     response = await getProductAllByBarcode({ barcode: searchBarcode });
                     /* toast.info("Filter by barcode"); */
                 } else if (searchGem && searchGem.color) {
-             
                     response = await getProductByGem(searchGem);
                     /* toast.info("Filter by gem"); */
                 } else {
@@ -87,7 +86,6 @@ const StaffProduct = () => {
                     setDataProducts([response.data]);
                     setErrorMessage(""); // Clear error message if a product is found
                 } else {
-
                     toast.error("Product not found");
                 }
             } catch (error) {
@@ -230,6 +228,9 @@ const StaffProduct = () => {
             setSelectedRowKeys(selectedRowKeys); // Update selected row keys
             setSelectedProducts(selectedRows); // Update selected products
         },
+        getCheckboxProps: (record) => ({
+            disabled: !record.status, // Disable checkbox if status is false
+        }),
         selections: [
             Table.SELECTION_ALL,
             Table.SELECTION_INVERT,

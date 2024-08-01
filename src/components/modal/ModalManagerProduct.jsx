@@ -74,6 +74,11 @@ const ModalManager = ({
             value: "METAL",
             id: 6,
         },
+        {
+            name: "GEMSTONE",
+            value: "GEMSTONE",
+            id: 7,
+        },
     ];
     return (
         <Modal
