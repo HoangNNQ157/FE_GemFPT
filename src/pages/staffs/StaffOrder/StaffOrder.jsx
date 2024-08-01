@@ -185,23 +185,32 @@ const StaffOrder = () => {
                 .then((res) => {
                     const data = res.data;
                     if (data?.customer?.id === customerData.id && data.approved) {
-                        setDiscountData(data);
-                        setTotalAmount((prevTotal) =>
-                            Math.floor(
-                                prevTotal * (1 - Number(data.requestedDiscount) / 100)
-                            )
-                        );
-                        toast.success("Discount was applied successfully");
+                        if (new Date(data.expirationTime) > new Date()) {
+                            setDiscountData(data);
+                            setTotalAmount((prevTotal) =>
+                                Math.floor(
+                                    prevTotal * (1 - Number(data.requestedDiscount) / 100)
+                                )
+                            );
+                            toast.success("Discount was applied successfully");
+                        } else {
+                            toast.error("Discount has expired");
+                        }
                     } else {
                         toast.error("Discount application failed");
                     }
                 })
-                .catch(() => {
-                    toast.error("Discount not found");
+                .catch((error) => {
+                    toast.error(error?.response?.data || "Discount application failed");
                 });
         }
     }, [discountDebounce, customerData.id]);
-    
+
+    const clearDiscount = () => {
+        setDiscountId("");
+        setDiscountData({});
+        calculateTotalAmount(dataProducts); // Recalculate the total amount without discount
+    };
 
     return dataProducts.length ? (
         <div className="order-container">
@@ -260,9 +269,16 @@ const StaffOrder = () => {
                             <p className="order__label">Discount: </p>
                             <Input
                                 style={{ padding: 8, height: "32px" }}
-                                disabled={!!discountData.requestedDiscount}
                                 value={discountId}
                                 onChange={(e) => setDiscountId(e.target.value)}
+                                suffix={
+                                    discountId && (
+                                        <CgClose
+                                            style={{ cursor: "pointer" }}
+                                            onClick={clearDiscount}
+                                        />
+                                    )
+                                }
                             />
                         </Flex>
                         {discountData.requestedDiscount && (
@@ -273,7 +289,11 @@ const StaffOrder = () => {
                                     color: "red",
                                 }}
                             >
-                                Discounts are accepted: {discountData.requestedDiscount}%
+                                {new Date(discountData.expirationTime) < new Date() ? (
+                                    "Discount has expired"
+                                ) : (
+                                    `Discounts are accepted: ${discountData.requestedDiscount}%`
+                                )}
                             </p>
                         )}
                         <div className="total_mount">
