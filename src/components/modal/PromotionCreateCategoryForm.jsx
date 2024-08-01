@@ -1,7 +1,7 @@
 import { Button, Form, Input, Modal, DatePicker, Select } from "antd";
 import React, { useEffect } from "react";
 
-const OPTIONCATE = ["RING", "BRACELET", "NECKLACE", "EARRINGS", "ANKLETS"];
+const OPTIONCATE = ["RING", "BRACELET", "NECKLACE", "EARRINGS", "ANKLETS","GEMSTONE","METAL"];
 const PromotionCreateCategoryForm = ({ visible, onCancel, onSave }) => {
     const [form] = Form.useForm();
     useEffect(() => {

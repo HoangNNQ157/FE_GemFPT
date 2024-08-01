@@ -193,6 +193,7 @@ const Profile = () => {
                                             ]}
                                         >
                                             <Input
+                                                disabled
                                                 placeholder="Email"
                                                 className="profile-input"
                                             />

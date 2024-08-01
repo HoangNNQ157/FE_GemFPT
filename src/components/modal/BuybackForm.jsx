@@ -41,6 +41,21 @@ const BuybackForm = ({
     const handleOk = () => {
         form.validateFields()
             .then((values) => {
+                // Kiểm tra và loại bỏ mảng kim loại nếu rỗng
+                if (!values.metals || values.metals.length === 0) {
+                    delete values.metals;
+                }
+
+                // Kiểm tra và loại bỏ mảng đá quý nếu rỗng
+                if (!values.gemstones || values.gemstones.length === 0) {
+                    delete values.gemstones;
+                }
+
+                // Kiểm tra và loại bỏ URLs nếu rỗng
+                if (!values.urls || values.urls.length === 0) {
+                    delete values.urls;
+                }
+
                 form.resetFields();
                 onSave({
                     values: values,
@@ -71,7 +86,7 @@ const BuybackForm = ({
         { name: "EARRINGS", value: "EARRINGS", id: 4 },
         { name: "ANKLETS", value: "ANKLETS", id: 5 },
         { name: "METAL", value: "METAL", id: 6 },
-        { name: "GEM", value: "GEM", id: 7 },
+        { name: "GEMSTONE", value: "GEMSTONE", id: 7 },
     ];
 
     return (
@@ -271,6 +286,12 @@ const BuybackForm = ({
                                                     name={[field.name, "gemBarcode"]}
                                                     fieldKey={[field.fieldKey, "gemBarcode"]}
                                                     label="Barcode"
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "Please input the barcode!",
+                                                        },
+                                                    ]}
                                                 >
                                                     <Input type="text" />
                                                 </Form.Item>
@@ -279,6 +300,12 @@ const BuybackForm = ({
                                                     name={[field.name, "buyRate"]}
                                                     fieldKey={[field.fieldKey, "buyRate"]}
                                                     label="Buy Rate"
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "Please input the buy rate!",
+                                                        },
+                                                    ]}
                                                 >
                                                     <Input type="number" />
                                                 </Form.Item>
